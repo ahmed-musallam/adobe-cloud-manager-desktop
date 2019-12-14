@@ -1,0 +1,30 @@
+{
+  "name": "adobe-cloud-manager-menubar",
+  "version": "0.1.0",
+  "description": "Adobe Cloud Manager Menubar",
+  "main": "main.js",
+  "scripts": {
+    "pre-build": "node pre-build.js",
+    "build": "npm run pre-build && parcel build app/main.js --no-source-maps && electron .",
+    "dev": "npm run pre-build && parcel index.html",
+    "start": "npm run pre-build && parcel build app/main.js && electron ."
+  },
+  "devDependencies": {
+    "@vue/component-compiler-utils": "^3.1.0",
+    "cssnano": "^4.1.10",
+    "electron": "^7.1.4",
+    "electron-reloader": "^0.3.0",
+    "parcel-bundler": "^1.12.4",
+    "vue-template-compiler": "^2.6.10",
+    "parcel-plugin-do-something.js": "file:./parcel-plugin-transform-html"
+  },
+  "dependencies": {
+    "@adobe/coral-spectrum": "^4.0.0",
+    "@adobe/jwt-auth": "^0.3.0",
+    "dotenv": "^8.2.0",
+    "fs-extra": "^8.1.0",
+    "menubar": "^7.1.0",
+    "vue": "^2.6.10",
+    "vue-hot-reload-api": "^2.3.4"
+  }
+}

@@ -1,0 +1,8 @@
+node_modules
+\.cache
+\.env
+dist
+*.crt
+*.key
+
+.DS_Store
