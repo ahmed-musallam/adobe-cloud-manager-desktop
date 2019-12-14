@@ -1,18 +1,16 @@
-# example-menubar-hello-world
+# Adobe Cloud Manager Menubar
+A simple menubar app to show cloud manger status.
 
-## Description
+# Dev
 
-This is a simple Hello World menubar app that will just open a window that says "Hello World".
+Building and running the electron app:
 
-## Screenshot
+```
+npm run build
+```
 
-![screenshot](./screenshot.png)
+UI Development only (parcel with server and auto-reload)
 
-## Instructions
-
-- Clone the repository.
-- Run `yarn install` from the root folder.
-- Run `yarn build` from the root folder.
-- `cd` into this directory.
-- Run `yarn install` to install this example's dependencies.
-- Run `yarn start` from this directory to run app.
+```
+npm run dev
+```
