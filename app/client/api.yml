@@ -1,0 +1,1899 @@
+
+# from: https://raw.githubusercontent.com/AdobeDocs/cloudmanager-api-docs/master/swagger-specs/api.yaml
+# but fixed up.. that one was invalid
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Cloud Manager API
+  description: 'This API allows access to Cloud Manager programs, pipelines, and environments by an authorized technical account created through the Adobe I/O Console. The base url for this API is https://cloudmanager.adobe.io, e.g. to get the list of programs for an organization, you would make a GET request to https://cloudmanager.adobe.io/api/programs (with the correct set of headers as described below).'
+host: cloudmanager.adobe.io
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+tags:
+  - name: Programs
+  - name: Repositories
+  - name: Branches
+  - name: Pipelines
+  - name: Pipeline Execution
+  - name: Environments
+paths:
+  /api/programs:
+    get:
+      tags:
+        - Programs
+      summary: Lists Programs
+      description: Returns all programs that the requesting user has access to
+      operationId: getPrograms
+      parameters:
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS organization ID that the request is being made under.
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: 'Bearer [token] - An access token for the technical account created through integration with Adobe IO'
+          required: true
+          type: string
+        - name: x-api-key
+          in: header
+          description: IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ProgramList'
+        '400':
+          description: The request is malformed.
+        '401':
+          description: The request has not been applied because it lacks valid authentication credentials for the target resource.
+        '403':
+          description: The requester is not authorized to access the resource.
+        '405':
+          description: Client sent a request using a HTTP method that the server doesn't support.
+        '406':
+          description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
+        '500':
+          description: This is an indicator of a server-side error.
+        '502':
+          description: This is an indicator that the back-end service did not send a valid response.
+        '503':
+          description: This is an indicator of a potential server overload.
+        '504':
+          description: This is an indicator that the back-end service did not complete a response within an allowed time period.
+  '/api/program/{programId}':
+    get:
+      tags:
+        - Programs
+      summary: Get Program
+      description: Returns a program by its id
+      operationId: getProgram
+      parameters:
+        - name: programId
+          in: path
+          description: Identifier of the program
+          required: true
+          type: string
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS organization ID that the request is being made under.
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: 'Bearer [token] - An access token for the technical account created through integration with Adobe IO'
+          required: true
+          type: string
+        - name: x-api-key
+          in: header
+          description: IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful retrieval of program
+          schema:
+            $ref: '#/definitions/Program'
+        '400':
+          description: The request is malformed.
+        '401':
+          description: The request has not been applied because it lacks valid authentication credentials for the target resource.
+        '403':
+          description: The requester is not authorized to access the resource.
+        '404':
+          description: Program not found
+        '405':
+          description: Client sent a request using a HTTP method that the server doesn't support.
+        '406':
+          description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
+        '500':
+          description: This is an indicator of a server-side error.
+        '502':
+          description: This is an indicator that the back-end service did not send a valid response.
+        '503':
+          description: This is an indicator of a potential server overload.
+        '504':
+          description: This is an indicator that the back-end service did not complete a response within an allowed time period.
+  '/api/program/{programId}/repositories':
+    get:
+      tags:
+        - Repositories
+      summary: Lists Repositories
+      description: Lists all Repositories in an program
+      operationId: getRepositories
+      parameters:
+        - name: programId
+          in: path
+          description: Identifier of the program
+          required: true
+          type: string
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS organization ID that the request is being made under.
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: 'Bearer [token] - An access token for the technical account created through integration with Adobe IO'
+          required: true
+          type: string
+        - name: x-api-key
+          in: header
+          description: IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/RepositoryList'
+  '/api/program/{programId}/repository/{repositoryId}':
+    get:
+      tags:
+        - Repositories
+      summary: Get Repository
+      description: Returns an repository by its id
+      operationId: getRepository
+      parameters:
+        - name: programId
+          in: path
+          description: Identifier of the program
+          required: true
+          type: string
+        - name: repositoryId
+          in: path
+          description: Identifier of the repository
+          required: true
+          type: string
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS organization ID that the request is being made under.
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: 'Bearer [token] - An access token for the technical account created through integration with Adobe IO'
+          required: true
+          type: string
+        - name: x-api-key
+          in: header
+          description: IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Repository'
+  '/api/program/{programId}/repository/{repositoryId}/branches':
+    get:
+      tags:
+        - Branches
+      summary: List Branches
+      description: Returns the list of branches from a repository
+      operationId: getBranches
+      parameters:
+        - name: programId
+          in: path
+          description: Identifier of the program.
+          required: true
+          type: string
+        - name: repositoryId
+          in: path
+          description: Identifier of the repository
+          required: true
+          type: string
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS organization ID that the request is being made under.
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: 'Bearer [token] - An access token for the technical account created through integration with Adobe IO'
+          required: true
+          type: string
+        - name: x-api-key
+          in: header
+          description: IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful retrieval of the list of repository branches
+          schema:
+            $ref: '#/definitions/BranchList'
+  '/api/program/{programId}/pipelines':
+    get:
+      tags:
+        - Pipelines
+      summary: List Pipelines
+      description: Returns all the pipelines that the requesting user has access to in an program
+      operationId: getPipelines
+      parameters:
+        - name: programId
+          in: path
+          description: Identifier of the program
+          required: true
+          type: string
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS organization ID that the request is being made under.
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: 'Bearer [token] - An access token for the technical account created through integration with Adobe IO'
+          required: true
+          type: string
+        - name: x-api-key
+          in: header
+          description: IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/PipelineList'
+        '400':
+          description: The request is malformed.
+        '401':
+          description: The request has not been applied because it lacks valid authentication credentials for the target resource.
+        '403':
+          description: The requester is not authorized to access the resource.
+        '405':
+          description: Client sent a request using a HTTP method that the server doesn't support.
+        '406':
+          description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
+        '500':
+          description: This is an indicator of a server-side error.
+        '502':
+          description: This is an indicator that the back-end service did not send a valid response.
+        '503':
+          description: This is an indicator of a potential server overload.
+        '504':
+          description: This is an indicator that the back-end service did not complete a response within an allowed time period.
+  '/api/program/{programId}/pipeline/{pipelineId}':
+    get:
+      tags:
+        - Pipelines
+      summary: Get Pipeline
+      description: Returns a pipeline by its id
+      operationId: getPipeline
+      parameters:
+        - name: programId
+          in: path
+          description: Identifier of the program
+          required: true
+          type: string
+        - name: pipelineId
+          in: path
+          description: Identifier of the pipeline
+          required: true
+          type: string
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS organization ID that the request is being made under.
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: 'Bearer [token] - An access token for the technical account created through integration with Adobe IO'
+          required: true
+          type: string
+        - name: x-api-key
+          in: header
+          description: IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful retrieval of pipeline
+          schema:
+            $ref: '#/definitions/Pipeline'
+        '400':
+          description: The request is malformed.
+        '401':
+          description: The request has not been applied because it lacks valid authentication credentials for the target resource.
+        '403':
+          description: The requester is not authorized to access the resource.
+        '404':
+          description: Pipeline not found
+        '405':
+          description: Client sent a request using a HTTP method that the server doesn't support.
+        '406':
+          description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
+        '500':
+          description: This is an indicator of a server-side error.
+        '502':
+          description: This is an indicator that the back-end service did not send a valid response.
+        '503':
+          description: This is an indicator of a potential server overload.
+        '504':
+          description: This is an indicator that the back-end service did not complete a response within an allowed time period.
+    delete:
+      tags:
+        - Pipelines
+      summary: Delete a Pipeline
+      description: Delete a pipeline. All the data is wiped.
+      operationId: deletePipeline
+      parameters:
+        - name: programId
+          in: path
+          description: Identifier of the program
+          required: true
+          type: string
+        - name: pipelineId
+          in: path
+          description: Identifier of the pipeline
+          required: true
+          type: string
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS organization ID that the request is being made under.
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: 'Bearer [token] - An access token for the technical account created through integration with Adobe IO'
+          required: true
+          type: string
+        - name: x-api-key
+          in: header
+          description: IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+          required: true
+          type: string
+      responses:
+        '400':
+          description: The request is malformed.
+        '401':
+          description: The request has not been applied because it lacks valid authentication credentials for the target resource.
+        '403':
+          description: The requester is not authorized to access the resource.
+        '405':
+          description: Client sent a request using a HTTP method that the server doesn't support.
+        '406':
+          description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
+        '500':
+          description: This is an indicator of a server-side error.
+        '502':
+          description: This is an indicator that the back-end service did not send a valid response.
+        '503':
+          description: This is an indicator of a potential server overload.
+        '504':
+          description: This is an indicator that the back-end service did not complete a response within an allowed time period.
+    patch:
+      tags:
+        - Pipelines
+      summary: Patches Pipeline
+      description: Patches a pipeline within an program.
+      operationId: patchPipeline
+      parameters:
+        - name: programId
+          in: path
+          description: Identifier of the program
+          required: true
+          type: string
+        - name: pipelineId
+          in: path
+          description: Identifier of the pipeline
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: The updated Pipeline
+          required: true
+          schema:
+            $ref: '#/definitions/Pipeline'
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS organization ID that the request is being made under.
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: 'Bearer [token] - An access token for the technical account created through integration with Adobe IO'
+          required: true
+          type: string
+        - name: x-api-key
+          in: header
+          description: IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+          required: true
+          type: string
+        - name: Content-Type
+          in: header
+          description: Must always be application/json
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Pipeline'
+        '400':
+          description: The request is malformed.
+        '401':
+          description: The request has not been applied because it lacks valid authentication credentials for the target resource.
+        '403':
+          description: The requester is not authorized to access the resource.
+        '405':
+          description: Client sent a request using a HTTP method that the server doesn't support.
+        '406':
+          description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
+        '500':
+          description: This is an indicator of a server-side error.
+        '502':
+          description: This is an indicator that the back-end service did not send a valid response.
+        '503':
+          description: This is an indicator of a potential server overload.
+        '504':
+          description: This is an indicator that the back-end service did not complete a response within an allowed time period.
+  '/api/program/{programId}/pipeline/{pipelineId}/execution':
+    get:
+      tags:
+        - Pipeline Execution
+      summary: Get current pipeline execution
+      description: Returns current pipeline execution if any.
+      operationId: getCurrentExecution
+      parameters:
+        - name: programId
+          in: path
+          description: Identifier of the program.
+          required: true
+          type: string
+        - name: pipelineId
+          in: path
+          description: Identifier of the pipeline
+          required: true
+          type: string
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS organization ID that the request is being made under.
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: 'Bearer [token] - An access token for the technical account created through integration with Adobe IO'
+          required: true
+          type: string
+        - name: x-api-key
+          in: header
+          description: IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful retrieval of current execution
+          schema:
+            $ref: '#/definitions/PipelineExecution'
+        '400':
+          description: The request is malformed.
+        '401':
+          description: The request has not been applied because it lacks valid authentication credentials for the target resource.
+        '403':
+          description: The requester is not authorized to access the resource.
+        '404':
+          description: No pipeline execution exits or unknown pipeline or program
+        '405':
+          description: Client sent a request using a HTTP method that the server doesn't support.
+        '406':
+          description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
+        '409':
+          description: The resource was modified before the call. Client should reload and try again
+        '500':
+          description: This is an indicator of a server-side error.
+        '502':
+          description: This is an indicator that the back-end service did not send a valid response.
+        '503':
+          description: This is an indicator of a potential server overload.
+        '504':
+          description: This is an indicator that the back-end service did not complete a response within an allowed time period.
+    put:
+      tags:
+        - Pipeline Execution
+      summary: Start the pipeline
+      description: Starts the Pipeline. This works only if the pipeline is not already started.
+      operationId: startPipeline
+      parameters:
+        - name: programId
+          in: path
+          description: Identifier of the program.
+          required: true
+          type: string
+        - name: pipelineId
+          in: path
+          description: Identifier of the pipeline
+          required: true
+          type: string
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS organization ID that the request is being made under.
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: 'Bearer [token] - An access token for the technical account created through integration with Adobe IO'
+          required: true
+          type: string
+        - name: x-api-key
+          in: header
+          description: IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+          required: true
+          type: string
+        - name: Content-Type
+          in: header
+          description: Must always be application/json
+          required: true
+          type: string
+      responses:
+        '201':
+          description: Successful started pipeline execution
+        '400':
+          description: Request conflicts with the expected state of pipeline
+        '401':
+          description: The request has not been applied because it lacks valid authentication credentials for the target resource.
+        '403':
+          description: The requester is not authorized to access the resource.
+        '404':
+          description: No pipeline execution exits or unknown pipeline or application
+        '405':
+          description: Client sent a request using a HTTP method that the server doesn't support.
+        '406':
+          description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
+        '409':
+          description: The resource was modified before the call. Client should reload and try again
+        '412':
+          description: Pipeline is busy
+        '500':
+          description: This is an indicator of a server-side error.
+        '502':
+          description: This is an indicator that the back-end service did not send a valid response.
+        '503':
+          description: This is an indicator of a potential server overload.
+        '504':
+          description: This is an indicator that the back-end service did not complete a response within an allowed time period.
+  '/api/program/{programId}/pipeline/{pipelineId}/execution/{executionId}':
+    get:
+      tags:
+        - Pipeline Execution
+      summary: Get pipeline execution
+      description: Returns a pipeline execution by id
+      operationId: getExecution
+      parameters:
+        - name: programId
+          in: path
+          description: Identifier of the program.
+          required: true
+          type: string
+        - name: pipelineId
+          in: path
+          description: Identifier of the pipeline
+          required: true
+          type: string
+        - name: executionId
+          in: path
+          description: Identifier of the execution
+          required: true
+          type: string
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS organization ID that the request is being made under.
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: 'Bearer [token] - An access token for the technical account created through integration with Adobe IO'
+          required: true
+          type: string
+        - name: x-api-key
+          in: header
+          description: IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful retrieval of execution
+          schema:
+            $ref: '#/definitions/PipelineExecution'
+        '400':
+          description: The request is malformed.
+        '401':
+          description: The request has not been applied because it lacks valid authentication credentials for the target resource.
+        '403':
+          description: The requester is not authorized to access the resource.
+        '404':
+          description: No pipeline execution exits or unknown pipeline or application
+        '405':
+          description: Client sent a request using a HTTP method that the server doesn't support.
+        '406':
+          description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
+        '409':
+          description: The resource was modified before the call. Client should reload and try again
+        '500':
+          description: This is an indicator of a server-side error.
+        '502':
+          description: This is an indicator that the back-end service did not send a valid response.
+        '503':
+          description: This is an indicator of a potential server overload.
+        '504':
+          description: This is an indicator that the back-end service did not complete a response within an allowed time period.
+  '/api/program/{programId}/pipeline/{pipelineId}/execution/{executionId}/phase/{phaseId}/step/{stepId}':
+    get:
+      tags:
+        - Pipeline Execution
+      summary: Get step state
+      description: ''
+      operationId: stepState
+      parameters:
+        - name: programId
+          in: path
+          description: Identifier of the program.
+          required: true
+          type: string
+        - name: pipelineId
+          in: path
+          description: Identifier of the pipeline
+          required: true
+          type: string
+        - name: executionId
+          in: path
+          description: Identifier of the execution
+          required: true
+          type: string
+        - name: phaseId
+          in: path
+          description: Identifier of the phase
+          required: true
+          type: string
+        - name: stepId
+          in: path
+          description: Identifier of the step
+          required: true
+          type: string
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS organization ID that the request is being made under.
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: 'Bearer [token] - An access token for the technical account created through integration with Adobe IO'
+          required: true
+          type: string
+        - name: x-api-key
+          in: header
+          description: IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful retrieval of step state
+          schema:
+            $ref: '#/definitions/PipelineExecutionStepState'
+        '400':
+          description: The request is malformed.
+        '401':
+          description: The request has not been applied because it lacks valid authentication credentials for the target resource.
+        '403':
+          description: Missing permission for user to read step
+        '404':
+          description: Pipeline execution does not exist
+        '405':
+          description: Client sent a request using a HTTP method that the server doesn't support.
+        '406':
+          description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
+        '409':
+          description: The resource was modified before the call. Client should reload and try again
+        '500':
+          description: This is an indicator of a server-side error.
+        '502':
+          description: This is an indicator that the back-end service did not send a valid response.
+        '503':
+          description: This is an indicator of a potential server overload.
+        '504':
+          description: This is an indicator that the back-end service did not complete a response within an allowed time period.
+  '/api/program/{programId}/pipeline/{pipelineId}/execution/{executionId}/phase/{phaseId}/step/{stepId}/advance':
+    put:
+      tags:
+        - Pipeline Execution
+      summary: Advance
+      description: 'Post to this url in order to advance the current pipeline execution, if paused and waiting for user interaction. Link is present in output only in that case. The input depends on the actual reason for which the pipeline execution stopped.'
+      operationId: advancePipelineExecution
+      parameters:
+        - name: programId
+          in: path
+          description: Identifier of the program.
+          required: true
+          type: string
+        - name: pipelineId
+          in: path
+          description: Identifier of the pipeline
+          required: true
+          type: string
+        - name: executionId
+          in: path
+          description: Identifier of the execution
+          required: true
+          type: string
+        - name: phaseId
+          in: path
+          description: Identifier of the phase
+          required: true
+          type: string
+        - name: stepId
+          in: path
+          description: Identifier of the step
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Input for advance. See documentation for details.
+          required: true
+          schema: {}
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS organization ID that the request is being made under.
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: 'Bearer [token] - An access token for the technical account created through integration with Adobe IO'
+          required: true
+          type: string
+        - name: x-api-key
+          in: header
+          description: IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+          required: true
+          type: string
+        - name: Content-Type
+          in: header
+          description: Must always be application/json
+          required: true
+          type: string
+      responses:
+        '202':
+          description: Successful resume of pipeline execution
+        '400':
+          description: The request is malformed.
+        '401':
+          description: The request has not been applied because it lacks valid authentication credentials for the target resource.
+        '403':
+          description: Missing permission for user to advance the pipeline execution
+        '404':
+          description: No pipeline execution exits or unknown pipeline or program
+        '405':
+          description: Client sent a request using a HTTP method that the server doesn't support.
+        '406':
+          description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
+        '409':
+          description: The resource was modified before the call. Client should reload and try again
+        '500':
+          description: This is an indicator of a server-side error.
+        '502':
+          description: This is an indicator that the back-end service did not send a valid response.
+        '503':
+          description: This is an indicator of a potential server overload.
+        '504':
+          description: This is an indicator that the back-end service did not complete a response within an allowed time period.
+  '/api/program/{programId}/pipeline/{pipelineId}/execution/{executionId}/phase/{phaseId}/step/{stepId}/cancel':
+    put:
+      tags:
+        - Pipeline Execution
+      summary: Cancel
+      description: Post to this url in order to cancel the current pipeline execution. Link is present in output only in that case.
+      operationId: cancelPipelineExecutionStep
+      parameters:
+        - name: programId
+          in: path
+          description: Identifier of the program.
+          required: true
+          type: string
+        - name: pipelineId
+          in: path
+          description: Identifier of the pipeline
+          required: true
+          type: string
+        - name: executionId
+          in: path
+          description: Identifier of the execution
+          required: true
+          type: string
+        - name: phaseId
+          in: path
+          description: Identifier of the phase
+          required: true
+          type: string
+        - name: stepId
+          in: path
+          description: Identifier of the step
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Input for advance. See documentation for details.
+          required: true
+          schema: {}
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS organization ID that the request is being made under.
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: 'Bearer [token] - An access token for the technical account created through integration with Adobe IO'
+          required: true
+          type: string
+        - name: x-api-key
+          in: header
+          description: IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+          required: true
+          type: string
+        - name: Content-Type
+          in: header
+          description: Must always be application/json
+          required: true
+          type: string
+      responses:
+        '202':
+          description: Successful cancel of pipeline execution
+        '400':
+          description: The request is malformed.
+        '401':
+          description: The request has not been applied because it lacks valid authentication credentials for the target resource.
+        '403':
+          description: Missing permission for user to cancel the current pipeline execution
+        '404':
+          description: No pipeline execution exits or unknown pipeline or program
+        '405':
+          description: Client sent a request using a HTTP method that the server doesn't support.
+        '406':
+          description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
+        '409':
+          description: The resource was modified before the call. Client should reload and try again
+        '500':
+          description: This is an indicator of a server-side error.
+        '502':
+          description: This is an indicator that the back-end service did not send a valid response.
+        '503':
+          description: This is an indicator of a potential server overload.
+        '504':
+          description: This is an indicator that the back-end service did not complete a response within an allowed time period.
+  '/api/program/{programId}/pipeline/{pipelineId}/execution/{executionId}/phase/{phaseId}/step/{stepId}/logs':
+    get:
+      tags:
+        - Pipeline Execution
+      summary: Get logs
+      description: Get the logs associated with a step.
+      operationId: getStepLogs
+      parameters:
+        - name: programId
+          in: path
+          description: Identifier of the program.
+          required: true
+          type: string
+        - name: pipelineId
+          in: path
+          description: Identifier of the pipeline
+          required: true
+          type: string
+        - name: executionId
+          in: path
+          description: Identifier of the execution
+          required: true
+          type: string
+        - name: phaseId
+          in: path
+          description: Identifier of the phase
+          required: true
+          type: string
+        - name: stepId
+          in: path
+          description: Identifier of the step
+          required: true
+          type: string
+        - name: Accept
+          in: header
+          required: false
+          type: string
+          description: 'Specify application/json in this header to receive a JSON response. Otherwise, a 307 response code will be returned with a Location header.'
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS organization ID that the request is being made under.
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: 'Bearer [token] - An access token for the technical account created through integration with Adobe IO'
+          required: true
+          type: string
+        - name: x-api-key
+          in: header
+          description: IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful retrieval of logs
+        '400':
+          description: The request is malformed.
+        '401':
+          description: The request has not been applied because it lacks valid authentication credentials for the target resource.
+        '403':
+          description: Missing permission for user to read logs
+        '404':
+          description: Pipeline execution does not exist
+        '405':
+          description: Client sent a request using a HTTP method that the server doesn't support.
+        '406':
+          description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
+        '409':
+          description: The resource was modified before the call. Client should reload and try again
+        '500':
+          description: This is an indicator of a server-side error.
+        '502':
+          description: This is an indicator that the back-end service did not send a valid response.
+        '503':
+          description: This is an indicator of a potential server overload.
+        '504':
+          description: This is an indicator that the back-end service did not complete a response within an allowed time period.
+  '/api/program/{programId}/pipeline/{pipelineId}/execution/{executionId}/phase/{phaseId}/step/{stepId}/metrics':
+    get:
+      tags:
+        - Pipeline Execution
+      summary: Get step metrics
+      description: ''
+      operationId: stepMetric
+      parameters:
+        - name: programId
+          in: path
+          description: Identifier of the program.
+          required: true
+          type: string
+        - name: pipelineId
+          in: path
+          description: Identifier of the pipeline
+          required: true
+          type: string
+        - name: executionId
+          in: path
+          description: Identifier of the execution
+          required: true
+          type: string
+        - name: phaseId
+          in: path
+          description: Identifier of the phase
+          required: true
+          type: string
+        - name: stepId
+          in: path
+          description: Identifier of the step
+          required: true
+          type: string
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS organization ID that the request is being made under.
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: 'Bearer [token] - An access token for the technical account created through integration with Adobe IO'
+          required: true
+          type: string
+        - name: x-api-key
+          in: header
+          description: IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful retrieval of metrics
+          schema:
+            $ref: '#/definitions/PipelineStepMetrics'
+        '400':
+          description: The request is malformed.
+        '401':
+          description: The request has not been applied because it lacks valid authentication credentials for the target resource.
+        '403':
+          description: Missing permission for user to read metrics
+        '404':
+          description: Pipeline execution does not exist
+        '405':
+          description: Client sent a request using a HTTP method that the server doesn't support.
+        '406':
+          description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
+        '409':
+          description: The resource was modified before the call. Client should reload and try again
+        '500':
+          description: This is an indicator of a server-side error.
+        '502':
+          description: This is an indicator that the back-end service did not send a valid response.
+        '503':
+          description: This is an indicator of a potential server overload.
+        '504':
+          description: This is an indicator that the back-end service did not complete a response within an allowed time period.
+  '/api/program/{programId}/pipeline/{pipelineId}/executions':
+    get:
+      tags:
+        - Pipeline Execution
+      summary: List Executions
+      description: Returns the history of pipeline executions in a newest to oldest order
+      operationId: getExecutions
+      parameters:
+        - name: programId
+          in: path
+          description: Identifier of the program.
+          required: true
+          type: string
+        - name: pipelineId
+          in: path
+          description: Identifier of the pipeline
+          required: true
+          type: string
+        - name: start
+          in: query
+          description: Pagination start parameter
+          required: false
+          type: string
+        - name: limit
+          in: query
+          description: Pagination limit parameter
+          required: false
+          type: integer
+          format: int32
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS organization ID that the request is being made under.
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: 'Bearer [token] - An access token for the technical account created through integration with Adobe IO'
+          required: true
+          type: string
+        - name: x-api-key
+          in: header
+          description: IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful retrieval of execution history
+          schema:
+            $ref: '#/definitions/PipelineExecutionListRepresentation'
+        '400':
+          description: The request is malformed.
+        '401':
+          description: The request has not been applied because it lacks valid authentication credentials for the target resource.
+        '403':
+          description: Missing permission for user to read executions
+        '404':
+          description: Pipeline does not exist
+        '405':
+          description: Client sent a request using a HTTP method that the server doesn't support.
+        '406':
+          description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
+        '409':
+          description: The resource was modified before the call. Client should reload and try again
+        '500':
+          description: This is an indicator of a server-side error.
+        '502':
+          description: This is an indicator that the back-end service did not send a valid response.
+        '503':
+          description: This is an indicator of a potential server overload.
+        '504':
+          description: This is an indicator that the back-end service did not complete a response within an allowed time period.
+  '/api/program/{programId}/environments':
+    get:
+      tags:
+        - Environments
+      summary: List Environments
+      description: Lists all environments in an program
+      operationId: getEnvironments
+      parameters:
+        - name: programId
+          in: path
+          description: Identifier of the program
+          required: true
+          type: string
+        - name: type
+          in: query
+          description: Type of the environment
+          required: false
+          type: string
+          enum:
+            - dev
+            - stage
+            - prod
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS organization ID that the request is being made under.
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: 'Bearer [token] - An access token for the technical account created through integration with Adobe IO'
+          required: true
+          type: string
+        - name: x-api-key
+          in: header
+          description: IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful retrieval of environment list
+          schema:
+            $ref: '#/definitions/EnvironmentList'
+        '400':
+          description: The request is malformed.
+        '401':
+          description: The request has not been applied because it lacks valid authentication credentials for the target resource.
+        '403':
+          description: The requester is not authorized to access the resource.
+        '404':
+          description: Program not found
+        '405':
+          description: Client sent a request using a HTTP method that the server doesn't support.
+        '406':
+          description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
+        '500':
+          description: This is an indicator of a server-side error.
+        '502':
+          description: This is an indicator that the back-end service did not send a valid response.
+        '503':
+          description: This is an indicator of a potential server overload.
+        '504':
+          description: This is an indicator that the back-end service did not complete a response within an allowed time period.
+  '/api/program/{programId}/environment/{environmentId}':
+    get:
+      tags:
+        - Environments
+      summary: Get Environment
+      description: Returns an environment by its id
+      operationId: getEnvironment
+      parameters:
+        - name: programId
+          in: path
+          description: Identifier of the program
+          required: true
+          type: string
+        - name: environmentId
+          in: path
+          description: Identifier of the environment
+          required: true
+          type: string
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS organization ID that the request is being made under.
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: 'Bearer [token] - An access token for the technical account created through integration with Adobe IO'
+          required: true
+          type: string
+        - name: x-api-key
+          in: header
+          description: IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Environment'
+        '400':
+          description: The request is malformed.
+        '401':
+          description: The request has not been applied because it lacks valid authentication credentials for the target resource.
+        '403':
+          description: The requester is not authorized to access the resource.
+        '405':
+          description: Client sent a request using a HTTP method that the server doesn't support.
+        '406':
+          description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
+        '500':
+          description: This is an indicator of a server-side error.
+        '502':
+          description: This is an indicator that the back-end service did not send a valid response.
+        '503':
+          description: This is an indicator of a potential server overload.
+        '504':
+          description: This is an indicator that the back-end service did not complete a response within an allowed time period.
+definitions:
+  ProgramList:
+    type: object
+    properties:
+      _totalNumberOfItems:
+        type: integer
+        format: int32
+      _embedded:
+        type: object
+        readOnly: true
+        properties:
+          programs:
+            type: array
+            items:
+              $ref: '#/definitions/EmbeddedProgram'
+      _links:
+        type: object
+        readOnly: true
+        properties:
+          next:
+            $ref: '#/definitions/HalLink'
+          prev:
+            $ref: '#/definitions/HalLink'
+          self:
+            $ref: '#/definitions/HalLink'
+  EmbeddedProgram:
+    type: object
+    required:
+      - name
+    properties:
+      id:
+        type: string
+        example: '14'
+        description: Identifier of the program. Unique within the space.
+        readOnly: true
+      name:
+        type: string
+        example: AcmeCorp Main Site
+        description: Name of the program
+      enabled:
+        type: boolean
+        description: Whether this Program has been enabled for Cloud Manager usage
+        readOnly: true
+      tenantId:
+        type: string
+        example: acmeCorp
+        description: Tenant Id
+        readOnly: true
+      _links:
+        type: object
+        readOnly: true
+        properties:
+          self:
+            $ref: '#/definitions/HalLink'
+    description: Describes an __Embedded Program__
+  Program:
+    type: object
+    required:
+      - name
+    properties:
+      id:
+        type: string
+        example: '14'
+        description: Identifier of the program. Unique within the space.
+        readOnly: true
+      name:
+        type: string
+        example: AcmeCorp Main Site
+        description: Name of the program
+        minLength: 0
+        maxLength: 255
+      enabled:
+        type: boolean
+        description: Whether this Program has been enabled for Cloud Manager usage
+      tenantId:
+        type: string
+        example: acmeCorp
+        description: Tenant Id
+      imsOrgId:
+        type: string
+        example: 6522A55453334E247F120101@AdobeOrg
+        description: Organisation Id
+      _links:
+        type: object
+        readOnly: true
+        properties:
+          'http://ns.adobe.com/adobecloud/rel/pipelines':
+            description: Pipelines defined in the program
+            $ref: '#/definitions/HalLink'
+          'http://ns.adobe.com/adobecloud/rel/environments':
+            description: The environments linked to this program.
+            $ref: '#/definitions/HalLink'
+          'http://ns.adobe.com/adobecloud/rel/repositories':
+            description: The repositories linked to this program.
+            $ref: '#/definitions/HalLink'
+          self:
+            $ref: '#/definitions/HalLink'
+    description: Describes a __Program__
+  HalLink:
+    type: object
+    properties:
+      href:
+        type: string
+      templated:
+        type: boolean
+      type:
+        type: string
+      deprecation:
+        type: string
+      profile:
+        type: string
+      title:
+        type: string
+      hreflang:
+        type: string
+      name:
+        type: string
+  Pipeline:
+    type: object
+    required:
+      - name
+      - phases
+    properties:
+      id:
+        type: string
+        example: '29'
+        description: Identifier of the pipeline. Unique within the program.
+      programId:
+        type: string
+        example: '14'
+        description: Identifier of the program. Unique within the space.
+      name:
+        type: string
+        example: AcmeCorp Main Pipeline
+        description: Name of the pipeline
+      trigger:
+        type: string
+        example: MANUAL
+        description: 'How should the execution be triggered. ON_COMMIT: each time a PR is available and the Pipeline is idle then a execution is triggered. MANUAL: triggerd through UI or API. SCHEDULE: recurring schedule (not yet implemented}'
+        enum:
+          - ON_COMMIT
+          - MANUAL
+          - SCHEDULE
+      status:
+        type: string
+        example: 'RUNNING,FAILED'
+        description: Pipeline status
+        enum:
+          - IDLE
+          - BUSY
+          - WAITING
+      createdAt:
+        type: string
+        format: date-time
+        description: Create date
+        readOnly: true
+      updatedAt:
+        type: string
+        format: date-time
+        description: Update date
+        readOnly: true
+      lastStartedAt:
+        type: string
+        format: date-time
+        description: Last pipeline execution start
+        readOnly: true
+      lastFinishedAt:
+        type: string
+        format: date-time
+        description: Last pipeline execution end
+        readOnly: true
+      phases:
+        type: array
+        description: Pipeline phases in execution order
+        items:
+          $ref: '#/definitions/PipelinePhase'
+        maxItems: 100
+        minItems: 1
+      _links:
+        type: object
+        readOnly: true
+        properties:
+          'http://ns.adobe.com/adobecloud/rel/program':
+            description: The Program this pipeline belongs to.
+            $ref: '#/definitions/HalLink'
+          'http://ns.adobe.com/adobecloud/rel/execution':
+            description: Current pipeline execution if any
+            $ref: '#/definitions/HalLink'
+          'http://ns.adobe.com/adobecloud/rel/executions':
+            description: Run history
+            $ref: '#/definitions/HalLink'
+          self:
+            $ref: '#/definitions/HalLink'
+    description: Describes a __CI/CD Pipeline__
+  PipelinePhase:
+    type: object
+    required:
+      - type
+    properties:
+      name:
+        type: string
+        example: DEV Build
+        description: Name of the phase
+      type:
+        type: string
+        example: DEPLOY
+        description: Type of the phase
+        enum:
+          - VALIDATE
+          - BUILD
+          - DEPLOY
+      repositoryId:
+        type: string
+        description: |-
+          Identifier of the source repository. The code from this repository will be build at the start of this phase. 
+          Mandatory if type=BUILD
+      branch:
+        type: string
+        description: |-
+          Name of the tracked branch or a fully qualified git tag (e.g. refs/tags/v1). 
+           Assumed to be `master` if missing.
+      environmentId:
+        type: string
+        description: Identifier of the target environment. Mandatory if type=DEPLOY
+    description: Describes a phase of a pipeline
+  PipelineList:
+    type: object
+    properties:
+      _totalNumberOfItems:
+        type: integer
+        format: int32
+      _embedded:
+        type: object
+        readOnly: true
+        properties:
+          pipelines:
+            type: array
+            items:
+              $ref: '#/definitions/Pipeline'
+      _links:
+        type: object
+        readOnly: true
+        properties:
+          next:
+            $ref: '#/definitions/HalLink'
+          prev:
+            $ref: '#/definitions/HalLink'
+          self:
+            $ref: '#/definitions/HalLink'
+  PipelineExecution:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Pipeline execution identifier
+      programId:
+        type: string
+        example: '14'
+        description: Identifier of the program. Unique within the space.
+        readOnly: true
+      pipelineId:
+        type: string
+        example: '10'
+        description: Identifier of the pipeline. Unique within the space.
+        readOnly: true
+      artifactsVersion:
+        type: string
+        description: Version of the artifacts generated during this execution
+      user:
+        type: string
+        example: 0123456789ABCDE@AdobeID
+        description: AdobeID who started the pipeline. Empty for auto triggered builds
+      status:
+        type: string
+        description: Status of the execution
+        enum:
+          - NOT_STARTED
+          - RUNNING
+          - CANCELLING
+          - CANCELLED
+          - FINISHED
+          - ERROR
+          - FAILED
+      trigger:
+        type: string
+        description: How the execution was triggered.
+        enum:
+          - ON_COMMIT
+          - MANUAL
+          - SCHEDULE
+      createdAt:
+        type: string
+        format: date-time
+        description: Start time
+      updatedAt:
+        type: string
+        format: date-time
+        description: Date of last status change
+      finishedAt:
+        type: string
+        format: date-time
+        description: Date the execution reached a final state
+      _embedded:
+        type: object
+        readOnly: true
+        properties:
+          stepStates:
+            type: array
+            items:
+              $ref: '#/definitions/PipelineExecutionStepState'
+      _links:
+        type: object
+        readOnly: true
+        properties:
+          'http://ns.adobe.com/adobecloud/rel/program':
+            description: Get the program of the execution
+            $ref: '#/definitions/HalLink'
+          'http://ns.adobe.com/adobecloud/rel/pipeline':
+            description: Get the pipeline of the execution
+            $ref: '#/definitions/HalLink'
+          self:
+            $ref: '#/definitions/HalLink'
+    description: Wraps a pipeline execution
+  PipelineExecutionStepState:
+    type: object
+    properties:
+      id:
+        type: string
+      stepId:
+        type: string
+      phaseId:
+        type: string
+      action:
+        type: string
+        example: build
+        description: Name of the action
+      repository:
+        type: string
+        description: Target repository
+      branch:
+        type: string
+        description: Target branch
+      environment:
+        type: string
+        description: Target environment
+      environmentType:
+        type: string
+        description: Target environment type
+      startedAt:
+        type: string
+        format: date-time
+        description: Start time
+      finishedAt:
+        type: string
+        format: date-time
+        description: Date the execution reached a final state
+      details:
+        type: object
+        example: scheduled time
+        description: Information about step result
+        additionalProperties:
+          type: object
+      status:
+        type: string
+        example: NOT_STARTED
+        description: Action status
+        enum:
+          - NOT_STARTED
+          - RUNNING
+          - FINISHED
+          - ERROR
+          - ROLLING_BACK
+          - ROLLED_BACK
+          - WAITING
+          - CANCELLED
+          - FAILED
+      _links:
+        type: object
+        readOnly: true
+        properties:
+          'http://ns.adobe.com/adobecloud/rel/execution':
+            $ref: '#/definitions/HalLink'
+          'http://ns.adobe.com/adobecloud/rel/pipeline':
+            description: Get the pipeline of the execution
+            $ref: '#/definitions/HalLink'
+          'http://ns.adobe.com/adobecloud/rel/pipeline/logs':
+            $ref: '#/definitions/HalLink'
+          'http://ns.adobe.com/adobecloud/rel/pipeline/metrics':
+            $ref: '#/definitions/HalLink'
+          'http://ns.adobe.com/adobecloud/rel/pipeline/advance':
+            description: 'Post to this link in order to advance the pipeline, if paused and waiting for user interaction. Link is present in output only in that case.'
+            $ref: '#/definitions/HalLink'
+          'http://ns.adobe.com/adobecloud/rel/pipeline/cancel':
+            description: Post to this link in order to cancel the pipeline. Link is present in output only in that case.
+            $ref: '#/definitions/HalLink'
+          'http://ns.adobe.com/adobecloud/rel/program':
+            description: Get the program of the execution
+            $ref: '#/definitions/HalLink'
+          self:
+            $ref: '#/definitions/HalLink'
+    description: Describes the status of a particular pipeline execution step for display purposes
+  PipelineExecutionListRepresentation:
+    type: object
+    properties:
+      _totalNumberOfItems:
+        type: integer
+        format: int32
+      _page:
+        $ref: '#/definitions/RequestedPageDetails'
+      _embedded:
+        type: object
+        readOnly: true
+        properties:
+          executions:
+            type: array
+            items:
+              $ref: '#/definitions/PipelineExecution'
+      _links:
+        type: object
+        readOnly: true
+        properties:
+          next:
+            $ref: '#/definitions/HalLink'
+          page:
+            $ref: '#/definitions/HalLink'
+          prev:
+            $ref: '#/definitions/HalLink'
+          self:
+            $ref: '#/definitions/HalLink'
+    description: List of pipeline executions
+  PipelineStepMetrics:
+    type: object
+    properties:
+      metrics:
+        type: array
+        description: metrics
+        readOnly: true
+        items:
+          $ref: '#/definitions/Metric'
+  Metric:
+    type: object
+    properties:
+      id:
+        type: string
+        description: KPI result identifier
+      severity:
+        type: string
+        description: Severity of the metric
+        enum:
+          - critical
+          - important
+          - informational
+      passed:
+        type: boolean
+        description: Whether metric is considered passed
+      override:
+        type: boolean
+        description: Whether user override the failed metric
+      actualValue:
+        type: string
+        description: Expected value for the metric
+      expectedValue:
+        type: string
+        description: Expected value for the metric
+      comparator:
+        type: string
+        description: Comparator used for the metric
+        enum:
+          - GT
+          - GTE
+          - LT
+          - LTE
+          - EQ
+          - NEQ
+      kpi:
+        type: string
+        description: KPI identifier
+    description: Describes a __Metric__
+  EnvironmentList:
+    type: object
+    properties:
+      _totalNumberOfItems:
+        type: integer
+        format: int32
+      _embedded:
+        type: object
+        readOnly: true
+        properties:
+          environments:
+            type: array
+            items:
+              $ref: '#/definitions/Environment'
+      _links:
+        type: object
+        readOnly: true
+        properties:
+          next:
+            $ref: '#/definitions/HalLink'
+          prev:
+            $ref: '#/definitions/HalLink'
+          self:
+            $ref: '#/definitions/HalLink'
+  Environment:
+    type: object
+    properties:
+      id:
+        type: string
+        description: id
+        readOnly: true
+      programId:
+        type: string
+        example: '14'
+        description: Identifier of the program. Unique within the space.
+        readOnly: true
+      name:
+        type: string
+        example: AcmeCorp Dev1 Environment
+        description: Name of the environment
+      description:
+        type: string
+        example: This is our primary development environment
+        description: Description of the environment
+      type:
+        type: string
+        example: dev
+        description: Type of the environment
+        enum:
+          - dev
+          - stage
+          - prod
+      _links:
+        type: object
+        readOnly: true
+        properties:
+          'http://ns.adobe.com/adobecloud/rel/program':
+            description: The Application this environment belongs to.
+            $ref: '#/definitions/HalLink'
+          'http://ns.adobe.com/adobecloud/rel/pipeline':
+            description: 'The Pipeline this environment is assigned to, if any'
+            $ref: '#/definitions/HalLink'
+          'http://ns.adobe.com/adobecloud/rel/author':
+            description: Author URL
+            $ref: '#/definitions/HalLink'
+          'http://ns.adobe.com/adobecloud/rel/publish':
+            description: Publish URL
+            $ref: '#/definitions/HalLink'
+          self:
+            $ref: '#/definitions/HalLink'
+    description: 'An Environment that '
+  Repository:
+    type: object
+    properties:
+      repo:
+        type: string
+        example: Adobe-Marketing-Cloud
+        description: Repository name
+        pattern: '^[A-Za-z0-9-]*$'
+      description:
+        type: string
+        example: Description
+        description: description
+      _links:
+        type: object
+        readOnly: true
+        properties:
+          'http://ns.adobe.com/adobecloud/rel/program':
+            description: The Program the repository belongs to
+            $ref: '#/definitions/HalLink'
+          'http://ns.adobe.com/adobecloud/rel/branches':
+            description: List of branches in this repository
+            $ref: '#/definitions/HalLink'
+          self:
+            $ref: '#/definitions/HalLink'
+    description: A sourcecode repository
+  RepositoryList:
+    type: object
+    properties:
+      _totalNumberOfItems:
+        type: integer
+        format: int32
+      _embedded:
+        type: object
+        readOnly: true
+        properties:
+          repositories:
+            type: array
+            items:
+              $ref: '#/definitions/Repository'
+      _links:
+        type: object
+        readOnly: true
+        properties:
+          next:
+            $ref: '#/definitions/HalLink'
+          prev:
+            $ref: '#/definitions/HalLink'
+          self:
+            $ref: '#/definitions/HalLink'
+  RepositoryBranch:
+    type: object
+    properties:
+      programId:
+        type: string
+        example: '14'
+        description: Identifier of the program. Unique within the space
+      repositoryId:
+        type: integer
+        format: int64
+        example: 2
+        description: Identifier of the repository
+      name:
+        type: string
+        example: master
+        description: Name of the branch
+      _links:
+        type: object
+        readOnly: true
+        properties:
+          'http://ns.adobe.com/adobecloud/rel/program':
+            description: Program
+            $ref: '#/definitions/HalLink'
+          'http://ns.adobe.com/adobecloud/rel/repository':
+            description: Repository
+            $ref: '#/definitions/HalLink'
+    description: Represents a Git Branch
+  BranchList:
+    type: object
+    properties:
+      _totalNumberOfItems:
+        type: integer
+        format: int32
+      _embedded:
+        type: object
+        readOnly: true
+        properties:
+          branches:
+            type: array
+            items:
+              $ref: '#/definitions/RepositoryBranch'
+      _links:
+        type: object
+        readOnly: true
+        properties:
+          next:
+            $ref: '#/definitions/HalLink'
+          prev:
+            $ref: '#/definitions/HalLink'
+          self:
+            $ref: '#/definitions/HalLink'
+  RequestedPageDetails:
+    type: object
+    properties:
+      limit:
+        type: integer
+        format: int32
+      orderBy:
+        type: string
+      property:
+        type: array
+        items:
+          type: string
+      type:
+        type: string
+      next:
+        type: integer
+        format: int32
+      prev:
+        type: integer
+        format: int32
+    description: Filtering and sorting page details

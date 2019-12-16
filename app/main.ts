@@ -7,4 +7,3 @@ new Vue({
   el: '#app',
   render: h => h(App)
 });
-//document.getElementById("test").innerHTML = "TEST"

@@ -20,17 +20,17 @@
     <coral-shell-content>
       <!-- Main application goes here -->
       <section class="u-coral-padding">
-        <input v-model="message">
-        <h1>{{ message }}</h1>
-        <h2>Watch this loader put in some searious work!</h2>
-        <coral-progress indeterminate=""></coral-progress>
+        <button @click="handleCall" is="coral-button" type="button">Get First Program</button>
+        <textarea disabled="" is="coral-textarea" style="resize: vertical;width: 80vw">{{resp}}</textarea>
       </section>
     </coral-shell-content>
   </coral-shell>
 </template>
 
-<script>
+<script lang="ts">
 import AuthForm from './AuthForm.vue'
+import {APIClient} from './client'
+import {AxiosRequestConfig} from 'axios'
 
 
 export default {
@@ -41,23 +41,26 @@ export default {
   data() {
     return {
       message: 'test',
+      resp: "initial"
     };
   },
-  created: function () {
-    console.log("getting emoji!");
-    (async () => {
-      const emoji = await window.ipc.callMain('get-emoji', 'unicorn');
-      window.console.log(emoji);
-      //=> '🦄'
-    })();
-  }
-  /*
   methods: {
-    async getEmojy () {
-      const emoji = await ipc.callMain('get-emoji', 'unicorn');
-      return emoji;
+    async handleCall() {
+      // sampl client init.
+      var conf = {
+        headers: {
+          'x-gw-ims-org-id': electronStore.get('orgId'),
+          'x-api-key': electronStore.get('apiKey'),
+          'Authorization': `Bearer ${electronStore.get('accessToken')}`
+        }
+      }
+      var client = new APIClient(conf);
+      const programsResp = await client.rest.api.programsService.getPrograms();
+      const programId = programsResp._embedded.programs[0].id
+      const resp = await client.rest.api.programService.getProgram(programId);
+      this.resp = resp;
     }
-  }*/
+  }
 };
 </script>
 
