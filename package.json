@@ -3,25 +3,37 @@
   "version": "0.1.0",
   "description": "Adobe Cloud Manager Menubar",
   "main": "main.js",
+  "browserslist": [
+    "last 1 Chrome versions"
+  ],
   "scripts": {
     "pre-build": "node pre-build.js",
-    "build": "npm run pre-build && parcel build app/main.js --no-source-maps && electron .",
+    "parcel:build": "parcel build app/main.js",
+    "parcel:watch": "parcel watch app/main.js",
+    "pre-electron": "npm run pre-build && npm run parcel:build",
+    "electron-only": "electron .",
+    "electron": "npm run pre-electron && electron .",
+    "electron:watch": "npm run pre-electron && concurrently \"npm:electron-only\" \"npm:parcel:watch\"",
+    "electron:watch:debug": "DEBUG_E=true npm run electron:watch",
     "dev": "npm run pre-build && parcel index.html",
-    "start": "npm run pre-build && parcel build app/main.js && electron ."
+    "start": "npm run pre-build && npm run parcel:build && electron ."
   },
   "devDependencies": {
     "@vue/component-compiler-utils": "^3.1.0",
+    "concurrently": "^5.0.1",
     "cssnano": "^4.1.10",
     "electron": "^7.1.4",
-    "electron-reloader": "^0.3.0",
     "parcel-bundler": "^1.12.4",
-    "vue-template-compiler": "^2.6.10",
-    "parcel-plugin-do-something.js": "file:./parcel-plugin-transform-html"
+    "parcel-plugin-trasform-html": "file:./parcel-plugin-transform-html",
+    "vue-template-compiler": "^2.6.10"
   },
   "dependencies": {
     "@adobe/coral-spectrum": "^4.0.0",
     "@adobe/jwt-auth": "^0.3.0",
+    "axios": "^0.19.0",
     "dotenv": "^8.2.0",
+    "electron-better-ipc": "^0.7.0",
+    "electron-store": "^5.1.0",
     "fs-extra": "^8.1.0",
     "menubar": "^7.1.0",
     "vue": "^2.6.10",

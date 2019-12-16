@@ -12,6 +12,7 @@ class HtmlAsset extends HTMLAsset {
     // replace references to "dist" with "app" on the fly
     var code = this.contents
       .replace('dist/main.js', 'app/main.js')
+      .replace('dist/main.css', 'app/main.css')
       .replace('dist/resources/', '/resources/');
     if (!this.ast) {
       this.ast = await this.parse(code);

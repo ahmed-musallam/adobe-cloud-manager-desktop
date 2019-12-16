@@ -1,8 +1,8 @@
 const { menubar } = require('menubar');
-const fs = require('fs');
-const fetch = require('node-fetch')
+const path = require('path')
 const auth = require('@adobe/jwt-auth');
 require('dotenv').config()
+const debug = !!process.env.DEBUG_E;
 
 /*
 const JWT_CONFIG = {
@@ -43,14 +43,23 @@ getAccessToken(JWT_CONFIG)
 */
 
 const mb = menubar({
-  icon: "icon.png",
+  icon: "icon/icon.png",
   browserWindow: {
     width: 400,
     height: 600,
-    resizable: false
-  }
+    resizable: false,
+    alwaysOnTop: debug, // debug
+    devTools: debug, // debug
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js')
+    }
+  },
+  showDockIcon: debug, // debug
+  windowPosition: debug ? 'topLeft' : undefined// debug
 });
 
 mb.on('ready', () => {
   console.log('Menubar app is ready.');
 });
+
+mb.on('after-create-window', () => mb.window.openDevTools()); // debug

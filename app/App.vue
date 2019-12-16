@@ -20,6 +20,7 @@
     <coral-shell-content>
       <!-- Main application goes here -->
       <section class="u-coral-padding">
+        <input v-model="message">
         <h1>{{ message }}</h1>
         <h2>Watch this loader put in some searious work!</h2>
         <coral-progress indeterminate=""></coral-progress>
@@ -30,7 +31,6 @@
 
 <script>
 import AuthForm from './AuthForm.vue'
-const {app} = window.require("electron")
 
 
 export default {
@@ -40,9 +40,24 @@ export default {
   },
   data() {
     return {
-      message: 'test ${}',
+      message: 'test',
     };
   },
+  created: function () {
+    console.log("getting emoji!");
+    (async () => {
+      const emoji = await window.ipc.callMain('get-emoji', 'unicorn');
+      window.console.log(emoji);
+      //=> '🦄'
+    })();
+  }
+  /*
+  methods: {
+    async getEmojy () {
+      const emoji = await ipc.callMain('get-emoji', 'unicorn');
+      return emoji;
+    }
+  }*/
 };
 </script>
 
