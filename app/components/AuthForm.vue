@@ -28,6 +28,8 @@
 </template>
 
 <script lang="ts">
+import AuthStore from './../util/AuthStore'
+import CMApiClient from './../util/CMApiClient'
 export default {
   name: "AuthForm",
 
@@ -40,11 +42,11 @@ export default {
       saveMsg: "",
       accessToken: electronStore.get('accessToken'),
       auth: {
-        apiKey: electronStore.get('apiKey'),
-        clientSecret: electronStore.get('clientSecret'),
-        orgId: electronStore.get('orgId'),
-        techAcct: electronStore.get('techAcct'),
-        privateKey: electronStore.get('privateKey')
+        apiKey:       AuthStore.getApiKey(),
+        clientSecret: AuthStore.getClientSecret(),
+        orgId:        AuthStore.getOrgId(),
+        techAcct:     AuthStore.getTechAcct(),
+        privateKey:   AuthStore.getPrivateKey()
       }
     }
   },
@@ -73,11 +75,11 @@ export default {
     handleSave() {
       var err = false;
       try {
-        electronStore.set('apiKey', this.auth.apiKey);
-        electronStore.set('clientSecret', this.auth.clientSecret);
-        electronStore.set('orgId', this.auth.orgId);
-        electronStore.set('techAcct', this.auth.techAcct);
-        electronStore.set('privateKey', this.auth.privateKey); // yeah, I know.. no encryption.. blah blah  blah
+        AuthStore.setApiKey(this.auth.apiKey)
+        AuthStore.setClientSecret(this.auth.clientSecret);
+        AuthStore.setOrgId(this.auth.orgId);
+        AuthStore.setTechAcct(this.auth.techAcct);
+        AuthStore.setPrivateKey(this.auth.privateKey); // yeah, I know.. no encryption.. blah blah blah
       } catch (e) {
         this.handleAfterSave(true)
         throw e
@@ -85,6 +87,7 @@ export default {
       this.handleAfterSave(false)
     },
     handleRefreshToken(){
+      
       const cmp = this;
       cmp.loading = true;
       adobeAuth({
@@ -100,7 +103,8 @@ export default {
       .then(tokenResponse => tokenResponse.access_token)
       .then(accessToken => {
         console.debug("Success! got token: ", accessToken)
-        electronStore.set('accessToken', accessToken);
+        AuthStore.setAccessToken(accessToken)
+        CMApiClient.refresh(); // refresh the client after obtaining new access token
         cmp.loading = false;
         cmp.handleShowCheck();
       })

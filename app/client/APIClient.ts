@@ -31,10 +31,7 @@ export class APIClient {
   constructor(configOrBaseURL: AxiosRequestConfig | string) {
     if (typeof configOrBaseURL === 'string') {
       configOrBaseURL = {baseURL: configOrBaseURL};
-    } else {
-      configOrBaseURL = Object.assign({}, configOrBaseURL, {baseURL: "https://cloudmanager.adobe.io"})
     }
-    console.log(configOrBaseURL)
     this.httpClient = axios.create(configOrBaseURL);
   }
 

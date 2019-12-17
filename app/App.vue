@@ -20,15 +20,15 @@
     <coral-shell-content>
       <!-- Main application goes here -->
       <section class="u-coral-padding">
-        <button @click="handleCall" is="coral-button" type="button">Get First Program</button>
-        <textarea disabled="" is="coral-textarea" style="resize: vertical;width: 80vw">{{resp}}</textarea>
+        <Program></Program>
       </section>
     </coral-shell-content>
   </coral-shell>
 </template>
 
 <script lang="ts">
-import AuthForm from './AuthForm.vue'
+import AuthForm from './components/AuthForm.vue'
+import Program from './components/Program.vue'
 import {APIClient} from './client'
 import {AxiosRequestConfig} from 'axios'
 
@@ -36,31 +36,15 @@ import {AxiosRequestConfig} from 'axios'
 export default {
   name: 'App',
   components: {
-    AuthForm
+    AuthForm,
+    Program
   },
   data() {
     return {
-      message: 'test',
-      resp: "initial"
+      message: 'test'
     };
   },
-  methods: {
-    async handleCall() {
-      // sampl client init.
-      var conf = {
-        headers: {
-          'x-gw-ims-org-id': electronStore.get('orgId'),
-          'x-api-key': electronStore.get('apiKey'),
-          'Authorization': `Bearer ${electronStore.get('accessToken')}`
-        }
-      }
-      var client = new APIClient(conf);
-      const programsResp = await client.rest.api.programsService.getPrograms();
-      const programId = programsResp._embedded.programs[0].id
-      const resp = await client.rest.api.programService.getProgram(programId);
-      this.resp = resp;
-    }
-  }
+  methods: {}
 };
 </script>
 
