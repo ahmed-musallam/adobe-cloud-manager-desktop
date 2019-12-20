@@ -1,12 +1,11 @@
 <template>
   <div>
-    <!-- <coral-wait size="M"></coral-wait> -->
-    <textarea is="coral-textarea" style="resize: vertical;width: 100%" rows="20">{{programs}}</textarea>
-
+    <h1>{{program.name}} <em>{{program.id}}</em></h1>
+    <textarea>{{pipelines}}</textarea>
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import CMApiClient from '../util/CMApiClient'
 
 export default {
@@ -14,19 +13,20 @@ export default {
 
   data() {
     return {
-      programs: {'loading': 'true'}
+      program: {},
+      pipelines: {}
     }
   },
   async beforeCreate () {
     var client = CMApiClient.getInstance();
-    var programs = await client.rest.api.programsService.getPrograms();
-    const promises = programs._embedded.programs.map( (async program => {
-      return client.rest.api.programService.getProgram(program.id);
-    }))
-    const results = await Promise.all(promises)
-    results.forEach((p,i) => programs._embedded.programs[i] = p);
-    this.programs = programs;
-    this.$forceUpdate();
+    try {
+      this.program = await client.rest.api.programService.getProgram(this.$route.params.id);
+      const pipelines = await client.rest.api.program.pipelinesService.getPipelines(this.program.id)
+      this.pipelines = pipelines._embedded.pipelines;
+    } catch (err) {
+      console.error(err);
+    }
+    
 
   },
 
