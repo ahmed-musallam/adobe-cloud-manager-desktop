@@ -18,6 +18,7 @@
     
     <coral-shell-content>
       <!-- Main application goes here -->
+      <Breadcrumb></Breadcrumb>
       <section class="u-coral-padding">
         <router-view></router-view>
       </section>
@@ -27,6 +28,7 @@
 
 <script lang="ts">
 import AuthForm from './components/AuthForm.vue'
+import Breadcrumb from './components/Breadcrumb.vue'
 import {APIClient} from './client'
 import {AxiosRequestConfig} from 'axios'
 import CMApiClient from './util/CMApiClient'
@@ -35,7 +37,8 @@ import CMApiClient from './util/CMApiClient'
 export default {
   name: 'App',
   components: {
-    AuthForm
+    AuthForm,
+    Breadcrumb
   },
   data() {
     return {

@@ -33,6 +33,7 @@
   "dependencies": {
     "@adobe/coral-spectrum": "^4.0.0",
     "@adobe/jwt-auth": "^0.3.0",
+    "@spectrum-css/breadcrumb": "^2.0.3",
     "axios": "^0.19.0",
     "dotenv": "^8.2.0",
     "electron-better-ipc": "^0.7.0",

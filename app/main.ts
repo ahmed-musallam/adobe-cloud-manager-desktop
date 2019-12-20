@@ -1,5 +1,7 @@
 require("@adobe/coral-spectrum/dist/js/coral.js")
 require("@adobe/coral-spectrum/dist/css/coral.css")
+require("@spectrum-css/breadcrumb/dist/index.css")
+
 import Vue from 'vue'
 import Router from 'vue-router'
 import App from './App.vue'

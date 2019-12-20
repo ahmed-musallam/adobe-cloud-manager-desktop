@@ -7,6 +7,8 @@
 
 <script>
 import CMApiClient from '../util/CMApiClient'
+  import { mutations } from "./BreadcrumbStore"
+
 
 export default {
   name: "Program",
@@ -19,7 +21,8 @@ export default {
   async beforeCreate () {
     var client = CMApiClient.getInstance();
     try {
-      this.pipeline = await client.rest.api.programService.getPipeline(this.$route.params.programId, this.$route.params.pipelineId)
+      this.pipeline = await client.rest.api.programService.getPipeline(this.$route.params.programId, this.$route.params.pipelineId);
+      mutations.setPipeline(this.pipeline.name)
     } catch (err) {
       console.error(err);
     }
