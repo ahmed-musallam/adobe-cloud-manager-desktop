@@ -27,7 +27,6 @@
 
 <script lang="ts">
 import AuthForm from './components/AuthForm.vue'
-import Programs from './components/Programs.vue'
 import {APIClient} from './client'
 import {AxiosRequestConfig} from 'axios'
 import CMApiClient from './util/CMApiClient'
@@ -36,8 +35,7 @@ import CMApiClient from './util/CMApiClient'
 export default {
   name: 'App',
   components: {
-    AuthForm,
-    Programs
+    AuthForm
   },
   data() {
     return {
