@@ -1,18 +1,18 @@
 <template>
   <div class="loading-container" :class="{hide: !show}">
-    <coral-wait centered=""></coral-wait>
+    <coral-wait centered></coral-wait>
   </div>
 </template>
 
 <script>
-import {loadingStore} from "./LoadingStore";
+import { loadingStore } from "./LoadingStore";
 
 export default {
   name: "Loading",
   computed: {
-     show () {
-        return loadingStore.show
-      },
+    show() {
+      return loadingStore.show;
+    }
   }
 };
 </script>

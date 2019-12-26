@@ -2,37 +2,50 @@
   <div>
     <h3>Pipelines:</h3>
     <div>
-      <router-link :to="'/program/' + program.id + '/pipeline/' + pipeline.id" v-for="pipeline in pipelines" :key="pipeline.id">
-        <coral-card fixedwidth="" variant="CONDENSED" >
-          <coral-card-asset style="display:none">
-          </coral-card-asset>
+      <router-link
+        :to="'/program/' + program.id + '/pipeline/' + pipeline.id"
+        v-for="pipeline in pipelines"
+        :key="pipeline.id"
+      >
+        <coral-card fixedwidth variant="CONDENSED">
+          <coral-card-asset style="display:none"></coral-card-asset>
           <coral-card-content>
             <!-- title does not render.. who know why.. -->
             <!-- <coral-card-title>{{pipeline.name}}</coral-card-title> -->
-            <coral-card-subtitle><h3>{{pipeline.name}}</h3></coral-card-subtitle>
+            <coral-card-subtitle>
+              <h3>{{pipeline.name}}</h3>
+            </coral-card-subtitle>
             <coral-card-propertylist>
               <coral-card-property>Started: {{pipeline.lastStartedAt | date}}</coral-card-property>
               <coral-card-property>Finished: {{pipeline.lastFinishedAt | date }}</coral-card-property>
             </coral-card-propertylist>
           </coral-card-content>
           <coral-card-info>
-              <coral-tag v-if="pipeline.status == 'IDLE'" color="green">{{pipeline.status.toLowerCase()}}</coral-tag>
-              <coral-tag v-if="pipeline.status == 'BUSY'" color="cyan">{{pipeline.status.toLowerCase()}}</coral-tag>
-              <coral-tag v-if="pipeline.status == 'WAITING'" color="yellow">{{pipeline.status.toLowerCase()}}</coral-tag>
+            <coral-tag
+              v-if="pipeline.status == 'IDLE'"
+              color="green"
+            >{{pipeline.status.toLowerCase()}}</coral-tag>
+            <coral-tag
+              v-if="pipeline.status == 'BUSY'"
+              color="cyan"
+            >{{pipeline.status.toLowerCase()}}</coral-tag>
+            <coral-tag
+              v-if="pipeline.status == 'WAITING'"
+              color="yellow"
+            >{{pipeline.status.toLowerCase()}}</coral-tag>
           </coral-card-info>
         </coral-card>
       </router-link>
     </div>
-    
-    
+
     <!-- <textarea>{{pipelines}}</textarea> -->
   </div>
 </template>
 
 <script>
-import CMApiClient from '../util/CMApiClient'
-import { mutations } from "./BreadcrumbStore"
-import { async } from 'q'
+import CMApiClient from "../util/CMApiClient";
+import { mutations } from "./BreadcrumbStore";
+import { async } from "q";
 
 export default {
   name: "Program",
@@ -42,39 +55,43 @@ export default {
       program: {},
       pipelines: {},
       client: CMApiClient.getInstance()
-    }
+    };
   },
-  beforeRouteUpdate (to, from, next) {
+  beforeRouteUpdate(to, from, next) {
     this.updateProgram(to.params.programId);
     next();
   },
-  created () {
+  created() {
     this.updateProgram(this.$route.params.programId);
   },
   methods: {
-   async updateProgram (programId) {
-    console.log("redering program: ", programId)
-    try {
-      this.$showLoadingScreen();
-      this.program = await this.client.rest.api.programService.getProgram(programId);
-      mutations.setProgram(this.program);
-      const pipelines = await this.client.rest.api.program.pipelinesService.getPipelines(this.program.id)
-      this.pipelines = pipelines._embedded.pipelines;
-      this.$hideLoadingScreen();
-    } catch (err) {
-      console.error(err);
-      this.$hideLoadingScreen();
+    async updateProgram(programId) {
+      console.log("redering program: ", programId);
+      try {
+        this.$showLoadingScreen();
+        this.program = await this.client.rest.api.programService.getProgram(
+          programId
+        );
+        mutations.setProgram(this.program);
+        const pipelines = await this.client.rest.api.program.pipelinesService.getPipelines(
+          this.program.id
+        );
+        this.pipelines = pipelines._embedded.pipelines;
+        this.$hideLoadingScreen();
+      } catch (err) {
+        console.error(err);
+        this.$hideLoadingScreen();
+      }
     }
-   }
   }
 };
 </script>
 
 <style scoped>
-  coral-card-subtitle {
-    color: black !important;
-  }
-  coral-card-asset {
-    display: none !important; 
-  }
+coral-card-subtitle {
+  color: black !important;
+}
+coral-card-asset {
+  display: none !important;
+}
 </style>

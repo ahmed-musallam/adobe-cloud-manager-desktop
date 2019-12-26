@@ -3,11 +3,11 @@
     <h3>Executions:</h3>
     <table is="coral-table">
       <thead is="coral-table-head">
-      <tr is="coral-table-row">
-        <th is="coral-table-headercell">Status</th>
-        <th is="coral-table-headercell">Execution</th>
-        <th is="coral-table-headercell">Started</th>
-      </tr>
+        <tr is="coral-table-row">
+          <th is="coral-table-headercell">Status</th>
+          <th is="coral-table-headercell">Execution</th>
+          <th is="coral-table-headercell">Started</th>
+        </tr>
       </thead>
       <tbody is="coral-table-body">
         <tr is="coral-table-row" v-for="execution in executions" :key="execution.id">
@@ -23,9 +23,8 @@
 </template>
 
 <script>
-import CMApiClient from '../util/CMApiClient'
-  import { mutations } from "./BreadcrumbStore"
-
+import CMApiClient from "../util/CMApiClient";
+import { mutations } from "./BreadcrumbStore";
 
 export default {
   name: "Program",
@@ -34,15 +33,21 @@ export default {
     return {
       pipeline: {},
       executions: []
-    }
+    };
   },
-  async beforeCreate () {
+  async beforeCreate() {
     var client = CMApiClient.getInstance();
     try {
       this.$showLoadingScreen();
-      this.pipeline = await client.rest.api.programService.getPipeline(this.$route.params.programId, this.$route.params.pipelineId);
-      mutations.setPipeline(this.pipeline.name)
-      const executions = await client.rest.api.program.executionsService.getExecutions(this.$route.params.programId, this.$route.params.pipelineId);
+      this.pipeline = await client.rest.api.programService.getPipeline(
+        this.$route.params.programId,
+        this.$route.params.pipelineId
+      );
+      mutations.setPipeline(this.pipeline.name);
+      const executions = await client.rest.api.program.executionsService.getExecutions(
+        this.$route.params.programId,
+        this.$route.params.pipelineId
+      );
       this.executions = executions._embedded.executions;
       this.$hideLoadingScreen();
     } catch (err) {
@@ -51,25 +56,25 @@ export default {
   },
 
   methods: {
-    getVariant (status) {
-      switch(status) {
+    getVariant(status) {
+      switch (status) {
         case "NOT_STARTED":
         case "RUNNING":
-          return "info"
+          return "info";
           break;
         case "CANCELLING":
         case "CANCELLED":
-          return "warning"
+          return "warning";
           break;
         case "FINISHED":
-          return "success"
+          return "success";
           break;
         case "ERROR":
         case "failed":
           return "error";
           break;
         default:
-          return "info"
+          return "info";
       }
     }
   }
@@ -77,12 +82,9 @@ export default {
 </script>
 
 <style scoped>
- .hidden {
-   display: none;
- }
- .status {
-    display: inline;
-    line-height: 32px;
-    margin-left: 7px;
- }
+.status {
+  display: inline;
+  line-height: 32px;
+  margin-left: 7px;
+}
 </style>

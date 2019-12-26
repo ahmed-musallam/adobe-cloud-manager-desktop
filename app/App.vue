@@ -2,15 +2,20 @@
   <coral-shell>
     <coral-shell-header>
       <coral-shell-header-content>
-       <coral-shell-workspaces ref="workspaces">
-          <span v-for="program in programs" :key="program.id" :href="'/program/' + program.id" is="coral-shell-workspace">{{program.name}}</span>
+        <coral-shell-workspaces ref="workspaces">
+          <span
+            v-for="program in programs"
+            :key="program.id"
+            :href="'/program/' + program.id"
+            is="coral-shell-workspace"
+          >{{program.name}}</span>
         </coral-shell-workspaces>
       </coral-shell-header-content>
       <coral-shell-header-actions>
-      <coral-shell-menubar>
-        <coral-shell-menubar-item menu="#menu_config" icon="gears"></coral-shell-menubar-item>
-      </coral-shell-menubar>
-    </coral-shell-header-actions>
+        <coral-shell-menubar>
+          <coral-shell-menubar-item menu="#menu_config" icon="gears"></coral-shell-menubar-item>
+        </coral-shell-menubar>
+      </coral-shell-header-actions>
     </coral-shell-header>
     <coral-shell-menu id="menu_config" class="u-coral-padding-horizontal">
       <AuthForm></AuthForm>
@@ -27,18 +32,16 @@
 </template>
 
 <script lang="ts">
-import AuthForm from './components/AuthForm.vue'
-import Breadcrumb from './components/Breadcrumb.vue'
-import Loading from './components/Loading.vue'
-import {APIClient} from './client'
-import {AxiosRequestConfig} from 'axios'
-import CMApiClient from './util/CMApiClient'
-import { store } from "./components/BreadcrumbStore"
-
-
+import AuthForm from "./components/AuthForm.vue";
+import Breadcrumb from "./components/Breadcrumb.vue";
+import Loading from "./components/Loading.vue";
+import { APIClient } from "./client";
+import { AxiosRequestConfig } from "axios";
+import CMApiClient from "./util/CMApiClient";
+import { store } from "./components/BreadcrumbStore";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     AuthForm,
     Breadcrumb,
@@ -50,17 +53,17 @@ export default {
       state: {}
     };
   },
-  mounted () {
-
-    this.$refs.workspaces.on('coral-shell-workspaces:change', (e) => {
+  mounted() {
+    this.$refs.workspaces.on("coral-shell-workspaces:change", e => {
       const href = e.detail.selection.getAttribute("href");
-      if (this.$route.path !== href) { // safeguard against page refresh
-        this.$router.push({ path: href});
+      if (this.$route.path !== href) {
+        // safeguard against page refresh
+        this.$router.push({ path: href });
       }
     });
   },
-  async beforeCreate () {
-   var client = CMApiClient.getInstance();
+  async beforeCreate() {
+    var client = CMApiClient.getInstance();
     try {
       this.$showLoadingScreen();
       var result = await client.rest.api.programsService.getPrograms();
@@ -71,12 +74,9 @@ export default {
       this.$hideLoadingScreen();
     }
   },
-  methods: {
-
-  }
+  methods: {}
 };
 </script>
 
 <style scoped>
-
 </style>
