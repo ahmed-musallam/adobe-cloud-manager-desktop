@@ -7,7 +7,7 @@
         v-for="pipeline in pipelines"
         :key="pipeline.id"
       >
-        <coral-card fixedwidth variant="CONDENSED">
+        <coral-card variant="CONDENSED">
           <coral-card-asset style="display:none"></coral-card-asset>
           <coral-card-content>
             <!-- title does not render.. who know why.. -->
@@ -16,7 +16,7 @@
               <h3>{{pipeline.name}}</h3>
             </coral-card-subtitle>
             <coral-card-propertylist>
-              <coral-card-property>Started: {{pipeline.lastStartedAt | date}}</coral-card-property>
+              <coral-card-property>Started: {{pipeline.lastStartedAt | date}}</coral-card-property> <br>
               <coral-card-property>Finished: {{pipeline.lastFinishedAt | date }}</coral-card-property>
             </coral-card-propertylist>
           </coral-card-content>
@@ -88,6 +88,13 @@ export default {
 </script>
 
 <style scoped>
+coral-card {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+._coral-Card-wrapper {
+  border-bottom-color: transparent !important;
+}
 coral-card-subtitle {
   color: black !important;
 }

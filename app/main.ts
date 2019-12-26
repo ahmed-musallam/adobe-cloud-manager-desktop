@@ -14,7 +14,6 @@ Vue.use(Router)
 Vue.use({
   install: function(vue) {
     vue.prototype.$showLoadingScreen = () => {
-      console.log("SHOWWWWWW")
       loadingActions.show();
     };
     vue.prototype.$hideLoadingScreen = () => {
