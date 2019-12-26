@@ -3,7 +3,7 @@
     <coral-shell-header>
       <coral-shell-header-content>
        <coral-shell-workspaces ref="workspaces">
-          <a v-for="program in programs" :key="program.id" :href="'/program/' + program.id" is="coral-shell-workspace">{{program.name}}</a>
+          <span v-for="program in programs" :key="program.id" :href="'/program/' + program.id" is="coral-shell-workspace">{{program.name}}</span>
         </coral-shell-workspaces>
       </coral-shell-header-content>
       <coral-shell-header-actions>
@@ -15,13 +15,13 @@
     <coral-shell-menu id="menu_config" class="u-coral-padding-horizontal">
       <AuthForm></AuthForm>
     </coral-shell-menu>
-    
     <coral-shell-content>
       <!-- Main application goes here -->
       <Breadcrumb></Breadcrumb>
-      <section class="u-coral-padding">
+      <section class="u-coral-padding-horizontal">
         <router-view></router-view>
       </section>
+
     </coral-shell-content>
   </coral-shell>
 </template>
@@ -32,6 +32,8 @@ import Breadcrumb from './components/Breadcrumb.vue'
 import {APIClient} from './client'
 import {AxiosRequestConfig} from 'axios'
 import CMApiClient from './util/CMApiClient'
+import { store } from "./components/BreadcrumbStore"
+
 
 
 export default {
@@ -42,20 +44,22 @@ export default {
   },
   data() {
     return {
-      programs: []
+      programs: [],
+      state: {}
     };
   },
   mounted () {
-    // handle program change
     this.$refs.workspaces.on('coral-shell-workspaces:change', (e) => {
-      console.log("going to: " + e.detail.selection.getAttribute("href"))
-      this.$router.push(e.detail.selection.getAttribute("href"))
-    })
+      const href = e.detail.selection.getAttribute("href");
+      if (this.$route.path !== href) { // safeguard against page refresh
+        this.$router.push({ path: href});
+      }
+    });
   },
   async beforeCreate () {
-    var client = CMApiClient.getInstance();
+   var client = CMApiClient.getInstance();
     try {
-      var result= await client.rest.api.programsService.getPrograms();
+      var result = await client.rest.api.programsService.getPrograms();
       this.programs = result._embedded.programs;
     } catch (err) {
       console.error(err);

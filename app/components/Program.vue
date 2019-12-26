@@ -1,14 +1,38 @@
 <template>
   <div>
-    <h1>{{program.name}} <em>{{program.id}}</em></h1>
-    <textarea>{{pipelines}}</textarea>
-    <router-link v-for="pipeline in pipelines" :key="pipeline.id" :to="'/program/' + program.id + '/pipeline/' + pipeline.id">{{pipeline.name}}</router-link>
+    <h3>Programs:</h3>
+    <div>
+      <router-link :to="'/program/' + program.id + '/pipeline/' + pipeline.id" v-for="pipeline in pipelines" :key="pipeline.id">
+        <coral-card fixedwidth="" variant="CONDENSED" >
+          <coral-card-asset style="display:none">
+          </coral-card-asset>
+          <coral-card-content>
+            <!-- title does not render.. who know why.. -->
+            <!-- <coral-card-title>{{pipeline.name}}</coral-card-title> -->
+            <coral-card-subtitle><h3>{{pipeline.name}}</h3></coral-card-subtitle>
+            <coral-card-propertylist>
+              <coral-card-property>Started: {{pipeline.lastStartedAt | date}}</coral-card-property>
+              <coral-card-property>Finished: {{pipeline.lastFinishedAt | date }}</coral-card-property>
+            </coral-card-propertylist>
+          </coral-card-content>
+          <coral-card-info>
+              <coral-tag v-if="pipeline.status == 'IDLE'" color="green">{{pipeline.status.toLowerCase()}}</coral-tag>
+              <coral-tag v-if="pipeline.status == 'BUSY'" color="cyan">{{pipeline.status.toLowerCase()}}</coral-tag>
+              <coral-tag v-if="pipeline.status == 'WAITING'" color="yellow">{{pipeline.status.toLowerCase()}}</coral-tag>
+          </coral-card-info>
+        </coral-card>
+      </router-link>
+    </div>
+    
+    
+    <!-- <textarea>{{pipelines}}</textarea> -->
   </div>
 </template>
 
 <script>
 import CMApiClient from '../util/CMApiClient'
 import { mutations } from "./BreadcrumbStore"
+import { async } from 'q'
 
 export default {
   name: "Program",
@@ -16,36 +40,38 @@ export default {
   data() {
     return {
       program: {},
-      pipelines: {}
+      pipelines: {},
+      client: CMApiClient.getInstance()
     }
   },
-  async beforeCreate () {
-    var client = CMApiClient.getInstance();
+  beforeRouteUpdate (to, from, next) {
+    this.updateProgram(to.params.programId);
+    next();
+  },
+  created () {
+    this.updateProgram(this.$route.params.programId);
+  },
+  methods: {
+   async updateProgram (programId) {
+    console.log("redering program: ", programId)
     try {
-      this.program = await client.rest.api.programService.getProgram(this.$route.params.programId);
-      mutations.setProgram(this.program.name);
-      const pipelines = await client.rest.api.program.pipelinesService.getPipelines(this.program.id)
+      this.program = await this.client.rest.api.programService.getProgram(programId);
+      mutations.setProgram(this.program);
+      const pipelines = await this.client.rest.api.program.pipelinesService.getPipelines(this.program.id)
       this.pipelines = pipelines._embedded.pipelines;
     } catch (err) {
       console.error(err);
     }
-    
-
-  },
-
-  methods: {
-   
+   }
   }
 };
 </script>
 
 <style scoped>
- .hidden {
-   display: none;
- }
- .status {
-    display: inline;
-    line-height: 32px;
-    margin-left: 7px;
- }
+  coral-card-subtitle {
+    color: black !important;
+  }
+  coral-card-asset {
+    display: none !important; 
+  }
 </style>
