@@ -39,11 +39,12 @@ export default {
   async beforeCreate () {
     var client = CMApiClient.getInstance();
     try {
-      
+      this.$showLoadingScreen();
       this.pipeline = await client.rest.api.programService.getPipeline(this.$route.params.programId, this.$route.params.pipelineId);
       mutations.setPipeline(this.pipeline.name)
       const executions = await client.rest.api.program.executionsService.getExecutions(this.$route.params.programId, this.$route.params.pipelineId);
       this.executions = executions._embedded.executions;
+      this.$hideLoadingScreen();
     } catch (err) {
       console.error(err);
     }

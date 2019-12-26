@@ -6,13 +6,25 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import App from './App.vue'
 import router from './router'
+import {loadingActions} from './components/LoadingStore'
 
+// Plugins
 Vue.use(Router)
-new Vue({
-  el: '#app',
-  router,
-  render: h => h(App)
-});
+
+Vue.use({
+  install: function(vue) {
+    vue.prototype.$showLoadingScreen = () => {
+      console.log("SHOWWWWWW")
+      loadingActions.show();
+    };
+    vue.prototype.$hideLoadingScreen = () => {
+      loadingActions.hide();
+    }
+  }
+})
+
+// Filters
+
 
 Vue.filter('date', function (value) {
   if (!value) return ''
@@ -41,8 +53,11 @@ Vue.filter('limit', function (value, limit) {
   }
 })
 
-function locationHashChanged() {
-  console.log("HashChanged: ", location.hash);
-}
+// app
 
-window.onhashchange = locationHashChanged;
+
+new Vue({
+  el: '#app',
+  router,
+  render: h => h(App)
+});

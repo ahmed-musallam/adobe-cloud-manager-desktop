@@ -21,7 +21,7 @@
       <section class="u-coral-padding-horizontal">
         <router-view></router-view>
       </section>
-
+      <Loading></Loading>
     </coral-shell-content>
   </coral-shell>
 </template>
@@ -29,6 +29,7 @@
 <script lang="ts">
 import AuthForm from './components/AuthForm.vue'
 import Breadcrumb from './components/Breadcrumb.vue'
+import Loading from './components/Loading.vue'
 import {APIClient} from './client'
 import {AxiosRequestConfig} from 'axios'
 import CMApiClient from './util/CMApiClient'
@@ -40,7 +41,8 @@ export default {
   name: 'App',
   components: {
     AuthForm,
-    Breadcrumb
+    Breadcrumb,
+    Loading
   },
   data() {
     return {
@@ -49,6 +51,7 @@ export default {
     };
   },
   mounted () {
+
     this.$refs.workspaces.on('coral-shell-workspaces:change', (e) => {
       const href = e.detail.selection.getAttribute("href");
       if (this.$route.path !== href) { // safeguard against page refresh
@@ -59,10 +62,13 @@ export default {
   async beforeCreate () {
    var client = CMApiClient.getInstance();
     try {
+      this.$showLoadingScreen();
       var result = await client.rest.api.programsService.getPrograms();
       this.programs = result._embedded.programs;
+      this.$hideLoadingScreen();
     } catch (err) {
       console.error(err);
+      this.$hideLoadingScreen();
     }
   },
   methods: {

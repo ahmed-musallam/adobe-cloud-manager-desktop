@@ -55,12 +55,15 @@ export default {
    async updateProgram (programId) {
     console.log("redering program: ", programId)
     try {
+      this.$showLoadingScreen();
       this.program = await this.client.rest.api.programService.getProgram(programId);
       mutations.setProgram(this.program);
       const pipelines = await this.client.rest.api.program.pipelinesService.getPipelines(this.program.id)
       this.pipelines = pipelines._embedded.pipelines;
+      this.$hideLoadingScreen();
     } catch (err) {
       console.error(err);
+      this.$hideLoadingScreen();
     }
    }
   }
