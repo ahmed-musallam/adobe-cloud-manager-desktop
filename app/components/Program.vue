@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Programs:</h3>
+    <h3>Pipelines:</h3>
     <div>
       <router-link :to="'/program/' + program.id + '/pipeline/' + pipeline.id" v-for="pipeline in pipelines" :key="pipeline.id">
         <coral-card fixedwidth="" variant="CONDENSED" >
