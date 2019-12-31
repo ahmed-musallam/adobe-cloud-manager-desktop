@@ -1,42 +1,22 @@
 <template>
   <div>
     <form class="coral-Form coral-Form--vertical">
-      <label id="apiKey" class="coral-FieldLabel">API Key</label>
-      <input
-        :value="auth.apiKey"
-        @input="auth.apiKey = $event.target.value"
-        is="coral-textfield"
-        labelledby="apiKey"
-        class="coral-Form-field"
-        variant="quiet"
-      />
-      <label id="clientSecret" class="coral-FieldLabel">Client Secret</label>
-      <input
-        :value="auth.clientSecret"
-        @input="auth.clientSecret = $event.target.value"
-        is="coral-textfield"
-        labelledby="clientSecret"
-        class="coral-Form-field"
-        variant="quiet"
-      />
-      <label id="orgId" class="coral-FieldLabel">Organization ID</label>
-      <input
-        :value="auth.orgId"
-        @input="auth.orgId = $event.target.value"
-        is="coral-textfield"
-        labelledby="orgId"
-        class="coral-Form-field"
-        variant="quiet"
-      />
-      <label id="techAcct" class="coral-FieldLabel">Technical Account</label>
-      <input
-        :value="auth.techAcct"
-        @input="auth.techAcct = $event.target.value"
-        is="coral-textfield"
-        labelledby="techAcct"
-        class="coral-Form-field"
-        variant="quiet"
-      />
+      <SecretInput label="API Key" v-model="auth.apiKey"></SecretInput>
+      <SecretInput
+        label="Client Secret"
+        v-model="auth.clientSecret"
+      ></SecretInput>
+      <SecretInput label="Organization ID" v-model="auth.orgId"></SecretInput>
+      <SecretInput
+        label="Technical Account"
+        v-model="auth.techAcct"
+      ></SecretInput>
+      <SecretInput
+        label="Private Key"
+        textarea="true"
+        v-model="auth.privateKey"
+      ></SecretInput>
+
       <label id="privateKey" class="coral-FieldLabel">Private Key</label>
       <textarea
         @input="auth.privateKey = $event.target.value"
@@ -46,21 +26,9 @@
         style="resize: vertical;"
         >{{ auth.privateKey }}</textarea
       >
-      <button @click="handleRefreshToken" is="coral-button" type="button">
-        <span :class="{ hidden: !loading }">
-          <coral-wait size="S"></coral-wait>
-        </span>
-        <span :class="{ hidden: !showCheck }">
-          <coral-icon
-            icon="Checkmark"
-            size="S"
-            title="check"
-            style="color: green;"
-          ></coral-icon>
-        </span>
-        <span :class="{ hidden: showCheck || loading }">Refresh Token</span>
+      <button @click="handleSave" is="coral-button" type="button">
+        Save Authentication Info
       </button>
-      <button @click="handleSave" is="coral-button" type="button">Save</button>
       <h4
         class="status"
         :class="{ hidden: !saved }"
@@ -68,6 +36,24 @@
       >
         <em>{{ saveMsg }}</em>
       </h4>
+      <br />
+      <br />
+      <button @click="handleRefreshToken" is="coral-button" type="button">
+        <span :class="{ hidden: !loading }">
+          <coral-wait size="S"></coral-wait>
+        </span>
+        <span :class="{ hidden: !showRefreshResult }">
+          <coral-icon
+            :icon="refreshResultFail ? 'Close' : 'Checkmark'"
+            size="S"
+            title="check"
+            :style="{ color: refreshResultFail ? 'red' : 'green' }"
+          ></coral-icon>
+        </span>
+        <span :class="{ hidden: showRefreshResult || loading }"
+          >Refresh Token</span
+        >
+      </button>
       <br />
     </form>
     <form class="coral-Form coral-Form--vertical">
@@ -89,14 +75,15 @@
 <script>
 import AuthStore from "./../util/AuthStore";
 import CMApiClient from "./../util/CMApiClient";
-import { async } from "q";
+import SecretInput from "./SecretInput";
 export default {
   name: "AuthForm",
 
   data() {
     return {
       loading: false,
-      showCheck: false,
+      showRefreshResult: false,
+      refreshResultFail: false,
       saved: false,
       savedError: false,
       saveMsg: "",
@@ -110,6 +97,9 @@ export default {
       }
     };
   },
+  components: {
+    SecretInput
+  },
   async beforeCreate() {
     this.accessToken = await AuthStore.getAccessToken();
     this.auth = {
@@ -121,13 +111,6 @@ export default {
     };
   },
   methods: {
-    handleShowCheck() {
-      this.showCheck = true;
-      setTimeout(() => {
-        this.showCheck = false;
-        this.$forceUpdate(); // for some reason reactivity is lost, so forcing update....
-      }, 3000);
-    },
     handleAfterSave(error) {
       if (error) {
         this.savedError = true;
@@ -174,9 +157,22 @@ export default {
           AuthStore.setAccessToken(accessToken);
           CMApiClient.refresh(); // refresh the client after obtaining new access token
           cmp.loading = false;
-          cmp.handleShowCheck();
+          cmp.handleRefreshTokenResult();
         })
-        .catch(console.error);
+        .catch(err => {
+          console.error(err);
+          cmp.loading = false;
+          cmp.handleRefreshTokenResult(true);
+          this.accessToken = err;
+        });
+    },
+    handleRefreshTokenResult(fail) {
+      this.refreshResultFail = !!fail;
+      this.showRefreshResult = true;
+      setTimeout(() => {
+        this.showRefreshResult = false;
+        this.$forceUpdate(); // for some reason reactivity is lost, so forcing update....
+      }, 3000);
     }
   }
 };
