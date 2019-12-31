@@ -4,7 +4,7 @@ require("@spectrum-css/breadcrumb/dist/index.css");
 
 import Vue from "vue";
 import Router from "vue-router";
-import App from "./App.vue";
+import App from "./App";
 import router from "./router";
 import { loadingActions } from "./components/LoadingStore";
 

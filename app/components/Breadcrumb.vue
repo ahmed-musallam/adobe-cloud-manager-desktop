@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <ul class="spectrum-Breadcrumbs">
+    <ul class="spectrum-Breadcrumbs" v-if="$route.path.startsWith('/program')">
       <li class="spectrum-Breadcrumbs-item">
         <router-link
           class="spectrum-Breadcrumbs-itemLink"
@@ -24,13 +24,28 @@
           tabindex="0"
           >{{ pipeline | limit(20) }}</router-link
         >
-        <!-- <coral-icon class="" icon="ChevronRight" size="S"></coral-icon> -->
       </li>
-      <!--
-        <li class="spectrum-Breadcrumbs-item">
-        <a class="spectrum-Breadcrumbs-itemLink" role="link" aria-current="page">January 2019 Assets</a>
+    </ul>
+    <ul v-else class="spectrum-Breadcrumbs">
+      <li
+        v-for="(breadcrumb, index) in breadcrumbs"
+        :key="index"
+        class="spectrum-Breadcrumbs-item"
+      >
+        <router-link
+          class="spectrum-Breadcrumbs-itemLink"
+          :to="breadcrumb[0]"
+          role="link"
+          tabindex="0"
+          >{{ breadcrumb[1] | limit(20) }}</router-link
+        >
+        <coral-icon
+          v-if="breadcrumbs.length == 1 || breadcrumbs.length - 1 === index"
+          class=""
+          icon="ChevronRight"
+          size="S"
+        ></coral-icon>
       </li>
-      -->
     </ul>
   </nav>
 </template>
@@ -42,6 +57,15 @@ import { store } from "./BreadcrumbStore";
 export default {
   name: "Breadcrumb",
   computed: {
+    breadcrumbs() {
+      return this.$route.path
+        .split("/")
+        .filter(Boolean)
+        .reduce((acc, item, ind, arr) => {
+          acc.push(["/" + arr.slice(0, ind + 1).join("/"), item]);
+          return acc;
+        }, []);
+    },
     program() {
       return store.program.name;
     },
