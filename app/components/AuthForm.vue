@@ -16,16 +16,6 @@
         textarea="true"
         v-model="auth.privateKey"
       ></SecretInput>
-
-      <label id="privateKey" class="coral-FieldLabel">Private Key</label>
-      <textarea
-        @input="auth.privateKey = $event.target.value"
-        is="coral-textarea"
-        class="coral-Form-field"
-        labelledby="privateKey"
-        style="resize: vertical;"
-        >{{ auth.privateKey }}</textarea
-      >
       <button @click="handleSave" is="coral-button" type="button">
         Save Authentication Info
       </button>
