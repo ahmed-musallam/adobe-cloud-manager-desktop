@@ -14,7 +14,12 @@
       </coral-shell-header-content>
       <coral-shell-header-actions>
         <router-link to="/settings" role="link" tabindex="0">
-          <button is="coral-button" icon="gears" variant="quiet"></button>
+          <button
+            is="coral-button"
+            icon="gears"
+            variant="quietaction"
+            style="margin-right: 0.5em;"
+          ></button>
         </router-link>
       </coral-shell-header-actions>
     </coral-shell-header>
