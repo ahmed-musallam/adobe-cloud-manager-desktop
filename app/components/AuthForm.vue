@@ -89,6 +89,7 @@
 <script>
 import AuthStore from "./../util/AuthStore";
 import CMApiClient from "./../util/CMApiClient";
+import { async } from "q";
 export default {
   name: "AuthForm",
 
@@ -99,14 +100,24 @@ export default {
       saved: false,
       savedError: false,
       saveMsg: "",
-      accessToken: electronStore.get("accessToken"),
+      accessToken: "",
       auth: {
-        apiKey: AuthStore.getApiKey(),
-        clientSecret: AuthStore.getClientSecret(),
-        orgId: AuthStore.getOrgId(),
-        techAcct: AuthStore.getTechAcct(),
-        privateKey: AuthStore.getPrivateKey()
+        apiKey: "",
+        clientSecret: "",
+        orgId: "",
+        techAcct: "",
+        privateKey: ""
       }
+    };
+  },
+  async beforeCreate() {
+    this.accessToken = await AuthStore.getAccessToken();
+    this.auth = {
+      apiKey: await AuthStore.getApiKey(),
+      clientSecret: await AuthStore.getClientSecret(),
+      orgId: await AuthStore.getOrgId(),
+      techAcct: await AuthStore.getTechAcct(),
+      privateKey: await AuthStore.getPrivateKey()
     };
   },
   methods: {
@@ -149,16 +160,17 @@ export default {
       const cmp = this;
       cmp.loading = true;
       adobeAuth({
-        clientId: this.auth.apiKey, //electronStore.get('apiKey'),
-        clientSecret: this.auth.clientSecret, // electronStore.get('clientSecret'),
-        privateKey: this.auth.privateKey, //electronStore.get('privateKey'),
-        technicalAccountId: this.auth.techAcct, //electronStore.get('techAcct'),
-        orgId: this.auth.orgId, //electronStore.get('orgId'),
+        clientId: this.auth.apiKey,
+        clientSecret: this.auth.clientSecret,
+        privateKey: this.auth.privateKey,
+        technicalAccountId: this.auth.techAcct,
+        orgId: this.auth.orgId,
         metaScopes: ["https://ims-na1.adobelogin.com/s/ent_cloudmgr_sdk"]
       })
         .then(tokenResponse => tokenResponse.access_token)
         .then(accessToken => {
           console.debug("Success! got token: ", accessToken);
+          this.accessToken = accessToken;
           AuthStore.setAccessToken(accessToken);
           CMApiClient.refresh(); // refresh the client after obtaining new access token
           cmp.loading = false;

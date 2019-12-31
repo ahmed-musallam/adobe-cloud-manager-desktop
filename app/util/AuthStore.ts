@@ -3,11 +3,12 @@ const CLIENT_SECRET = "clientSecret",
   TECH_ACCT = "techAcct",
   ORG_ID = "orgId",
   PRIVATE_KEY = "privateKey",
-  ACCESS_TOKEN = "accessToken";
+  ACCESS_TOKEN = "accessToken",
+  KEYTAR_SERVICE = "adobe-cloud-manager-menubar";
 
 export default class AuthStore {
-  static get = (key: string) => electronStore.get(key);
-  static set = (key: string, val: string) => electronStore.set(key, val);
+  static get = (key: string) => keytar.getPassword(KEYTAR_SERVICE, key);
+  static set = (key: string, val: string) => keytar.setPassword(KEYTAR_SERVICE, key, val);
 
   static getClientSecret = () => AuthStore.get(CLIENT_SECRET);
   static getApiKey = () => AuthStore.get(API_KEY);

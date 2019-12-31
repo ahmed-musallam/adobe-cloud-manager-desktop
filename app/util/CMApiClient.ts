@@ -6,21 +6,21 @@ export default class CMApiClient {
 
   private constructor() {}
 
-  static getInstance(): APIClient {
+  static async getInstance(): Promise<APIClient> {
     if (!CMApiClient.instance) {
       CMApiClient.instance = new APIClient({
         baseURL: "https://cloudmanager.adobe.io",
         headers: {
-          "x-gw-ims-org-id": AuthStore.getOrgId(),
-          "x-api-key": AuthStore.getApiKey(),
-          Authorization: `Bearer ${AuthStore.getAccessToken()}`
+          "x-gw-ims-org-id": await AuthStore.getOrgId(),
+          "x-api-key": await AuthStore.getApiKey(),
+          Authorization: `Bearer ${await AuthStore.getAccessToken()}`
         }
       });
     }
     return CMApiClient.instance;
   }
 
-  static refresh(): APIClient {
+  static async refresh():  Promise<APIClient> {
     CMApiClient.instance = null;
     return CMApiClient.getInstance();
   }

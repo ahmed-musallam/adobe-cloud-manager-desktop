@@ -64,7 +64,7 @@ export default {
     });
   },
   async beforeCreate() {
-    var client = CMApiClient.getInstance();
+    var client = await CMApiClient.getInstance();
     try {
       this.$showLoadingScreen();
       var result = await client.rest.api.programsService.getPrograms();

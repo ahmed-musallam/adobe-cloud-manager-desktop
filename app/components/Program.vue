@@ -57,8 +57,7 @@ export default {
   data() {
     return {
       program: {},
-      pipelines: {},
-      client: CMApiClient.getInstance()
+      pipelines: {}
     };
   },
   beforeRouteUpdate(to, from, next) {
@@ -72,12 +71,13 @@ export default {
     async updateProgram(programId) {
       console.log("redering program: ", programId);
       try {
+        var client = await CMApiClient.getInstance();
         this.$showLoadingScreen();
-        this.program = await this.client.rest.api.programService.getProgram(
+        this.program = await client.rest.api.programService.getProgram(
           programId
         );
         mutations.setProgram(this.program);
-        const pipelines = await this.client.rest.api.program.pipelinesService.getPipelines(
+        const pipelines = await client.rest.api.program.pipelinesService.getPipelines(
           this.program.id
         );
         this.pipelines = pipelines._embedded.pipelines;
