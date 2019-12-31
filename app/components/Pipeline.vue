@@ -10,12 +10,18 @@
         </tr>
       </thead>
       <tbody is="coral-table-body">
-        <tr is="coral-table-row" v-for="execution in executions" :key="execution.id">
+        <tr
+          is="coral-table-row"
+          v-for="execution in executions"
+          :key="execution.id"
+        >
           <td is="coral-table-cell">
-            <coral-status :variant="getVariant(execution.status)">{{execution.status}}</coral-status>
+            <coral-status :variant="getVariant(execution.status)">{{
+              execution.status
+            }}</coral-status>
           </td>
-          <td is="coral-table-cell">{{execution.id}}</td>
-          <td is="coral-table-cell">{{execution.createdAt | date}}</td>
+          <td is="coral-table-cell">{{ execution.id }}</td>
+          <td is="coral-table-cell">{{ execution.createdAt | date }}</td>
         </tr>
       </tbody>
     </table>
@@ -49,6 +55,7 @@ export default {
         this.$route.params.pipelineId
       );
       this.executions = executions._embedded.executions;
+      console.log(this.executions);
       this.$hideLoadingScreen();
     } catch (err) {
       console.error(err);

@@ -13,26 +13,30 @@
             <!-- title does not render.. who know why.. -->
             <!-- <coral-card-title>{{pipeline.name}}</coral-card-title> -->
             <coral-card-subtitle>
-              <h3>{{pipeline.name}}</h3>
+              <h3>{{ pipeline.name }}</h3>
             </coral-card-subtitle>
             <coral-card-propertylist>
-              <coral-card-property>Started: {{pipeline.lastStartedAt | date}}</coral-card-property> <br>
-              <coral-card-property>Finished: {{pipeline.lastFinishedAt | date }}</coral-card-property>
+              <coral-card-property
+                >Started:
+                {{ pipeline.lastStartedAt | date }}</coral-card-property
+              >
+              <br />
+              <coral-card-property
+                >Finished:
+                {{ pipeline.lastFinishedAt | date }}</coral-card-property
+              >
             </coral-card-propertylist>
           </coral-card-content>
           <coral-card-info>
-            <coral-tag
-              v-if="pipeline.status == 'IDLE'"
-              color="green"
-            >{{pipeline.status.toLowerCase()}}</coral-tag>
-            <coral-tag
-              v-if="pipeline.status == 'BUSY'"
-              color="cyan"
-            >{{pipeline.status.toLowerCase()}}</coral-tag>
-            <coral-tag
-              v-if="pipeline.status == 'WAITING'"
-              color="yellow"
-            >{{pipeline.status.toLowerCase()}}</coral-tag>
+            <coral-tag v-if="pipeline.status == 'IDLE'" color="green">{{
+              pipeline.status.toLowerCase()
+            }}</coral-tag>
+            <coral-tag v-if="pipeline.status == 'BUSY'" color="cyan">{{
+              pipeline.status.toLowerCase()
+            }}</coral-tag>
+            <coral-tag v-if="pipeline.status == 'WAITING'" color="yellow">{{
+              pipeline.status.toLowerCase()
+            }}</coral-tag>
           </coral-card-info>
         </coral-card>
       </router-link>

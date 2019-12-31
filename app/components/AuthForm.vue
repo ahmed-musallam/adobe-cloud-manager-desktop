@@ -4,7 +4,7 @@
       <label id="apiKey" class="coral-FieldLabel">API Key</label>
       <input
         :value="auth.apiKey"
-        @input="auth.apiKey=$event.target.value"
+        @input="auth.apiKey = $event.target.value"
         is="coral-textfield"
         labelledby="apiKey"
         class="coral-Form-field"
@@ -13,7 +13,7 @@
       <label id="clientSecret" class="coral-FieldLabel">Client Secret</label>
       <input
         :value="auth.clientSecret"
-        @input="auth.clientSecret=$event.target.value"
+        @input="auth.clientSecret = $event.target.value"
         is="coral-textfield"
         labelledby="clientSecret"
         class="coral-Form-field"
@@ -22,7 +22,7 @@
       <label id="orgId" class="coral-FieldLabel">Organization ID</label>
       <input
         :value="auth.orgId"
-        @input="auth.orgId=$event.target.value"
+        @input="auth.orgId = $event.target.value"
         is="coral-textfield"
         labelledby="orgId"
         class="coral-Form-field"
@@ -31,7 +31,7 @@
       <label id="techAcct" class="coral-FieldLabel">Technical Account</label>
       <input
         :value="auth.techAcct"
-        @input="auth.techAcct=$event.target.value"
+        @input="auth.techAcct = $event.target.value"
         is="coral-textfield"
         labelledby="techAcct"
         class="coral-Form-field"
@@ -39,40 +39,49 @@
       />
       <label id="privateKey" class="coral-FieldLabel">Private Key</label>
       <textarea
-        @input="auth.privateKey=$event.target.value"
+        @input="auth.privateKey = $event.target.value"
         is="coral-textarea"
         class="coral-Form-field"
         labelledby="privateKey"
         style="resize: vertical;"
-      >{{auth.privateKey}}</textarea>
+        >{{ auth.privateKey }}</textarea
+      >
       <button @click="handleRefreshToken" is="coral-button" type="button">
-        <span :class="{ hidden: !loading}">
+        <span :class="{ hidden: !loading }">
           <coral-wait size="S"></coral-wait>
         </span>
-        <span :class="{ hidden: !showCheck}">
-          <coral-icon icon="Checkmark" size="S" title="check" style="color: green;"></coral-icon>
+        <span :class="{ hidden: !showCheck }">
+          <coral-icon
+            icon="Checkmark"
+            size="S"
+            title="check"
+            style="color: green;"
+          ></coral-icon>
         </span>
-        <span :class="{ hidden: showCheck || loading}">Refresh Token</span>
+        <span :class="{ hidden: showCheck || loading }">Refresh Token</span>
       </button>
       <button @click="handleSave" is="coral-button" type="button">Save</button>
       <h4
         class="status"
         :class="{ hidden: !saved }"
-        :style="{ color: savedError ? 'red' : 'green'}"
+        :style="{ color: savedError ? 'red' : 'green' }"
       >
-        <em>{{saveMsg}}</em>
+        <em>{{ saveMsg }}</em>
       </h4>
       <br />
     </form>
     <form class="coral-Form coral-Form--vertical">
-      <label id="accessToken" class="coral-FieldLabel">Current Access Token</label>
+      <label id="accessToken" class="coral-FieldLabel"
+        >Current Access Token</label
+      >
       <textarea
         disabled
         is="coral-textarea"
         class="coral-Form-field"
         labelledby="accessToken"
         style="resize: vertical;"
-      >{{accessToken}}</textarea>
+        >{{ accessToken }}</textarea
+      >
     </form>
   </div>
 </template>

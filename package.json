@@ -7,6 +7,8 @@
     "last 1 Chrome versions"
   ],
   "scripts": {
+    "precommit": "lint-staged",
+    "prettier": "prettier --vue-indent-script-and-style --write ./app/**.{js,ts,vue} ./app/**/**.{js,ts,vue}  ",
     "pre-build": "node pre-build.js",
     "parcel:build": "parcel build app/main.ts",
     "parcel:watch": "parcel watch app/main.ts",
@@ -19,13 +21,22 @@
     "start": "npm run pre-build && npm run parcel:build && electron .",
     "generate-client": "swaxios -i ./app/generated/api.yml -o ./app/generated/api"
   },
+  "lint-staged": {
+    "*.{js,json,css,vue}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
   "devDependencies": {
     "@vue/component-compiler-utils": "^3.1.0",
     "concurrently": "^5.0.1",
     "cssnano": "^4.1.10",
     "electron": "^7.1.4",
+    "husky": "3.1.0",
+    "lint-staged": "9.5.0",
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-trasform-html": "file:./parcel-plugin-transform-html",
+    "prettier": "1.19.1",
     "swaxios": "^0.1.3",
     "typescript": "^3.7.3",
     "vue-template-compiler": "^2.6.10"

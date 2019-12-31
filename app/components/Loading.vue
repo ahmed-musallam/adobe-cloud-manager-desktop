@@ -1,5 +1,5 @@
 <template>
-  <div class="loading-container" :class="{hide: !show}">
+  <div class="loading-container" :class="{ hide: !show }">
     <coral-wait centered></coral-wait>
   </div>
 </template>

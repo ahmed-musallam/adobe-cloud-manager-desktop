@@ -8,12 +8,16 @@
             :key="program.id"
             :href="'/program/' + program.id"
             is="coral-shell-workspace"
-          >{{program.name}}</span>
+            >{{ program.name }}</span
+          >
         </coral-shell-workspaces>
       </coral-shell-header-content>
       <coral-shell-header-actions>
         <coral-shell-menubar>
-          <coral-shell-menubar-item menu="#menu_config" icon="gears"></coral-shell-menubar-item>
+          <coral-shell-menubar-item
+            menu="#menu_config"
+            icon="gears"
+          ></coral-shell-menubar-item>
         </coral-shell-menubar>
       </coral-shell-header-actions>
     </coral-shell-header>
@@ -78,5 +82,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

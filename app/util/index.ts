@@ -1,1 +1,1 @@
-export * from './AuthStore';
+export * from "./AuthStore";

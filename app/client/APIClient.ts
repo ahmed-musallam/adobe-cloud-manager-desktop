@@ -5,8 +5,8 @@
  * It should not be modified by hand.
  */
 
-import axios, {AxiosInstance, AxiosRequestConfig} from 'axios';
-import {ProgramService, ProgramsService} from './rest/api';
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import { ProgramService, ProgramsService } from "./rest/api";
 import {
   AdvanceService,
   BranchesService,
@@ -17,8 +17,8 @@ import {
   LogsService,
   MetricsService,
   PipelinesService,
-  RepositoriesService,
-} from './rest/api/program';
+  RepositoriesService
+} from "./rest/api/program";
 
 /**
  * This API allows access to Cloud Manager programs, pipelines, and environments by an authorized technical account created through the Adobe I/O Console. The base url for this API is https://cloudmanager.adobe.io, e.g. to get the list of programs for an organization, you would make a GET request to https://cloudmanager.adobe.io/api/programs (with the correct set of headers as described below).
@@ -29,8 +29,8 @@ export class APIClient {
   constructor(baseURL: string);
   constructor(config: AxiosRequestConfig);
   constructor(configOrBaseURL: AxiosRequestConfig | string) {
-    if (typeof configOrBaseURL === 'string') {
-      configOrBaseURL = {baseURL: configOrBaseURL};
+    if (typeof configOrBaseURL === "string") {
+      configOrBaseURL = { baseURL: configOrBaseURL };
     }
     this.httpClient = axios.create(configOrBaseURL);
   }
@@ -50,9 +50,9 @@ export class APIClient {
           logsService: new LogsService(this.httpClient),
           metricsService: new MetricsService(this.httpClient),
           pipelinesService: new PipelinesService(this.httpClient),
-          repositoriesService: new RepositoriesService(this.httpClient),
-        },
-      },
+          repositoriesService: new RepositoriesService(this.httpClient)
+        }
+      }
     };
   }
 
