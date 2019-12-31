@@ -86,7 +86,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import AuthStore from "./../util/AuthStore";
 import CMApiClient from "./../util/CMApiClient";
 export default {

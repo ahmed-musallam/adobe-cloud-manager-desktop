@@ -35,7 +35,7 @@
   </coral-shell>
 </template>
 
-<script lang="ts">
+<script>
 import AuthForm from "./components/AuthForm.vue";
 import Breadcrumb from "./components/Breadcrumb.vue";
 import Loading from "./components/Loading.vue";
