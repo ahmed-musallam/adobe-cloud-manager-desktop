@@ -14,7 +14,7 @@
     "parcel:build": "parcel build app/main.js",
     "parcel:watch": "parcel watch app/main.js",
     "pre-electron": "npm run pre-build && npm run parcel:build",
-    "electron-only": "electron -help",
+    "electron-only": "electron .",
     "electron": "npm run pre-electron && electron .",
     "electron:watch": "npm run pre-electron && concurrently \"npm:electron-only\" \"npm:parcel:watch\"",
     "electron:watch:debug": "DEBUG_E=true npm run electron:watch",
