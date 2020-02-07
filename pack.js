@@ -1,8 +1,26 @@
 const packager = require("electron-packager");
+const createDMG = require("electron-installer-dmg");
+const path = require("path");
+var APP_NAME = "Cloud Manager Menubar";
 
 async function bundleElectronApp(options) {
   const appPaths = await packager(options);
   console.log(`Electron app bundles created:\n${appPaths.join("\n")}`);
+  const appPath = `${APP_NAME}-${options.platform}-${options.arch}`;
+  const appName = `${APP_NAME}.app`;
+  createDMG(
+    {
+      appPath: path.join(appPath, appName),
+      out: appPath,
+      title: "Cloud Manager Menubar",
+      name: APP_NAME,
+      icon: `${options.icon}.icns`,
+      overwrite: true
+    },
+    function done(err) {
+      console.log(`Electron DMG created`);
+    }
+  );
 }
 
 function contains(str) {
@@ -11,12 +29,12 @@ function contains(str) {
 }
 
 bundleElectronApp({
-  name: "Adobe Cloud Manager Menubar",
+  name: APP_NAME,
   dir: "./",
   platform: "darwin",
   arch: "x64",
   overwrite: true,
-  icon: "app/icon/icon",
+  icon: "icon/icon",
   ignore: [
     ".cache",
     ".vscode",

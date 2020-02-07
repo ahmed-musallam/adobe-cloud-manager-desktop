@@ -3,7 +3,7 @@ const path = require("path");
 const debug = !!process.env.DEBUG_E;
 
 const mb = menubar({
-  icon: path.join(__dirname, "app/icon/icon.png"),
+  icon: path.join(__dirname, "icon/icon.png"),
   browserWindow: {
     width: 400,
     height: 600,
