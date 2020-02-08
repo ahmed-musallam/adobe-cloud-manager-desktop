@@ -5,11 +5,11 @@
  * It should not be modified by hand.
  */
 
-import {Pipeline} from './Pipeline';
-import {HalLink} from './HalLink';
+import { Pipeline } from "./Pipeline";
+import { HalLink } from "./HalLink";
 
 export interface PipelineList {
   _totalNumberOfItems?: number;
-  readonly _embedded?: {pipelines?: Array<Pipeline>};
-  readonly _links?: {next?: HalLink; prev?: HalLink; self?: HalLink};
+  readonly _embedded?: { pipelines?: Array<Pipeline> };
+  readonly _links?: { next?: HalLink; prev?: HalLink; self?: HalLink };
 }

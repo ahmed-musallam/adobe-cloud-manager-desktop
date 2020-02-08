@@ -5,7 +5,7 @@
  * It should not be modified by hand.
  */
 
-import {AxiosInstance, AxiosRequestConfig} from 'axios';
+import { AxiosInstance, AxiosRequestConfig } from "axios";
 
 export class AdvanceService {
   private readonly apiClient: AxiosInstance;
@@ -36,10 +36,10 @@ export class AdvanceService {
   ): Promise<void> => {
     const config: AxiosRequestConfig = {
       data: {
-        ...body,
+        ...body
       },
-      method: 'put',
-      url: `/api/program/${programId}/pipeline/${pipelineId}/execution/${executionId}/phase/${phaseId}/step/${stepId}/advance`,
+      method: "put",
+      url: `/api/program/${programId}/pipeline/${pipelineId}/execution/${executionId}/phase/${phaseId}/step/${stepId}/advance`
     };
     await this.apiClient.request(config);
   };

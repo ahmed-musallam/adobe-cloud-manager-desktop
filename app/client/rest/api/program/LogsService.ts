@@ -5,7 +5,7 @@
  * It should not be modified by hand.
  */
 
-import {AxiosInstance, AxiosRequestConfig} from 'axios';
+import { AxiosInstance, AxiosRequestConfig } from "axios";
 
 export class LogsService {
   private readonly apiClient: AxiosInstance;
@@ -33,8 +33,8 @@ export class LogsService {
     stepId: string
   ): Promise<void> => {
     const config: AxiosRequestConfig = {
-      method: 'get',
-      url: `/api/program/${programId}/pipeline/${pipelineId}/execution/${executionId}/phase/${phaseId}/step/${stepId}/logs`,
+      method: "get",
+      url: `/api/program/${programId}/pipeline/${pipelineId}/execution/${executionId}/phase/${phaseId}/step/${stepId}/logs`
     };
     await this.apiClient.request(config);
   };

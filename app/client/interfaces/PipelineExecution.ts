@@ -5,8 +5,8 @@
  * It should not be modified by hand.
  */
 
-import {PipelineExecutionStepState} from './PipelineExecutionStepState';
-import {HalLink} from './HalLink';
+import { PipelineExecutionStepState } from "./PipelineExecutionStepState";
+import { HalLink } from "./HalLink";
 
 export interface PipelineExecution {
   id?: string;
@@ -19,7 +19,7 @@ export interface PipelineExecution {
   createdAt?: string;
   updatedAt?: string;
   finishedAt?: string;
-  readonly _embedded?: {stepStates?: Array<PipelineExecutionStepState>};
+  readonly _embedded?: { stepStates?: Array<PipelineExecutionStepState> };
   readonly _links?: {
     http___ns_adobe_com_adobecloud_rel_program?: HalLink;
     http___ns_adobe_com_adobecloud_rel_pipeline?: HalLink;

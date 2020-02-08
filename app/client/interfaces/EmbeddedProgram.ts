@@ -5,12 +5,12 @@
  * It should not be modified by hand.
  */
 
-import {HalLink} from './HalLink';
+import { HalLink } from "./HalLink";
 
 export interface EmbeddedProgram {
   readonly id?: string;
   name: string;
   readonly enabled?: boolean;
   readonly tenantId?: string;
-  readonly _links?: {self?: HalLink};
+  readonly _links?: { self?: HalLink };
 }

@@ -5,11 +5,11 @@
  * It should not be modified by hand.
  */
 
-import {RepositoryBranch} from './RepositoryBranch';
-import {HalLink} from './HalLink';
+import { RepositoryBranch } from "./RepositoryBranch";
+import { HalLink } from "./HalLink";
 
 export interface BranchList {
   _totalNumberOfItems?: number;
-  readonly _embedded?: {branches?: Array<RepositoryBranch>};
-  readonly _links?: {next?: HalLink; prev?: HalLink; self?: HalLink};
+  readonly _embedded?: { branches?: Array<RepositoryBranch> };
+  readonly _links?: { next?: HalLink; prev?: HalLink; self?: HalLink };
 }

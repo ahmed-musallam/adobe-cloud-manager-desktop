@@ -1,7 +1,6 @@
 const { series, parallel } = require("gulp");
 const fs = require("fs-extra");
 const Bundler = require("parcel-bundler");
-const Path = require("path");
 const { spawn } = require("child_process");
 const packager = require("electron-packager");
 const createDMG = require("electron-installer-dmg");
@@ -95,7 +94,7 @@ function dmgTask(options) {
     cb();
   };
 }
-
+exports["prettier"] = series(prettierTask);
 exports["ui:build"] = series(prettierTask, copyAssetsTask, bundleTask());
 exports["ui:watch"] = series(prettierTask, copyAssetsTask, bundleTask(true));
 exports["electron:watch"] = parallel(

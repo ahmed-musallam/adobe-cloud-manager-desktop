@@ -5,8 +5,8 @@
  * It should not be modified by hand.
  */
 
-import {AxiosInstance, AxiosRequestConfig} from 'axios';
-import {PipelineList} from '../../../interfaces';
+import { AxiosInstance, AxiosRequestConfig } from "axios";
+import { PipelineList } from "../../../interfaces";
 
 export class PipelinesService {
   private readonly apiClient: AxiosInstance;
@@ -23,8 +23,8 @@ export class PipelinesService {
    */
   getPipelines = async (programId: string): Promise<PipelineList> => {
     const config: AxiosRequestConfig = {
-      method: 'get',
-      url: `/api/program/${programId}/pipelines`,
+      method: "get",
+      url: `/api/program/${programId}/pipelines`
     };
     const response = await this.apiClient.request<PipelineList>(config);
     return response.data;

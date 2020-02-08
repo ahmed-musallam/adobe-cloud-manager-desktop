@@ -5,7 +5,7 @@
  * It should not be modified by hand.
  */
 
-import {HalLink} from './HalLink';
+import { HalLink } from "./HalLink";
 
 export interface Program {
   readonly id?: string;

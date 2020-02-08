@@ -5,13 +5,13 @@
  * It should not be modified by hand.
  */
 
-export * from './AdvanceService';
-export * from './BranchesService';
-export * from './CancelService';
-export * from './EnvironmentsService';
-export * from './ExecutionService';
-export * from './ExecutionsService';
-export * from './LogsService';
-export * from './MetricsService';
-export * from './PipelinesService';
-export * from './RepositoriesService';
+export * from "./AdvanceService";
+export * from "./BranchesService";
+export * from "./CancelService";
+export * from "./EnvironmentsService";
+export * from "./ExecutionService";
+export * from "./ExecutionsService";
+export * from "./LogsService";
+export * from "./MetricsService";
+export * from "./PipelinesService";
+export * from "./RepositoriesService";

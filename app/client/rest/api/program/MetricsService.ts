@@ -5,8 +5,8 @@
  * It should not be modified by hand.
  */
 
-import {AxiosInstance, AxiosRequestConfig} from 'axios';
-import {PipelineStepMetrics} from '../../../interfaces';
+import { AxiosInstance, AxiosRequestConfig } from "axios";
+import { PipelineStepMetrics } from "../../../interfaces";
 
 export class MetricsService {
   private readonly apiClient: AxiosInstance;
@@ -33,8 +33,8 @@ export class MetricsService {
     stepId: string
   ): Promise<PipelineStepMetrics> => {
     const config: AxiosRequestConfig = {
-      method: 'get',
-      url: `/api/program/${programId}/pipeline/${pipelineId}/execution/${executionId}/phase/${phaseId}/step/${stepId}/metrics`,
+      method: "get",
+      url: `/api/program/${programId}/pipeline/${pipelineId}/execution/${executionId}/phase/${phaseId}/step/${stepId}/metrics`
     };
     const response = await this.apiClient.request<PipelineStepMetrics>(config);
     return response.data;

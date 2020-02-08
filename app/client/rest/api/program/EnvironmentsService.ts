@@ -5,8 +5,8 @@
  * It should not be modified by hand.
  */
 
-import {AxiosInstance, AxiosRequestConfig} from 'axios';
-import {EnvironmentList} from '../../../interfaces';
+import { AxiosInstance, AxiosRequestConfig } from "axios";
+import { EnvironmentList } from "../../../interfaces";
 
 export class EnvironmentsService {
   private readonly apiClient: AxiosInstance;
@@ -29,9 +29,9 @@ export class EnvironmentsService {
     }
   ): Promise<EnvironmentList> => {
     const config: AxiosRequestConfig = {
-      method: 'get',
+      method: "get",
       params,
-      url: `/api/program/${programId}/environments`,
+      url: `/api/program/${programId}/environments`
     };
     const response = await this.apiClient.request<EnvironmentList>(config);
     return response.data;

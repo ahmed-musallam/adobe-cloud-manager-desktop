@@ -5,11 +5,11 @@
  * It should not be modified by hand.
  */
 
-import {EmbeddedProgram} from './EmbeddedProgram';
-import {HalLink} from './HalLink';
+import { EmbeddedProgram } from "./EmbeddedProgram";
+import { HalLink } from "./HalLink";
 
 export interface ProgramList {
   _totalNumberOfItems?: number;
-  readonly _embedded?: {programs?: Array<EmbeddedProgram>};
-  readonly _links?: {next?: HalLink; prev?: HalLink; self?: HalLink};
+  readonly _embedded?: { programs?: Array<EmbeddedProgram> };
+  readonly _links?: { next?: HalLink; prev?: HalLink; self?: HalLink };
 }

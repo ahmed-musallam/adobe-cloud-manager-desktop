@@ -5,8 +5,8 @@
  * It should not be modified by hand.
  */
 
-import {PipelinePhase} from './PipelinePhase';
-import {HalLink} from './HalLink';
+import { PipelinePhase } from "./PipelinePhase";
+import { HalLink } from "./HalLink";
 
 export interface Pipeline {
   id?: string;

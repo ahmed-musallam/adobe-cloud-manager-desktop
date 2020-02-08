@@ -5,11 +5,11 @@
  * It should not be modified by hand.
  */
 
-import {Repository} from './Repository';
-import {HalLink} from './HalLink';
+import { Repository } from "./Repository";
+import { HalLink } from "./HalLink";
 
 export interface RepositoryList {
   _totalNumberOfItems?: number;
-  readonly _embedded?: {repositories?: Array<Repository>};
-  readonly _links?: {next?: HalLink; prev?: HalLink; self?: HalLink};
+  readonly _embedded?: { repositories?: Array<Repository> };
+  readonly _links?: { next?: HalLink; prev?: HalLink; self?: HalLink };
 }

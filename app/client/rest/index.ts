@@ -5,4 +5,4 @@
  * It should not be modified by hand.
  */
 
-export * from './api/';
+export * from "./api/";

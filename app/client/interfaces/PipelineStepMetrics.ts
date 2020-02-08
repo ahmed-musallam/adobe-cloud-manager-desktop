@@ -5,7 +5,7 @@
  * It should not be modified by hand.
  */
 
-import {Metric} from './Metric';
+import { Metric } from "./Metric";
 
 export interface PipelineStepMetrics {
   readonly metrics?: Array<Metric>;

@@ -5,8 +5,8 @@
  * It should not be modified by hand.
  */
 
-import {AxiosInstance, AxiosRequestConfig} from 'axios';
-import {ProgramList} from '../../interfaces';
+import { AxiosInstance, AxiosRequestConfig } from "axios";
+import { ProgramList } from "../../interfaces";
 
 export class ProgramsService {
   private readonly apiClient: AxiosInstance;
@@ -22,8 +22,8 @@ export class ProgramsService {
    */
   getPrograms = async (): Promise<ProgramList> => {
     const config: AxiosRequestConfig = {
-      method: 'get',
-      url: '/api/programs',
+      method: "get",
+      url: "/api/programs"
     };
     const response = await this.apiClient.request<ProgramList>(config);
     return response.data;

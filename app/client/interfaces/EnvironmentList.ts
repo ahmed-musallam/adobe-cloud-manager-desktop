@@ -5,11 +5,11 @@
  * It should not be modified by hand.
  */
 
-import {Environment} from './Environment';
-import {HalLink} from './HalLink';
+import { Environment } from "./Environment";
+import { HalLink } from "./HalLink";
 
 export interface EnvironmentList {
   _totalNumberOfItems?: number;
-  readonly _embedded?: {environments?: Array<Environment>};
-  readonly _links?: {next?: HalLink; prev?: HalLink; self?: HalLink};
+  readonly _embedded?: { environments?: Array<Environment> };
+  readonly _links?: { next?: HalLink; prev?: HalLink; self?: HalLink };
 }

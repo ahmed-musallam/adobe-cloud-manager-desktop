@@ -5,6 +5,6 @@
  * It should not be modified by hand.
  */
 
-export * from './ProgramService';
-export * from './ProgramsService';
-export * from './program';
+export * from "./ProgramService";
+export * from "./ProgramsService";
+export * from "./program";

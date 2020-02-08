@@ -5,8 +5,8 @@
  * It should not be modified by hand.
  */
 
-import {AxiosInstance, AxiosRequestConfig} from 'axios';
-import {BranchList} from '../../../interfaces';
+import { AxiosInstance, AxiosRequestConfig } from "axios";
+import { BranchList } from "../../../interfaces";
 
 export class BranchesService {
   private readonly apiClient: AxiosInstance;
@@ -27,8 +27,8 @@ export class BranchesService {
     repositoryId: string
   ): Promise<BranchList> => {
     const config: AxiosRequestConfig = {
-      method: 'get',
-      url: `/api/program/${programId}/repository/${repositoryId}/branches`,
+      method: "get",
+      url: `/api/program/${programId}/repository/${repositoryId}/branches`
     };
     const response = await this.apiClient.request<BranchList>(config);
     return response.data;

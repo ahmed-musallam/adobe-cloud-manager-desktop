@@ -5,14 +5,14 @@
  * It should not be modified by hand.
  */
 
-import {RequestedPageDetails} from './RequestedPageDetails';
-import {PipelineExecution} from './PipelineExecution';
-import {HalLink} from './HalLink';
+import { RequestedPageDetails } from "./RequestedPageDetails";
+import { PipelineExecution } from "./PipelineExecution";
+import { HalLink } from "./HalLink";
 
 export interface PipelineExecutionListRepresentation {
   _totalNumberOfItems?: number;
   _page?: RequestedPageDetails;
-  readonly _embedded?: {executions?: Array<PipelineExecution>};
+  readonly _embedded?: { executions?: Array<PipelineExecution> };
   readonly _links?: {
     next?: HalLink;
     page?: HalLink;

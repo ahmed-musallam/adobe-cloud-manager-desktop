@@ -5,15 +5,15 @@
  * It should not be modified by hand.
  */
 
-import {AxiosInstance, AxiosRequestConfig} from 'axios';
+import { AxiosInstance, AxiosRequestConfig } from "axios";
 import {
   Program,
   Repository,
   Pipeline,
   PipelineExecution,
   PipelineExecutionStepState,
-  Environment,
-} from '../../interfaces';
+  Environment
+} from "../../interfaces";
 
 export class ProgramService {
   private readonly apiClient: AxiosInstance;
@@ -30,8 +30,8 @@ export class ProgramService {
    */
   getProgram = async (programId: string): Promise<Program> => {
     const config: AxiosRequestConfig = {
-      method: 'get',
-      url: `/api/program/${programId}`,
+      method: "get",
+      url: `/api/program/${programId}`
     };
     const response = await this.apiClient.request<Program>(config);
     return response.data;
@@ -49,8 +49,8 @@ export class ProgramService {
     repositoryId: string
   ): Promise<Repository> => {
     const config: AxiosRequestConfig = {
-      method: 'get',
-      url: `/api/program/${programId}/repository/${repositoryId}`,
+      method: "get",
+      url: `/api/program/${programId}/repository/${repositoryId}`
     };
     const response = await this.apiClient.request<Repository>(config);
     return response.data;
@@ -68,8 +68,8 @@ export class ProgramService {
     pipelineId: string
   ): Promise<Pipeline> => {
     const config: AxiosRequestConfig = {
-      method: 'get',
-      url: `/api/program/${programId}/pipeline/${pipelineId}`,
+      method: "get",
+      url: `/api/program/${programId}/pipeline/${pipelineId}`
     };
     const response = await this.apiClient.request<Pipeline>(config);
     return response.data;
@@ -87,8 +87,8 @@ export class ProgramService {
     pipelineId: string
   ): Promise<void> => {
     const config: AxiosRequestConfig = {
-      method: 'delete',
-      url: `/api/program/${programId}/pipeline/${pipelineId}`,
+      method: "delete",
+      url: `/api/program/${programId}/pipeline/${pipelineId}`
     };
     await this.apiClient.request(config);
   };
@@ -109,10 +109,10 @@ export class ProgramService {
   ): Promise<Pipeline> => {
     const config: AxiosRequestConfig = {
       data: {
-        ...body,
+        ...body
       },
-      method: 'patch',
-      url: `/api/program/${programId}/pipeline/${pipelineId}`,
+      method: "patch",
+      url: `/api/program/${programId}/pipeline/${pipelineId}`
     };
     const response = await this.apiClient.request<Pipeline>(config);
     return response.data;
@@ -132,8 +132,8 @@ export class ProgramService {
     executionId: string
   ): Promise<PipelineExecution> => {
     const config: AxiosRequestConfig = {
-      method: 'get',
-      url: `/api/program/${programId}/pipeline/${pipelineId}/execution/${executionId}`,
+      method: "get",
+      url: `/api/program/${programId}/pipeline/${pipelineId}/execution/${executionId}`
     };
     const response = await this.apiClient.request<PipelineExecution>(config);
     return response.data;
@@ -157,8 +157,8 @@ export class ProgramService {
     stepId: string
   ): Promise<PipelineExecutionStepState> => {
     const config: AxiosRequestConfig = {
-      method: 'get',
-      url: `/api/program/${programId}/pipeline/${pipelineId}/execution/${executionId}/phase/${phaseId}/step/${stepId}`,
+      method: "get",
+      url: `/api/program/${programId}/pipeline/${pipelineId}/execution/${executionId}/phase/${phaseId}/step/${stepId}`
     };
     const response = await this.apiClient.request<PipelineExecutionStepState>(
       config
@@ -178,8 +178,8 @@ export class ProgramService {
     environmentId: string
   ): Promise<Environment> => {
     const config: AxiosRequestConfig = {
-      method: 'get',
-      url: `/api/program/${programId}/environment/${environmentId}`,
+      method: "get",
+      url: `/api/program/${programId}/environment/${environmentId}`
     };
     const response = await this.apiClient.request<Environment>(config);
     return response.data;
