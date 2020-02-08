@@ -10,17 +10,9 @@
     "postinstall": "electron-rebuild",
     "precommit": "lint-staged",
     "prettier": "prettier --vue-indent-script-and-style --write ./app/**.{js,ts,vue} ./app/**/**.{js,ts,vue}  ",
-    "pre-build": "node pre-build.js",
-    "parcel:build": "parcel build app/index.ts",
-    "parcel:watch": "parcel watch app/index.ts",
-    "pre-electron": "npm run pre-build && npm run parcel:build",
-    "electron-only": "electron .",
-    "electron": "npm run pre-electron && electron .",
-    "electron:watch": "npm run pre-electron && concurrently \"npm:electron-only\" \"npm:parcel:watch\"",
-    "electron:watch:debug": "DEBUG_E=true npm run electron:watch",
-    "start": "npm run electron",
-    "pack": "npm run pre-electron && node pack.js",
-    "generate-client": "swaxios -i ./app/generated/api.yml -o ./app/generated/api"
+    "start": "gulp",
+    "generate-client": "swaxios -i ./app/generated/api.yml -o ./app/generated/api",
+    "gulp": "gulp"
   },
   "lint-staged": {
     "*.{js,json,css,vue}": [
