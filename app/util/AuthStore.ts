@@ -8,7 +8,8 @@ const CLIENT_SECRET = "clientSecret",
 
 export default class AuthStore {
   static get = (key: string) => keytar.getPassword(KEYTAR_SERVICE, key);
-  static set = (key: string, val: string) => keytar.setPassword(KEYTAR_SERVICE, key, val);
+  static set = (key: string, val: string) =>
+    keytar.setPassword(KEYTAR_SERVICE, key, val);
 
   static getClientSecret = () => AuthStore.get(CLIENT_SECRET);
   static getApiKey = () => AuthStore.get(API_KEY);

@@ -20,7 +20,7 @@ export default class CMApiClient {
     return CMApiClient.instance;
   }
 
-  static async refresh():  Promise<APIClient> {
+  static async refresh(): Promise<APIClient> {
     CMApiClient.instance = null;
     return CMApiClient.getInstance();
   }
