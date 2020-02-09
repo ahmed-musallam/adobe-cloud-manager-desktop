@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    // this aligns with Vue's browser support
+    "target": "ES2020",
+    // this enables stricter inference for data properties on `this`
+    "strict": true,
+    "moduleResolution": "node"
+  }
+}
