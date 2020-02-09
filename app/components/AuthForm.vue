@@ -132,15 +132,7 @@ export default {
     handleRefreshToken() {
       const cmp = this;
       cmp.loading = true;
-      adobeAuth({
-        clientId: this.auth.apiKey,
-        clientSecret: this.auth.clientSecret,
-        privateKey: this.auth.privateKey,
-        technicalAccountId: this.auth.techAcct,
-        orgId: this.auth.orgId,
-        metaScopes: ["https://ims-na1.adobelogin.com/s/ent_cloudmgr_sdk"]
-      })
-        .then(tokenResponse => tokenResponse.access_token)
+      CMApiClient.getAccessToken()
         .then(accessToken => {
           console.debug("Success! got token: ", accessToken);
           this.accessToken = accessToken;
