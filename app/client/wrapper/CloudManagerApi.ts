@@ -69,7 +69,7 @@ export default class CloudManagerApi {
           // an unfortunate thing to do, really... the generated API interfaces
           // have keys names "embedded" but the ACTUAL response retunrs keys "_embedded"
           // so we rename them here ¯\_(ツ)_/¯
-          key === "_embedded" ? "embedded" : key 
+          key === "_embedded" ? "embedded" : key
         ),
       async error => {
         if (401 === error.response.status) {
@@ -79,7 +79,9 @@ export default class CloudManagerApi {
           try {
             const access_token = await AuthUtil.getAccessToken();
             AuthStore.setAccessToken(access_token);
-            console.log("Got the token!, saving it and retrying the same request.");
+            console.log(
+              "Got the token!, saving it and retrying the same request."
+            );
             CloudManagerApi.refresh();
             // just for this request, change auth
             error.config.headers["Authorization"] = "Bearer " + access_token;

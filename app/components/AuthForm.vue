@@ -66,9 +66,11 @@
 
 <script lang="ts">
 import AuthStore from "./../util/AuthStore";
-import SecretInput from "./SecretInput";
+import SecretInput from "./SecretInput.vue";
 import AuthUtil from "../util/AuthUtil";
-export default {
+import Vue from "vue";
+
+export default Vue.extend({
   name: "AuthForm",
 
   data() {
@@ -94,7 +96,6 @@ export default {
   },
   async created() {
     this.accessToken = await AuthStore.getAccessToken();
-    console.log("got: " + this.accessToken);
     this.auth = {
       apiKey: await AuthStore.getApiKey(),
       clientSecret: await AuthStore.getClientSecret(),
@@ -104,7 +105,7 @@ export default {
     };
   },
   methods: {
-    handleAfterSave(error) {
+    handleAfterSave(error: boolean) {
       if (error) {
         this.savedError = true;
         this.saveMsg = "Error! Check log!";
@@ -162,7 +163,7 @@ export default {
       }
       */
   }
-};
+});
 </script>
 
 <style scoped>

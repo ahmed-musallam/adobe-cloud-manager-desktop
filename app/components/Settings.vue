@@ -16,12 +16,23 @@
         <AuthForm></AuthForm>
       </coral-accordion-item>
     </coral-accordion>
+    <button
+      is="coral-button"
+      variant="quietaction"
+      icon="close"
+      @click="quitApp"
+      style="position: absolute;bottom: 5px;right: 5px;"
+    >
+      Quit
+    </button>
   </div>
 </template>
 
-<script>
-import AuthForm from "./AuthForm";
-export default {
+<script lang="ts">
+import AuthForm from "./AuthForm.vue";
+import Vue from "vue";
+
+export default Vue.extend({
   name: "Settings",
   components: {
     AuthForm
@@ -29,8 +40,12 @@ export default {
   data() {
     return {};
   },
-  methods: {}
-};
+  methods: {
+    quitApp() {
+      electron.remote.getCurrentWindow().close();
+    }
+  }
+});
 </script>
 
 <style scoped></style>

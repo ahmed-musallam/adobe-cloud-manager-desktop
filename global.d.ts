@@ -5,6 +5,7 @@ import CloudManagerApi, { CloudManagerApiInstance } from "./app/client/wrapper/C
 declare const electronStore;
 declare const adobeAuth;
 declare const keytar;
+declare const electron;
 
 declare module '*.vue' {
   import Vue from 'vue';
