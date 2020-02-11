@@ -29,23 +29,23 @@
 </template>
 
 <script lang="ts">
-import AuthForm from "./AuthForm.vue";
-import Vue from "vue";
+  import AuthForm from "./AuthForm.vue";
+  import Vue from "vue";
 
-export default Vue.extend({
-  name: "Settings",
-  components: {
-    AuthForm
-  },
-  data() {
-    return {};
-  },
-  methods: {
-    quitApp() {
-      electron.remote.getCurrentWindow().close();
+  export default Vue.extend({
+    name: "Settings",
+    components: {
+      AuthForm
+    },
+    data() {
+      return {};
+    },
+    methods: {
+      quitApp() {
+        electron.remote.getCurrentWindow().close();
+      }
     }
-  }
-});
+  });
 </script>
 
 <style scoped></style>

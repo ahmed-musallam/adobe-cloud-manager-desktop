@@ -34,31 +34,31 @@
 </template>
 
 <script>
-export default {
-  name: "SecretInput",
-  props: ["value", "label", "textarea"],
-  data() {
-    return {
-      showSecret: false
-    };
-  },
-  computed: {
-    id() {
-      return this.label.replace(/[\W_]+/g, "-");
+  export default {
+    name: "SecretInput",
+    props: ["value", "label", "textarea"],
+    data() {
+      return {
+        showSecret: false
+      };
+    },
+    computed: {
+      id() {
+        return this.label.replace(/[\W_]+/g, "-");
+      }
     }
-  }
-};
+  };
 </script>
 
 <style scoped>
-.coral-FieldLabel {
-  display: block;
-}
-.coral-Form-field._coral-Textfield {
-  display: inline-block;
-  width: 90%;
-}
-[secret="true"] {
-  -webkit-text-security: disc;
-}
+  .coral-FieldLabel {
+    display: block;
+  }
+  .coral-Form-field._coral-Textfield {
+    display: inline-block;
+    width: 90%;
+  }
+  [secret="true"] {
+    -webkit-text-security: disc;
+  }
 </style>

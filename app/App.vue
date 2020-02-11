@@ -35,53 +35,53 @@
 </template>
 
 <script lang="ts">
-import Breadcrumb from "./components/Breadcrumb.vue";
-import Loading from "./components/Loading.vue";
-import { AxiosRequestConfig } from "axios";
-import { store } from "./components/BreadcrumbStore";
-import Vue from "vue";
-import { CoralElement } from "vue/types/vue";
-import { ProgramList, ProgramListEmbedded, EmbeddedProgram } from "./client";
-import CloudManagerApi, {
-  CloudManagerApiInstance
-} from "./client/wrapper/CloudManagerApi";
+  import Breadcrumb from "./components/Breadcrumb.vue";
+  import Loading from "./components/Loading.vue";
+  import { AxiosRequestConfig } from "axios";
+  import { store } from "./components/BreadcrumbStore";
+  import Vue from "vue";
+  import { CoralElement } from "vue/types/vue";
+  import { ProgramList, ProgramListEmbedded, EmbeddedProgram } from "./client";
+  import CloudManagerApi, {
+    CloudManagerApiInstance
+  } from "./client/wrapper/CloudManagerApi";
 
-export default Vue.extend({
-  name: "App",
-  components: {
-    Breadcrumb,
-    Loading
-  },
-  data() {
-    return {
-      programs: {} as EmbeddedProgram[] | undefined,
-      state: {}
-    };
-  },
-  mounted() {
-    const workspaces = this.$refs.workspaces as CoralElement;
-    workspaces.on("coral-shell-workspaces:change", e => {
-      const href = e.detail.selection.getAttribute("href") || "";
-      if (this.$route.path !== href) {
-        // safeguard against page refresh
-        this.$router.push({ path: href });
+  export default Vue.extend({
+    name: "App",
+    components: {
+      Breadcrumb,
+      Loading
+    },
+    data() {
+      return {
+        programs: {} as EmbeddedProgram[] | undefined,
+        state: {}
+      };
+    },
+    mounted() {
+      const workspaces = this.$refs.workspaces as CoralElement;
+      workspaces.on("coral-shell-workspaces:change", e => {
+        const href = e.detail.selection.getAttribute("href") || "";
+        if (this.$route.path !== href) {
+          // safeguard against page refresh
+          this.$router.push({ path: href });
+        }
+      });
+    },
+
+    async created() {
+      const client = await this.$CloudManagerApi;
+      try {
+        this.$showLoadingScreen();
+        const result = await client.programs.getPrograms();
+        this.programs = result.data.embedded?.programs;
+        this.$hideLoadingScreen();
+      } catch (err) {
+        console.error(err);
+        this.$hideLoadingScreen();
       }
-    });
-  },
-
-  async created() {
-    const client = await this.$CloudManagerApi;
-    try {
-      this.$showLoadingScreen();
-      const result = await client.programs.getPrograms();
-      this.programs = result.data.embedded?.programs;
-      this.$hideLoadingScreen();
-    } catch (err) {
-      console.error(err);
-      this.$hideLoadingScreen();
     }
-  }
-});
+  });
 </script>
 
 <style scoped></style>

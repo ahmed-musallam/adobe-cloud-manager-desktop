@@ -65,75 +65,75 @@
 </template>
 
 <script lang="ts">
-import AuthStore from "./../util/AuthStore";
-import SecretInput from "./SecretInput.vue";
-import AuthUtil from "../util/AuthUtil";
-import Vue from "vue";
+  import AuthStore from "./../util/AuthStore";
+  import SecretInput from "./SecretInput.vue";
+  import AuthUtil from "../util/AuthUtil";
+  import Vue from "vue";
 
-export default Vue.extend({
-  name: "AuthForm",
+  export default Vue.extend({
+    name: "AuthForm",
 
-  data() {
-    return {
-      loading: false,
-      showRefreshResult: false,
-      refreshResultFail: false,
-      saved: false,
-      savedError: false,
-      saveMsg: "",
-      accessToken: "",
-      auth: {
-        apiKey: "",
-        clientSecret: "",
-        orgId: "",
-        techAcct: "",
-        privateKey: ""
-      }
-    };
-  },
-  components: {
-    SecretInput
-  },
-  async created() {
-    this.accessToken = await AuthStore.getAccessToken();
-    this.auth = {
-      apiKey: await AuthStore.getApiKey(),
-      clientSecret: await AuthStore.getClientSecret(),
-      orgId: await AuthStore.getOrgId(),
-      techAcct: await AuthStore.getTechAcct(),
-      privateKey: await AuthStore.getPrivateKey()
-    };
-  },
-  methods: {
-    handleAfterSave(error: boolean) {
-      if (error) {
-        this.savedError = true;
-        this.saveMsg = "Error! Check log!";
-      } else {
-        this.savedError = false;
-        this.saveMsg = "Success!";
-      }
-      this.saved = true;
-      setTimeout(() => {
-        this.saved = false;
-        this.$forceUpdate(); // for some reason reactivity is lost, so forcing update....
-      }, 5000);
+    data() {
+      return {
+        loading: false,
+        showRefreshResult: false,
+        refreshResultFail: false,
+        saved: false,
+        savedError: false,
+        saveMsg: "",
+        accessToken: "",
+        auth: {
+          apiKey: "",
+          clientSecret: "",
+          orgId: "",
+          techAcct: "",
+          privateKey: ""
+        }
+      };
     },
-    handleSave() {
-      var err = false;
-      try {
-        AuthStore.setApiKey(this.auth.apiKey);
-        AuthStore.setClientSecret(this.auth.clientSecret);
-        AuthStore.setOrgId(this.auth.orgId);
-        AuthStore.setTechAcct(this.auth.techAcct);
-        AuthStore.setPrivateKey(this.auth.privateKey); // yeah, I know.. no encryption.. blah blah blah
-      } catch (e) {
-        this.handleAfterSave(true);
-        throw e;
+    components: {
+      SecretInput
+    },
+    async created() {
+      this.accessToken = await AuthStore.getAccessToken();
+      this.auth = {
+        apiKey: await AuthStore.getApiKey(),
+        clientSecret: await AuthStore.getClientSecret(),
+        orgId: await AuthStore.getOrgId(),
+        techAcct: await AuthStore.getTechAcct(),
+        privateKey: await AuthStore.getPrivateKey()
+      };
+    },
+    methods: {
+      handleAfterSave(error: boolean) {
+        if (error) {
+          this.savedError = true;
+          this.saveMsg = "Error! Check log!";
+        } else {
+          this.savedError = false;
+          this.saveMsg = "Success!";
+        }
+        this.saved = true;
+        setTimeout(() => {
+          this.saved = false;
+          this.$forceUpdate(); // for some reason reactivity is lost, so forcing update....
+        }, 5000);
+      },
+      handleSave() {
+        var err = false;
+        try {
+          AuthStore.setApiKey(this.auth.apiKey);
+          AuthStore.setClientSecret(this.auth.clientSecret);
+          AuthStore.setOrgId(this.auth.orgId);
+          AuthStore.setTechAcct(this.auth.techAcct);
+          AuthStore.setPrivateKey(this.auth.privateKey); // yeah, I know.. no encryption.. blah blah blah
+        } catch (e) {
+          this.handleAfterSave(true);
+          throw e;
+        }
+        this.handleAfterSave(false);
       }
-      this.handleAfterSave(false);
-    }
-    /*
+      /*
       handleRefreshToken() {
         const cmp = this;
         cmp.loading = true;
@@ -162,17 +162,17 @@ export default Vue.extend({
         }, 3000);
       }
       */
-  }
-});
+    }
+  });
 </script>
 
 <style scoped>
-.hidden {
-  display: none;
-}
-.status {
-  display: inline;
-  line-height: 32px;
-  margin-left: 7px;
-}
+  .hidden {
+    display: none;
+  }
+  .status {
+    display: inline;
+    line-height: 32px;
+    margin-left: 7px;
+  }
 </style>

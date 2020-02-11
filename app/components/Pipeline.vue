@@ -29,84 +29,84 @@
 </template>
 
 <script lang="ts">
-import { mutations } from "./BreadcrumbStore";
-import {
-  Pipeline,
-  PipelineExecutionListRepresentation,
-  PipelineExecutionListRepresentationEmbedded,
-  PipelineExecution,
-  PipelineExecutionStatusEnum
-} from "../client";
-import Vue from "vue";
+  import { mutations } from "./BreadcrumbStore";
+  import {
+    Pipeline,
+    PipelineExecutionListRepresentation,
+    PipelineExecutionListRepresentationEmbedded,
+    PipelineExecution,
+    PipelineExecutionStatusEnum
+  } from "../client";
+  import Vue from "vue";
 
-export default Vue.extend({
-  name: "Program",
+  export default Vue.extend({
+    name: "Program",
 
-  data() {
-    return {
-      pipeline: {} as Pipeline,
-      executions: [] as Array<PipelineExecution>
-    };
-  },
-  async created() {
-    var client = await this.$CloudManagerApi;
-    try {
-      this.$showLoadingScreen();
-      const programId = this.$route.params.programId;
-      const pipelineId = this.$route.params.pipelineId;
-      if (programId && pipelineId) {
-        const response = await client.pipelines.getPipeline(
-          this.$route.params.programId,
-          this.$route.params.pipelineId
-        );
-        this.pipeline = response.data;
-        mutations.setPipeline(this.pipeline.name);
+    data() {
+      return {
+        pipeline: {} as Pipeline,
+        executions: [] as Array<PipelineExecution>
+      };
+    },
+    async created() {
+      var client = await this.$CloudManagerApi;
+      try {
+        this.$showLoadingScreen();
+        const programId = this.$route.params.programId;
+        const pipelineId = this.$route.params.pipelineId;
+        if (programId && pipelineId) {
+          const response = await client.pipelines.getPipeline(
+            this.$route.params.programId,
+            this.$route.params.pipelineId
+          );
+          this.pipeline = response.data;
+          mutations.setPipeline(this.pipeline.name);
 
-        const executionsResult = await client.pipelineExecution.getExecutions(
-          this.$route.params.programId,
-          this.$route.params.pipelineId
-        );
-        this.executions = executionsResult.data.embedded?.executions as Array<
-          PipelineExecution
-        >;
-        this.executions[0].status;
+          const executionsResult = await client.pipelineExecution.getExecutions(
+            this.$route.params.programId,
+            this.$route.params.pipelineId
+          );
+          this.executions = executionsResult.data.embedded?.executions as Array<
+            PipelineExecution
+          >;
+          this.executions[0].status;
+        }
+        this.$hideLoadingScreen();
+      } catch (err) {
+        console.error(err);
       }
-      this.$hideLoadingScreen();
-    } catch (err) {
-      console.error(err);
-    }
-  },
+    },
 
-  methods: {
-    getVariant(status: PipelineExecutionStatusEnum): string {
-      switch (status) {
-        case PipelineExecutionStatusEnum.NOTSTARTED:
-        case PipelineExecutionStatusEnum.RUNNING:
-          return "info";
-          break;
-        case PipelineExecutionStatusEnum.CANCELLING:
-        case PipelineExecutionStatusEnum.CANCELLED:
-          return "warning";
-          break;
-        case PipelineExecutionStatusEnum.FINISHED:
-          return "success";
-          break;
-        case PipelineExecutionStatusEnum.ERROR:
-        case PipelineExecutionStatusEnum.FAILED:
-          return "error";
-          break;
-        default:
-          return "info";
+    methods: {
+      getVariant(status: PipelineExecutionStatusEnum): string {
+        switch (status) {
+          case PipelineExecutionStatusEnum.NOTSTARTED:
+          case PipelineExecutionStatusEnum.RUNNING:
+            return "info";
+            break;
+          case PipelineExecutionStatusEnum.CANCELLING:
+          case PipelineExecutionStatusEnum.CANCELLED:
+            return "warning";
+            break;
+          case PipelineExecutionStatusEnum.FINISHED:
+            return "success";
+            break;
+          case PipelineExecutionStatusEnum.ERROR:
+          case PipelineExecutionStatusEnum.FAILED:
+            return "error";
+            break;
+          default:
+            return "info";
+        }
       }
     }
-  }
-});
+  });
 </script>
 
 <style scoped>
-.status {
-  display: inline;
-  line-height: 32px;
-  margin-left: 7px;
-}
+  .status {
+    display: inline;
+    line-height: 32px;
+    margin-left: 7px;
+  }
 </style>

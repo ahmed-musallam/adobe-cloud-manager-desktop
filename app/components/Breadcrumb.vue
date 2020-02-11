@@ -51,41 +51,41 @@
 </template>
 
 <script>
-import { store } from "./BreadcrumbStore";
+  import { store } from "./BreadcrumbStore";
 
-export default {
-  name: "Breadcrumb",
-  computed: {
-    breadcrumbs() {
-      return this.$route.path
-        .split("/")
-        .filter(Boolean)
-        .reduce((acc, item, ind, arr) => {
-          acc.push(["/" + arr.slice(0, ind + 1).join("/"), item]);
-          return acc;
-        }, []);
+  export default {
+    name: "Breadcrumb",
+    computed: {
+      breadcrumbs() {
+        return this.$route.path
+          .split("/")
+          .filter(Boolean)
+          .reduce((acc, item, ind, arr) => {
+            acc.push(["/" + arr.slice(0, ind + 1).join("/"), item]);
+            return acc;
+          }, []);
+      },
+      program() {
+        return store.program.name;
+      },
+      pipeline() {
+        return store.pipeline;
+      }
     },
-    program() {
-      return store.program.name;
-    },
-    pipeline() {
-      return store.pipeline;
-    }
-  },
-  beforeCreate() {},
+    beforeCreate() {},
 
-  methods: {}
-};
+    methods: {}
+  };
 </script>
 
 <style scoped>
-[icon="ChevronRight"] {
-  color: #b3b3b3;
-}
-.spectrum-Breadcrumbs-itemLink {
-  color: #6e6e6e;
-}
-.spectrum-Breadcrumbs-itemLink.router-link-active {
-  color: #2c2c2c;
-}
+  [icon="ChevronRight"] {
+    color: #b3b3b3;
+  }
+  .spectrum-Breadcrumbs-itemLink {
+    color: #6e6e6e;
+  }
+  .spectrum-Breadcrumbs-itemLink.router-link-active {
+    color: #2c2c2c;
+  }
 </style>

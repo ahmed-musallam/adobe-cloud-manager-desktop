@@ -47,62 +47,62 @@
 </template>
 
 <script lang="ts">
-import { mutations } from "./BreadcrumbStore";
-import { async } from "q";
-import { Pipeline, Program } from "../client";
+  import { mutations } from "./BreadcrumbStore";
+  import { async } from "q";
+  import { Pipeline, Program } from "../client";
 
-export default {
-  name: "Program",
+  export default {
+    name: "Program",
 
-  data() {
-    return {
-      program: {} as Program,
-      pipelines: [] as Pipeline[]
-    };
-  },
-  beforeRouteUpdate(to, from, next) {
-    this.updateProgram(to.params.programId);
-    next();
-  },
-  created() {
-    this.updateProgram(this.$route.params.programId);
-  },
-  methods: {
-    async updateProgram(programId: string) {
-      var client = await this.$CloudManagerApi;
-      console.log("redering program: ", programId);
-      try {
-        this.$showLoadingScreen();
-        const programResponse = await client.programs.getProgram(programId);
-        this.program = programResponse.data;
+    data() {
+      return {
+        program: {} as Program,
+        pipelines: [] as Pipeline[]
+      };
+    },
+    beforeRouteUpdate(to, from, next) {
+      this.updateProgram(to.params.programId);
+      next();
+    },
+    created() {
+      this.updateProgram(this.$route.params.programId);
+    },
+    methods: {
+      async updateProgram(programId: string) {
+        var client = await this.$CloudManagerApi;
+        console.log("redering program: ", programId);
+        try {
+          this.$showLoadingScreen();
+          const programResponse = await client.programs.getProgram(programId);
+          this.program = programResponse.data;
 
-        mutations.setProgram(this.program);
-        const pipelinesResponse = await client.pipelines.getPipelines(
-          this.program?.id || ""
-        );
-        this.pipelines = pipelinesResponse.data?.embedded?.pipelines || [];
-        this.$hideLoadingScreen();
-      } catch (err) {
-        console.error(err);
-        this.$hideLoadingScreen();
+          mutations.setProgram(this.program);
+          const pipelinesResponse = await client.pipelines.getPipelines(
+            this.program?.id || ""
+          );
+          this.pipelines = pipelinesResponse.data?.embedded?.pipelines || [];
+          this.$hideLoadingScreen();
+        } catch (err) {
+          console.error(err);
+          this.$hideLoadingScreen();
+        }
       }
     }
-  }
-};
+  };
 </script>
 
 <style scoped>
-coral-card {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-}
-._coral-Card-wrapper {
-  border-bottom-color: transparent !important;
-}
-coral-card-subtitle {
-  color: black !important;
-}
-coral-card-asset {
-  display: none !important;
-}
+  coral-card {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+  ._coral-Card-wrapper {
+    border-bottom-color: transparent !important;
+  }
+  coral-card-subtitle {
+    color: black !important;
+  }
+  coral-card-asset {
+    display: none !important;
+  }
 </style>

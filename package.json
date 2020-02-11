@@ -16,7 +16,7 @@
   },
   "lint-staged": {
     "*.{js,json,css,vue}": [
-      "prettier --write",
+      "prettier --vue-indent-script-and-styl --writee",
       "git add"
     ]
   },

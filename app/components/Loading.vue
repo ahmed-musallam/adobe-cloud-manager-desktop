@@ -5,27 +5,27 @@
 </template>
 
 <script>
-import { loadingStore } from "./LoadingStore";
+  import { loadingStore } from "./LoadingStore";
 
-export default {
-  name: "Loading",
-  computed: {
-    show() {
-      return loadingStore.show;
+  export default {
+    name: "Loading",
+    computed: {
+      show() {
+        return loadingStore.show;
+      }
     }
-  }
-};
+  };
 </script>
 
 <style scoped>
-.hide {
-  display: none;
-}
-.loading-container {
-  position: absolute;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-}
+  .hide {
+    display: none;
+  }
+  .loading-container {
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
 </style>
