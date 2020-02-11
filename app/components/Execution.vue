@@ -1,42 +1,58 @@
 <template>
   <div v-if="execution && execution.id">
-    <h3>Execution: {{ execution.id }}</h3>
-    <h4>
-      started by: <b>{{ execution.user }}</b>
-    </h4>
-    <h4>
-      status: <b>{{ execution.status }}</b>
-    </h4>
-    <h4>
-      Started: <b>{{ execution.createdAt | date }}</b>
-    </h4>
-    <h4>
-      Last changed: <b>{{ execution.updatedAt | date }}</b>
-    </h4>
-    <h4>
-      Finished: <b>{{ execution.finishedAt | date }}</b>
-    </h4>
-
-    <ul v-for="step in execution.embedded.stepStates" :key="step.id">
-      <li>id: {{ step.id }}</li>
-      <li>stepId: {{ step.stepId }}</li>
-      <li>phaseId: {{ step.phaseId }}</li>
-      <li>action: {{ step.action }}</li>
-      <li>repository: {{ step.repository }}</li>
-      <li>environment: {{ step.environment }}</li>
-      <li>environmentType: {{ step.environmentType }}</li>
-      <li>startedAt: {{ step.startedAt | date }}</li>
-      <li>finishedAt: {{ step.finishedAt | date }}</li>
-      <li>details: {{ JSON.stringify(step.details) }}</li>
-      <li>status: {{ step.status }}</li>
-      <li>links: {{ JSON.stringify(step.links) }}</li>
-    </ul>
+    <Status :variant="execution.status" :showText="true"></Status>
+    <coral-list style="max-width:300px">
+      <coral-list-divider></coral-list-divider>
+      <coral-list-item icon="gear"
+        >ID/Step ID/Phase ID:
+        <em
+          >{{ execution.id }}/{{ execution.stepId }}/{{ execution.phaseId }}</em
+        ></coral-list-item
+      >
+      <coral-list-item icon="user"
+        >Started By: <em>{{ execution.user }}</em></coral-list-item
+      >
+      <coral-list-item icon="date"
+        >Started: <em>{{ execution.createdAt | date }}</em></coral-list-item
+      >
+      <coral-list-item icon="date"
+        >Last changed:
+        <em>{{ execution.updatedAt | date }}</em></coral-list-item
+      >
+      <coral-list-item v-if="execution.finishedAt" icon="date"
+        >Finished: <em>{{ execution.finishedAt | date }}</em></coral-list-item
+      >
+    </coral-list>
+    <VerticalSteps>
+      <VerticalStep
+        v-for="step in execution.embedded.stepStates"
+        :key="step.stepId"
+        :variant="step.status"
+        :title="step.action"
+      >
+        <span v-if="step.startedAt"
+          >started: <em>{{ step.startedAt | date }}</em
+          ><br
+        /></span>
+        <span v-if="step.finishedAt"
+          >finished: <em>{{ step.finishedAt | date }}</em
+          ><br
+        /></span>
+        <span v-if="step.startedAt && !step.finishedAt && step.updatedAt"
+          >last updated: <em>{{ step.updatedAt | date }}</em
+          ><br
+        /></span>
+      </VerticalStep>
+    </VerticalSteps>
   </div>
 </template>
 
 <script lang="ts">
   import { mutations } from "./BreadcrumbStore";
   import { PipelineExecution, PipelineExecutionStatusEnum } from "../client";
+  import VerticalSteps from "./VerticalSteps.vue";
+  import VerticalStep from "./VerticalStep.vue";
+  import Status from "./Status";
   import Vue from "vue";
 
   export default Vue.extend({
@@ -46,6 +62,11 @@
       return {
         execution: {} as PipelineExecution
       };
+    },
+    components: {
+      VerticalSteps,
+      VerticalStep,
+      Status
     },
     async created() {
       var client = await this.$CloudManagerApi;
@@ -95,10 +116,4 @@
   });
 </script>
 
-<style scoped>
-  .status {
-    display: inline;
-    line-height: 32px;
-    margin-left: 7px;
-  }
-</style>
+<style scoped lang="scss"></style>
