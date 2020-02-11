@@ -46,7 +46,7 @@
     "axios": "^0.19.2",
     "deep-rename-keys": "^0.2.1",
     "keytar": "^5.0.0",
-    "menubar": "^7.2.0",
+    "menubar": "^8.0.0",
     "vue": "^2.6.10",
     "vue-router": "^3.1.5"
   }
