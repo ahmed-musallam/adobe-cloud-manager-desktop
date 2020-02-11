@@ -65,12 +65,16 @@ export default class CloudManagerApi {
     // setup retry interceptor
     globalAxios.interceptors.response.use(
       response =>
-        deepRenameKeys(response, (key: string) =>
+        deepRenameKeys(response, (key: string) => {
           // an unfortunate thing to do, really... the generated API interfaces
           // have keys names "embedded" but the ACTUAL response retunrs keys "_embedded"
           // so we rename them here ¯\_(ツ)_/¯
-          key === "_embedded" ? "embedded" : key
-        ),
+          if (key === "_embedded") {
+            return "embedded";
+          } else if (key === "_links") {
+            return "links";
+          } else return key;
+        }),
       async error => {
         if (401 === error.response.status) {
           console.log(

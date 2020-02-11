@@ -27,7 +27,6 @@
         <em>{{ saveMsg }}</em>
       </h4>
       <br />
-      <br />
       <!--
       <button @click="handleRefreshToken" is="coral-button" type="button">
         <span :class="{ hidden: !loading }">
@@ -46,7 +45,6 @@
         >
       </button>
       -->
-      <br />
     </form>
     <form class="coral-Form coral-Form--vertical">
       <label id="accessToken" class="coral-FieldLabel"

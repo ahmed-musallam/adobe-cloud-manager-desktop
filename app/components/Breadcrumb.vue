@@ -3,17 +3,24 @@
     <ul class="spectrum-Breadcrumbs" v-if="$route.path.startsWith('/program')">
       <li class="spectrum-Breadcrumbs-item">
         <router-link
+          :title="program"
           class="spectrum-Breadcrumbs-itemLink"
           :to="'/program/' + $route.params.programId"
           role="link"
           tabindex="0"
           >{{ program | limit(20) }}</router-link
         >
-        <coral-icon class="" icon="ChevronRight" size="S"></coral-icon>
+        <coral-icon
+          v-if="$route.params.programId"
+          class=""
+          icon="ChevronRight"
+          size="S"
+        ></coral-icon>
       </li>
       <li class="spectrum-Breadcrumbs-item" v-if="pipeline">
         <router-link
           class="spectrum-Breadcrumbs-itemLink"
+          :title="pipeline"
           :to="
             '/program/' +
               $route.params.programId +
@@ -23,6 +30,28 @@
           role="link"
           tabindex="0"
           >{{ pipeline | limit(20) }}</router-link
+        >
+        <coral-icon
+          v-if="$route.params.pipelineId"
+          class=""
+          icon="ChevronRight"
+          size="S"
+        ></coral-icon>
+      </li>
+      <li class="spectrum-Breadcrumbs-item" v-if="pipeline && execution">
+        <router-link
+          class="spectrum-Breadcrumbs-itemLink"
+          :to="
+            '/program/' +
+              $route.params.programId +
+              '/pipeline/' +
+              $route.params.pipelineId +
+              '/execution/' +
+              $route.params.executionId
+          "
+          role="link"
+          tabindex="0"
+          >{{ execution | limit(20) }}</router-link
         >
       </li>
     </ul>
@@ -70,6 +99,9 @@
       },
       pipeline() {
         return store.pipeline;
+      },
+      execution() {
+        return store.execution;
       }
     },
     beforeCreate() {},

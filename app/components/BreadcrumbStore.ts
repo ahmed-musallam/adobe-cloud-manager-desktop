@@ -3,7 +3,8 @@ import { Program, Pipeline } from "../client";
 
 export const store = Vue.observable({
   program: {} as Program,
-  pipeline: "" as string | undefined
+  pipeline: "" as string | undefined,
+  execution: "" as string | undefined
 });
 
 export const mutations = {
@@ -13,5 +14,8 @@ export const mutations = {
   },
   setPipeline(pipeline: string) {
     store.pipeline = pipeline;
+  },
+  setExecution(execution: string) {
+    store.execution = execution;
   }
 };

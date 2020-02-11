@@ -1,10 +1,14 @@
-const { series, parallel } = require("gulp");
+const { src, watch, series, parallel } = require("gulp");
 const fs = require("fs-extra");
 const Bundler = require("parcel-bundler");
 const { spawn } = require("child_process");
+const util = require("util");
+const exec = util.promisify(require("child_process").exec);
+
 const packager = require("electron-packager");
 const createDMG = require("electron-installer-dmg");
 const path = require("path");
+const debug = !!process.env.DEBUG_E;
 
 const PACKAGER_OPTIONS = {
   name: "Cloud Manager Menubar",
@@ -27,6 +31,17 @@ const PACKAGER_OPTIONS = {
   ].map(toWildRegex)
 };
 
+const PRETTIER_FILES = [
+  "main.js",
+  "preload.js",
+  "index.html",
+  "gulpfile.js",
+  "./app/**/*.js",
+  "./app/**/*.ts",
+  "./app/**/*.vue",
+  "!./app/client/typescript-axios/*"
+];
+
 // makes any passed string a wile regex. Example: test => /.*test.*/g
 function toWildRegex(str) {
   var escaped = str.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
@@ -36,18 +51,36 @@ function toWildRegex(str) {
 // spawn proccess and pipe output to stdout and stderr
 function spawnAndLog(command, params) {
   const cp = spawn(command, params);
-  cp.stdout.pipe(process.stdout);
+  if (debug) {
+    cp.stdout.pipe(process.stdout);
+  }
   cp.stderr.pipe(process.stderr);
   return cp;
 }
 
-function prettierTask() {
-  return spawnAndLog("prettier", [
-    "--vue-indent-script-and-style",
-    "--write",
-    "./app/**.{js,ts,vue}",
-    "./app/**/**.{js,ts,vue}"
-  ]);
+async function execAndLog(command) {
+  const cp = await exec(command);
+  if (debug) {
+    console.log(cp.stdout);
+  }
+  console.error(cp.stderr);
+  return cp;
+}
+
+function prettierTask(watchFiles) {
+  const prettify = filePath => {
+    if (!filePath) return;
+    execAndLog(`prettier --vue-indent-script-and-style --write ${filePath}`);
+  };
+  return (prettier = cb => {
+    if (watchFiles) {
+      watcher = watch(PRETTIER_FILES);
+      "change add unlink".split(" ").forEach(e => watcher.on(e, prettify));
+    } else {
+      src(PRETTIER_FILES).on("data", file => prettify(file.path));
+    }
+    cb();
+  });
 }
 
 function copyAssetsTask(cb) {
@@ -58,13 +91,16 @@ function copyAssetsTask(cb) {
 }
 
 function bundleTask(watch) {
-  const bundler = new Bundler("./app/main.ts", { watch: !!watch });
-  return () => bundler.bundle();
+  const bundler = new Bundler("./app/main.ts", {
+    watch: !!watch,
+    hmrHostname: "localhost"
+  });
+  return (bundle = () => bundler.bundle());
 }
 
 function electronTask(debug) {
   process.env.DEBUG_E = !!debug;
-  return () => spawnAndLog("electron", ["."]);
+  return (electron = () => spawnAndLog("electron", ["."]));
 }
 
 async function packageTask(cb) {
@@ -74,7 +110,7 @@ async function packageTask(cb) {
 }
 
 function dmgTask(options) {
-  return cb => {
+  return (dmg = cb => {
     const appFolder = `${options.name}-${options.platform}-${options.arch}`;
     const appName = `${options.name}.app`;
     createDMG(
@@ -92,18 +128,24 @@ function dmgTask(options) {
       }
     );
     cb();
-  };
+  });
 }
-exports["prettier"] = series(prettierTask);
-exports["ui:build"] = series(prettierTask, copyAssetsTask, bundleTask());
-exports["ui:watch"] = series(prettierTask, copyAssetsTask, bundleTask(true));
+
+exports["prettier"] = prettierTask(false);
+exports["prettier:watch"] = prettierTask(true);
+exports["ui:build"] = series(this["prettier"], copyAssetsTask, bundleTask());
+exports["ui:watch"] = series(
+  this["prettier:watch"],
+  copyAssetsTask,
+  bundleTask(true)
+);
 exports["electron:watch"] = parallel(
-  prettierTask,
+  this["prettier:watch"],
   this["ui:watch"],
   electronTask()
 );
 exports["electron:watch:debug"] = parallel(
-  prettierTask,
+  this["prettier:watch"],
   this["ui:watch"],
   electronTask(true)
 );

@@ -1,12 +1,14 @@
 <template>
   <div>
     <h3>Executions:</h3>
-    <table is="coral-table">
+    <table is="coral-table" selectable="">
       <thead is="coral-table-head">
         <tr is="coral-table-row">
           <th is="coral-table-headercell">Status</th>
-          <th is="coral-table-headercell">Execution</th>
+          <th is="coral-table-headercell">Id</th>
           <th is="coral-table-headercell">Started</th>
+          <th is="coral-table-headercell">more</th>
+          <th></th>
         </tr>
       </thead>
       <tbody is="coral-table-body">
@@ -22,6 +24,23 @@
           </td>
           <td is="coral-table-cell">{{ execution.id }}</td>
           <td is="coral-table-cell">{{ execution.createdAt | date }}</td>
+          <td is="coral-table-cell">
+            <router-link
+              class="no-decoration"
+              :to="
+                '/program/' +
+                  $route.params.programId +
+                  '/pipeline/' +
+                  $route.params.pipelineId +
+                  '/execution/' +
+                  execution.id
+              "
+            >
+              <button is="coral-button" variant="action">
+                detail
+              </button>
+            </router-link>
+          </td>
         </tr>
       </tbody>
     </table>
