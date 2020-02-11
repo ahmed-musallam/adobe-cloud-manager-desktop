@@ -51,7 +51,6 @@
 </template>
 
 <script>
-import CMApiClient from "../util/CMApiClient";
 import { store } from "./BreadcrumbStore";
 
 export default {

@@ -28,36 +28,48 @@
   </div>
 </template>
 
-<script>
-import CMApiClient from "../util/CMApiClient";
+<script lang="ts">
 import { mutations } from "./BreadcrumbStore";
+import {
+  Pipeline,
+  PipelineExecutionListRepresentation,
+  PipelineExecutionListRepresentationEmbedded,
+  PipelineExecution,
+  PipelineExecutionStatusEnum
+} from "../client";
+import Vue from "vue";
 
-export default {
+export default Vue.extend({
   name: "Program",
 
   data() {
     return {
-      pipeline: {},
-      executions: []
+      pipeline: {} as Pipeline,
+      executions: [] as Array<PipelineExecution>
     };
   },
-  async beforeCreate() {
-    var client = await CMApiClient.getInstance();
+  async created() {
+    var client = await this.$CloudManagerApi;
     try {
       this.$showLoadingScreen();
       const programId = this.$route.params.programId;
       const pipelineId = this.$route.params.pipelineId;
       if (programId && pipelineId) {
-        this.pipeline = await client.rest.api.programService.getPipeline(
+        const response = await client.pipelines.getPipeline(
           this.$route.params.programId,
           this.$route.params.pipelineId
         );
+        this.pipeline = response.data;
         mutations.setPipeline(this.pipeline.name);
-        const executions = await client.rest.api.program.executionsService.getExecutions(
+
+        const executionsResult = await client.pipelineExecution.getExecutions(
           this.$route.params.programId,
           this.$route.params.pipelineId
         );
-        this.executions = executions._embedded.executions;
+        this.executions = executionsResult.data.embedded?.executions as Array<
+          PipelineExecution
+        >;
+        this.executions[0].status;
       }
       this.$hideLoadingScreen();
     } catch (err) {
@@ -66,21 +78,21 @@ export default {
   },
 
   methods: {
-    getVariant(status) {
+    getVariant(status: PipelineExecutionStatusEnum): string {
       switch (status) {
-        case "NOT_STARTED":
-        case "RUNNING":
+        case PipelineExecutionStatusEnum.NOTSTARTED:
+        case PipelineExecutionStatusEnum.RUNNING:
           return "info";
           break;
-        case "CANCELLING":
-        case "CANCELLED":
+        case PipelineExecutionStatusEnum.CANCELLING:
+        case PipelineExecutionStatusEnum.CANCELLED:
           return "warning";
           break;
-        case "FINISHED":
+        case PipelineExecutionStatusEnum.FINISHED:
           return "success";
           break;
-        case "ERROR":
-        case "failed":
+        case PipelineExecutionStatusEnum.ERROR:
+        case PipelineExecutionStatusEnum.FAILED:
           return "error";
           break;
         default:
@@ -88,7 +100,7 @@ export default {
       }
     }
   }
-};
+});
 </script>
 
 <style scoped>

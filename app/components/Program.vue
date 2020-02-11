@@ -46,18 +46,18 @@
   </div>
 </template>
 
-<script>
-import CMApiClient from "../util/CMApiClient";
+<script lang="ts">
 import { mutations } from "./BreadcrumbStore";
 import { async } from "q";
+import { Pipeline, Program } from "../client";
 
 export default {
   name: "Program",
 
   data() {
     return {
-      program: {},
-      pipelines: {}
+      program: {} as Program,
+      pipelines: [] as Pipeline[]
     };
   },
   beforeRouteUpdate(to, from, next) {
@@ -68,19 +68,19 @@ export default {
     this.updateProgram(this.$route.params.programId);
   },
   methods: {
-    async updateProgram(programId) {
+    async updateProgram(programId: string) {
+      var client = await this.$CloudManagerApi;
       console.log("redering program: ", programId);
       try {
-        var client = await CMApiClient.getInstance();
         this.$showLoadingScreen();
-        this.program = await client.rest.api.programService.getProgram(
-          programId
-        );
+        const programResponse = await client.programs.getProgram(programId);
+        this.program = programResponse.data;
+
         mutations.setProgram(this.program);
-        const pipelines = await client.rest.api.program.pipelinesService.getPipelines(
-          this.program.id
+        const pipelinesResponse = await client.pipelines.getPipelines(
+          this.program?.id || ""
         );
-        this.pipelines = pipelines._embedded.pipelines;
+        this.pipelines = pipelinesResponse.data?.embedded?.pipelines || [];
         this.$hideLoadingScreen();
       } catch (err) {
         console.error(err);

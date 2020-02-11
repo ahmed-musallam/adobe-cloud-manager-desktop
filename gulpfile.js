@@ -58,7 +58,7 @@ function copyAssetsTask(cb) {
 }
 
 function bundleTask(watch) {
-  const bundler = new Bundler("./app/main.js", { watch: !!watch });
+  const bundler = new Bundler("./app/main.ts", { watch: !!watch });
   return () => bundler.bundle();
 }
 

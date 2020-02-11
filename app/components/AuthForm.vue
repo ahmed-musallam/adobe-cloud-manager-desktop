@@ -28,6 +28,7 @@
       </h4>
       <br />
       <br />
+      <!--
       <button @click="handleRefreshToken" is="coral-button" type="button">
         <span :class="{ hidden: !loading }">
           <coral-wait size="S"></coral-wait>
@@ -44,6 +45,7 @@
           >Refresh Token</span
         >
       </button>
+      -->
       <br />
     </form>
     <form class="coral-Form coral-Form--vertical">
@@ -62,10 +64,10 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import AuthStore from "./../util/AuthStore";
-import CMApiClient from "./../util/CMApiClient";
 import SecretInput from "./SecretInput";
+import AuthUtil from "../util/AuthUtil";
 export default {
   name: "AuthForm",
 
@@ -90,8 +92,9 @@ export default {
   components: {
     SecretInput
   },
-  async beforeCreate() {
+  async created() {
     this.accessToken = await AuthStore.getAccessToken();
+    console.log("got: " + this.accessToken);
     this.auth = {
       apiKey: await AuthStore.getApiKey(),
       clientSecret: await AuthStore.getClientSecret(),
@@ -128,34 +131,36 @@ export default {
         throw e;
       }
       this.handleAfterSave(false);
-    },
-    handleRefreshToken() {
-      const cmp = this;
-      cmp.loading = true;
-      CMApiClient.getAccessToken()
-        .then(accessToken => {
-          console.debug("Success! got token: ", accessToken);
-          this.accessToken = accessToken;
-          AuthStore.setAccessToken(accessToken);
-          CMApiClient.refresh(); // refresh the client after obtaining new access token
-          cmp.loading = false;
-          cmp.handleRefreshTokenResult();
-        })
-        .catch(err => {
-          console.error(err);
-          cmp.loading = false;
-          cmp.handleRefreshTokenResult(true);
-          this.accessToken = err;
-        });
-    },
-    handleRefreshTokenResult(fail) {
-      this.refreshResultFail = !!fail;
-      this.showRefreshResult = true;
-      setTimeout(() => {
-        this.showRefreshResult = false;
-        this.$forceUpdate(); // for some reason reactivity is lost, so forcing update....
-      }, 3000);
     }
+    /*
+      handleRefreshToken() {
+        const cmp = this;
+        cmp.loading = true;
+        AuthUtil.getAccessToken()
+          .then(accessToken => { d
+            console.debug("Success! got token: ", accessToken);
+            this.accessToken = accessToken;
+            AuthStore.setAccessToken(accessToken);
+            CMApiClient.refresh(); // refresh the client after obtaining new access token
+            cmp.loading = false;
+            cmp.handleRefreshTokenResult();
+          })
+          .catch(err => {
+            console.error(err);
+            cmp.loading = false;
+            cmp.handleRefreshTokenResult(true);
+            this.accessToken = err;
+          });
+      },
+      handleRefreshTokenResult(fail) {
+        this.refreshResultFail = !!fail;
+        this.showRefreshResult = true;
+        setTimeout(() => {
+          this.showRefreshResult = false;
+          this.$forceUpdate(); // for some reason reactivity is lost, so forcing update....
+        }, 3000);
+      }
+      */
   }
 };
 </script>

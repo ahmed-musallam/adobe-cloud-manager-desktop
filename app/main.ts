@@ -7,24 +7,26 @@ import Router from "vue-router";
 import App from "./App";
 import router from "./router";
 import { loadingActions } from "./components/LoadingStore";
+import CloudManagerApi from "./client/wrapper/CloudManagerApi";
 
 // Plugins
 Vue.use(Router);
 
 Vue.use({
-  install: function(vue) {
+  install(vue) {
     vue.prototype.$showLoadingScreen = () => {
       loadingActions.show();
     };
     vue.prototype.$hideLoadingScreen = () => {
       loadingActions.hide();
     };
+    vue.prototype.$CloudManagerApi = CloudManagerApi.getInstance();
   }
 });
 
 // Filters
 
-Vue.filter("date", function(value) {
+Vue.filter("date", function(value: string) {
   if (!value) return "";
   value = value.toString();
   var date = new Date(value);
@@ -38,7 +40,7 @@ Vue.filter("date", function(value) {
   }).format(date);
 });
 
-Vue.filter("limit", function(value, limit) {
+Vue.filter("limit", function(value: string, limit: number) {
   if (!value) return "";
   value = value.toString();
   const length = value.length;

@@ -1,9 +1,15 @@
 import VueRouter, { Route } from 'vue-router'
+import CloudManagerApi, { CloudManagerApiInstance } from "./app/client/wrapper/CloudManagerApi";
 
 // declare global variables
 declare const electronStore;
 declare const adobeAuth;
 declare const keytar;
+
+declare module '*.vue' {
+  import Vue from 'vue';
+  export default Vue;
+}
 
 declare module 'vue/types/vue' {
   interface Vue {
@@ -11,6 +17,7 @@ declare module 'vue/types/vue' {
     on: FunctionStringCallback
     $showLoadingScreen: Function
     $hideLoadingScreen: Function
+    $CloudManagerApi: Promise<CloudManagerApiInstance>
   }
   interface CoralEvent extends Event {
     detail: {

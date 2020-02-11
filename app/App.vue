@@ -34,15 +34,19 @@
   </coral-shell>
 </template>
 
-<script>
-import Breadcrumb from "./components/Breadcrumb";
-import Loading from "./components/Loading";
-import { APIClient } from "./client";
+<script lang="ts">
+import Breadcrumb from "./components/Breadcrumb.vue";
+import Loading from "./components/Loading.vue";
 import { AxiosRequestConfig } from "axios";
-import CMApiClient from "./util/CMApiClient";
 import { store } from "./components/BreadcrumbStore";
+import Vue from "vue";
+import { CoralElement } from "vue/types/vue";
+import { ProgramList, ProgramListEmbedded, EmbeddedProgram } from "./client";
+import CloudManagerApi, {
+  CloudManagerApiInstance
+} from "./client/wrapper/CloudManagerApi";
 
-export default {
+export default Vue.extend({
   name: "App",
   components: {
     Breadcrumb,
@@ -50,33 +54,34 @@ export default {
   },
   data() {
     return {
-      programs: [],
+      programs: {} as EmbeddedProgram[] | undefined,
       state: {}
     };
   },
   mounted() {
-    this.$refs.workspaces.on("coral-shell-workspaces:change", e => {
-      const href = e.detail.selection.getAttribute("href");
+    const workspaces = this.$refs.workspaces as CoralElement;
+    workspaces.on("coral-shell-workspaces:change", e => {
+      const href = e.detail.selection.getAttribute("href") || "";
       if (this.$route.path !== href) {
         // safeguard against page refresh
         this.$router.push({ path: href });
       }
     });
   },
-  async beforeCreate() {
-    var client = await CMApiClient.getInstance();
+
+  async created() {
+    const client = await this.$CloudManagerApi;
     try {
       this.$showLoadingScreen();
-      var result = await client.rest.api.programsService.getPrograms();
-      this.programs = result._embedded.programs;
+      const result = await client.programs.getPrograms();
+      this.programs = result.data.embedded?.programs;
       this.$hideLoadingScreen();
     } catch (err) {
       console.error(err);
       this.$hideLoadingScreen();
     }
-  },
-  methods: {}
-};
+  }
+});
 </script>
 
 <style scoped></style>
