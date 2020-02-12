@@ -30,19 +30,19 @@ export interface BranchList {
      * @type {number}
      * @memberof BranchList
      */
-    totalNumberOfItems?: number;
+    _totalNumberOfItems?: number;
     /**
      * 
      * @type {BranchListEmbedded}
      * @memberof BranchList
      */
-    embedded?: BranchListEmbedded;
+    _embedded?: BranchListEmbedded;
     /**
      * 
      * @type {ProgramListLinks}
      * @memberof BranchList
      */
-    links?: ProgramListLinks;
+    _links?: ProgramListLinks;
 }
 /**
  * 
@@ -92,7 +92,7 @@ export interface EmbeddedProgram {
      * @type {EmbeddedProgramLinks}
      * @memberof EmbeddedProgram
      */
-    links?: EmbeddedProgramLinks;
+    _links?: EmbeddedProgramLinks;
 }
 /**
  * 
@@ -148,7 +148,7 @@ export interface Environment {
      * @type {EnvironmentLinks}
      * @memberof Environment
      */
-    links?: EnvironmentLinks;
+    _links?: EnvironmentLinks;
 }
 
 /**
@@ -156,9 +156,9 @@ export interface Environment {
     * @enum {string}
     */
 export enum EnvironmentTypeEnum {
-    Dev = 'dev',
-    Stage = 'stage',
-    Prod = 'prod'
+    dev = 'dev',
+    stage = 'stage',
+    prod = 'prod'
 }
 
 /**
@@ -172,25 +172,25 @@ export interface EnvironmentLinks {
      * @type {HalLink}
      * @memberof EnvironmentLinks
      */
-    httpNsAdobeComAdobecloudRelProgram?: HalLink;
+    http__ns_adobe_com_adobecloud_rel_program?: HalLink;
     /**
      * 
      * @type {HalLink}
      * @memberof EnvironmentLinks
      */
-    httpNsAdobeComAdobecloudRelPipeline?: HalLink;
+    http__ns_adobe_com_adobecloud_rel_pipeline?: HalLink;
     /**
      * 
      * @type {HalLink}
      * @memberof EnvironmentLinks
      */
-    httpNsAdobeComAdobecloudRelAuthor?: HalLink;
+    http__ns_adobe_com_adobecloud_rel_author?: HalLink;
     /**
      * 
      * @type {HalLink}
      * @memberof EnvironmentLinks
      */
-    httpNsAdobeComAdobecloudRelPublish?: HalLink;
+    http__ns_adobe_com_adobecloud_rel_publish?: HalLink;
     /**
      * 
      * @type {HalLink}
@@ -209,19 +209,19 @@ export interface EnvironmentList {
      * @type {number}
      * @memberof EnvironmentList
      */
-    totalNumberOfItems?: number;
+    _totalNumberOfItems?: number;
     /**
      * 
      * @type {EnvironmentListEmbedded}
      * @memberof EnvironmentList
      */
-    embedded?: EnvironmentListEmbedded;
+    _embedded?: EnvironmentListEmbedded;
     /**
      * 
      * @type {ProgramListLinks}
      * @memberof EnvironmentList
      */
-    links?: ProgramListLinks;
+    _links?: ProgramListLinks;
 }
 /**
  * 
@@ -352,9 +352,9 @@ export interface Metric {
     * @enum {string}
     */
 export enum MetricSeverityEnum {
-    Critical = 'critical',
-    Important = 'important',
-    Informational = 'informational'
+    critical = 'critical',
+    important = 'important',
+    informational = 'informational'
 }
 /**
     * @export
@@ -440,7 +440,7 @@ export interface Pipeline {
      * @type {PipelineLinks}
      * @memberof Pipeline
      */
-    links?: PipelineLinks;
+    _links?: PipelineLinks;
 }
 
 /**
@@ -448,7 +448,7 @@ export interface Pipeline {
     * @enum {string}
     */
 export enum PipelineTriggerEnum {
-    ONCOMMIT = 'ON_COMMIT',
+    ON_COMMIT = 'ON_COMMIT',
     MANUAL = 'MANUAL',
     SCHEDULE = 'SCHEDULE'
 }
@@ -533,13 +533,13 @@ export interface PipelineExecution {
      * @type {PipelineExecutionEmbedded}
      * @memberof PipelineExecution
      */
-    embedded?: PipelineExecutionEmbedded;
+    _embedded?: PipelineExecutionEmbedded;
     /**
      * 
      * @type {PipelineExecutionLinks}
      * @memberof PipelineExecution
      */
-    links?: PipelineExecutionLinks;
+    _links?: PipelineExecutionLinks;
 }
 
 /**
@@ -547,7 +547,7 @@ export interface PipelineExecution {
     * @enum {string}
     */
 export enum PipelineExecutionStatusEnum {
-    NOTSTARTED = 'NOT_STARTED',
+    NOT_STARTED = 'NOT_STARTED',
     RUNNING = 'RUNNING',
     CANCELLING = 'CANCELLING',
     CANCELLED = 'CANCELLED',
@@ -560,7 +560,7 @@ export enum PipelineExecutionStatusEnum {
     * @enum {string}
     */
 export enum PipelineExecutionTriggerEnum {
-    ONCOMMIT = 'ON_COMMIT',
+    ON_COMMIT = 'ON_COMMIT',
     MANUAL = 'MANUAL',
     SCHEDULE = 'SCHEDULE'
 }
@@ -589,13 +589,13 @@ export interface PipelineExecutionLinks {
      * @type {HalLink}
      * @memberof PipelineExecutionLinks
      */
-    httpNsAdobeComAdobecloudRelProgram?: HalLink;
+    http__ns_adobe_com_adobecloud_rel_program?: HalLink;
     /**
      * 
      * @type {HalLink}
      * @memberof PipelineExecutionLinks
      */
-    httpNsAdobeComAdobecloudRelPipeline?: HalLink;
+    http__ns_adobe_com_adobecloud_rel_pipeline?: HalLink;
     /**
      * 
      * @type {HalLink}
@@ -614,25 +614,25 @@ export interface PipelineExecutionListRepresentation {
      * @type {number}
      * @memberof PipelineExecutionListRepresentation
      */
-    totalNumberOfItems?: number;
+    _totalNumberOfItems?: number;
     /**
      * 
      * @type {RequestedPageDetails}
      * @memberof PipelineExecutionListRepresentation
      */
-    page?: RequestedPageDetails;
+    _page?: RequestedPageDetails;
     /**
      * 
      * @type {PipelineExecutionListRepresentationEmbedded}
      * @memberof PipelineExecutionListRepresentation
      */
-    embedded?: PipelineExecutionListRepresentationEmbedded;
+    _embedded?: PipelineExecutionListRepresentationEmbedded;
     /**
      * 
      * @type {PipelineExecutionListRepresentationLinks}
      * @memberof PipelineExecutionListRepresentation
      */
-    links?: PipelineExecutionListRepresentationLinks;
+    _links?: PipelineExecutionListRepresentationLinks;
 }
 /**
  * 
@@ -761,7 +761,7 @@ export interface PipelineExecutionStepState {
      * @type {PipelineExecutionStepStateLinks}
      * @memberof PipelineExecutionStepState
      */
-    links?: PipelineExecutionStepStateLinks;
+    _links?: PipelineExecutionStepStateLinks;
 }
 
 /**
@@ -769,12 +769,12 @@ export interface PipelineExecutionStepState {
     * @enum {string}
     */
 export enum PipelineExecutionStepStateStatusEnum {
-    NOTSTARTED = 'NOT_STARTED',
+    NOT_STARTED = 'NOT_STARTED',
     RUNNING = 'RUNNING',
     FINISHED = 'FINISHED',
     ERROR = 'ERROR',
-    ROLLINGBACK = 'ROLLING_BACK',
-    ROLLEDBACK = 'ROLLED_BACK',
+    ROLLING_BACK = 'ROLLING_BACK',
+    ROLLED_BACK = 'ROLLED_BACK',
     WAITING = 'WAITING',
     CANCELLED = 'CANCELLED',
     FAILED = 'FAILED'
@@ -791,43 +791,43 @@ export interface PipelineExecutionStepStateLinks {
      * @type {HalLink}
      * @memberof PipelineExecutionStepStateLinks
      */
-    httpNsAdobeComAdobecloudRelExecution?: HalLink;
+    http__ns_adobe_com_adobecloud_rel_execution?: HalLink;
     /**
      * 
      * @type {HalLink}
      * @memberof PipelineExecutionStepStateLinks
      */
-    httpNsAdobeComAdobecloudRelPipeline?: HalLink;
+    http__ns_adobe_com_adobecloud_rel_pipeline?: HalLink;
     /**
      * 
      * @type {HalLink}
      * @memberof PipelineExecutionStepStateLinks
      */
-    httpNsAdobeComAdobecloudRelPipelineLogs?: HalLink;
+    http__ns_adobe_com_adobecloud_rel_pipeline_logs?: HalLink;
     /**
      * 
      * @type {HalLink}
      * @memberof PipelineExecutionStepStateLinks
      */
-    httpNsAdobeComAdobecloudRelPipelineMetrics?: HalLink;
+    http__ns_adobe_com_adobecloud_rel_pipeline_metrics?: HalLink;
     /**
      * 
      * @type {HalLink}
      * @memberof PipelineExecutionStepStateLinks
      */
-    httpNsAdobeComAdobecloudRelPipelineAdvance?: HalLink;
+    http__ns_adobe_com_adobecloud_rel_pipeline_advance?: HalLink;
     /**
      * 
      * @type {HalLink}
      * @memberof PipelineExecutionStepStateLinks
      */
-    httpNsAdobeComAdobecloudRelPipelineCancel?: HalLink;
+    http__ns_adobe_com_adobecloud_rel_pipeline_cancel?: HalLink;
     /**
      * 
      * @type {HalLink}
      * @memberof PipelineExecutionStepStateLinks
      */
-    httpNsAdobeComAdobecloudRelProgram?: HalLink;
+    http__ns_adobe_com_adobecloud_rel_program?: HalLink;
     /**
      * 
      * @type {HalLink}
@@ -846,19 +846,19 @@ export interface PipelineLinks {
      * @type {HalLink}
      * @memberof PipelineLinks
      */
-    httpNsAdobeComAdobecloudRelProgram?: HalLink;
+    http__ns_adobe_com_adobecloud_rel_program?: HalLink;
     /**
      * 
      * @type {HalLink}
      * @memberof PipelineLinks
      */
-    httpNsAdobeComAdobecloudRelExecution?: HalLink;
+    http__ns_adobe_com_adobecloud_rel_execution?: HalLink;
     /**
      * 
      * @type {HalLink}
      * @memberof PipelineLinks
      */
-    httpNsAdobeComAdobecloudRelExecutions?: HalLink;
+    http__ns_adobe_com_adobecloud_rel_executions?: HalLink;
     /**
      * 
      * @type {HalLink}
@@ -877,19 +877,19 @@ export interface PipelineList {
      * @type {number}
      * @memberof PipelineList
      */
-    totalNumberOfItems?: number;
+    _totalNumberOfItems?: number;
     /**
      * 
      * @type {PipelineListEmbedded}
      * @memberof PipelineList
      */
-    embedded?: PipelineListEmbedded;
+    _embedded?: PipelineListEmbedded;
     /**
      * 
      * @type {ProgramListLinks}
      * @memberof PipelineList
      */
-    links?: ProgramListLinks;
+    _links?: ProgramListLinks;
 }
 /**
  * 
@@ -1006,7 +1006,7 @@ export interface Program {
      * @type {ProgramLinks}
      * @memberof Program
      */
-    links?: ProgramLinks;
+    _links?: ProgramLinks;
 }
 /**
  * 
@@ -1019,19 +1019,19 @@ export interface ProgramLinks {
      * @type {HalLink}
      * @memberof ProgramLinks
      */
-    httpNsAdobeComAdobecloudRelPipelines?: HalLink;
+    http__ns_adobe_com_adobecloud_rel_pipelines?: HalLink;
     /**
      * 
      * @type {HalLink}
      * @memberof ProgramLinks
      */
-    httpNsAdobeComAdobecloudRelEnvironments?: HalLink;
+    http__ns_adobe_com_adobecloud_rel_environments?: HalLink;
     /**
      * 
      * @type {HalLink}
      * @memberof ProgramLinks
      */
-    httpNsAdobeComAdobecloudRelRepositories?: HalLink;
+    http__ns_adobe_com_adobecloud_rel_repositories?: HalLink;
     /**
      * 
      * @type {HalLink}
@@ -1050,19 +1050,19 @@ export interface ProgramList {
      * @type {number}
      * @memberof ProgramList
      */
-    totalNumberOfItems?: number;
+    _totalNumberOfItems?: number;
     /**
      * 
      * @type {ProgramListEmbedded}
      * @memberof ProgramList
      */
-    embedded?: ProgramListEmbedded;
+    _embedded?: ProgramListEmbedded;
     /**
      * 
      * @type {ProgramListLinks}
      * @memberof ProgramList
      */
-    links?: ProgramListLinks;
+    _links?: ProgramListLinks;
 }
 /**
  * 
@@ -1125,7 +1125,7 @@ export interface Repository {
      * @type {RepositoryLinks}
      * @memberof Repository
      */
-    links?: RepositoryLinks;
+    _links?: RepositoryLinks;
 }
 /**
  * Represents a Git Branch
@@ -1156,7 +1156,7 @@ export interface RepositoryBranch {
      * @type {RepositoryBranchLinks}
      * @memberof RepositoryBranch
      */
-    links?: RepositoryBranchLinks;
+    _links?: RepositoryBranchLinks;
 }
 /**
  * 
@@ -1169,13 +1169,13 @@ export interface RepositoryBranchLinks {
      * @type {HalLink}
      * @memberof RepositoryBranchLinks
      */
-    httpNsAdobeComAdobecloudRelProgram?: HalLink;
+    http__ns_adobe_com_adobecloud_rel_program?: HalLink;
     /**
      * 
      * @type {HalLink}
      * @memberof RepositoryBranchLinks
      */
-    httpNsAdobeComAdobecloudRelRepository?: HalLink;
+    http__ns_adobe_com_adobecloud_rel_repository?: HalLink;
 }
 /**
  * 
@@ -1188,13 +1188,13 @@ export interface RepositoryLinks {
      * @type {HalLink}
      * @memberof RepositoryLinks
      */
-    httpNsAdobeComAdobecloudRelProgram?: HalLink;
+    http__ns_adobe_com_adobecloud_rel_program?: HalLink;
     /**
      * 
      * @type {HalLink}
      * @memberof RepositoryLinks
      */
-    httpNsAdobeComAdobecloudRelBranches?: HalLink;
+    http__ns_adobe_com_adobecloud_rel_branches?: HalLink;
     /**
      * 
      * @type {HalLink}
@@ -1213,19 +1213,19 @@ export interface RepositoryList {
      * @type {number}
      * @memberof RepositoryList
      */
-    totalNumberOfItems?: number;
+    _totalNumberOfItems?: number;
     /**
      * 
      * @type {RepositoryListEmbedded}
      * @memberof RepositoryList
      */
-    embedded?: RepositoryListEmbedded;
+    _embedded?: RepositoryListEmbedded;
     /**
      * 
      * @type {ProgramListLinks}
      * @memberof RepositoryList
      */
-    links?: ProgramListLinks;
+    _links?: ProgramListLinks;
 }
 /**
  * 
@@ -1295,13 +1295,13 @@ export const BranchesApiAxiosParamCreator = function (configuration?: Configurat
          * @summary List Branches
          * @param {string} programId Identifier of the program.
          * @param {string} repositoryId Identifier of the repository
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBranches(programId: string, repositoryId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options: any = {}): RequestArgs {
+        getBranches(programId: string, repositoryId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options: any = {}): RequestArgs {
             // verify required parameter 'programId' is not null or undefined
             if (programId === null || programId === undefined) {
                 throw new RequiredError('programId','Required parameter programId was null or undefined when calling getBranches.');
@@ -1310,17 +1310,17 @@ export const BranchesApiAxiosParamCreator = function (configuration?: Configurat
             if (repositoryId === null || repositoryId === undefined) {
                 throw new RequiredError('repositoryId','Required parameter repositoryId was null or undefined when calling getBranches.');
             }
-            // verify required parameter 'xGwImsOrgId' is not null or undefined
-            if (xGwImsOrgId === null || xGwImsOrgId === undefined) {
-                throw new RequiredError('xGwImsOrgId','Required parameter xGwImsOrgId was null or undefined when calling getBranches.');
+            // verify required parameter 'x_gw_ims_org_id' is not null or undefined
+            if (x_gw_ims_org_id === null || x_gw_ims_org_id === undefined) {
+                throw new RequiredError('x_gw_ims_org_id','Required parameter x_gw_ims_org_id was null or undefined when calling getBranches.');
             }
-            // verify required parameter 'authorization' is not null or undefined
-            if (authorization === null || authorization === undefined) {
-                throw new RequiredError('authorization','Required parameter authorization was null or undefined when calling getBranches.');
+            // verify required parameter 'Authorization' is not null or undefined
+            if (Authorization === null || Authorization === undefined) {
+                throw new RequiredError('Authorization','Required parameter Authorization was null or undefined when calling getBranches.');
             }
-            // verify required parameter 'xApiKey' is not null or undefined
-            if (xApiKey === null || xApiKey === undefined) {
-                throw new RequiredError('xApiKey','Required parameter xApiKey was null or undefined when calling getBranches.');
+            // verify required parameter 'x_api_key' is not null or undefined
+            if (x_api_key === null || x_api_key === undefined) {
+                throw new RequiredError('x_api_key','Required parameter x_api_key was null or undefined when calling getBranches.');
             }
             const localVarPath = `/api/program/{programId}/repository/{repositoryId}/branches`
                 .replace(`{${"programId"}}`, encodeURIComponent(String(programId)))
@@ -1334,16 +1334,16 @@ export const BranchesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (xGwImsOrgId !== undefined && xGwImsOrgId !== null) {
-                localVarHeaderParameter['x-gw-ims-org-id'] = String(xGwImsOrgId);
+            if (x_gw_ims_org_id !== undefined && x_gw_ims_org_id !== null) {
+                localVarHeaderParameter['x-gw-ims-org-id'] = String(x_gw_ims_org_id);
             }
 
-            if (authorization !== undefined && authorization !== null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
+            if (Authorization !== undefined && Authorization !== null) {
+                localVarHeaderParameter['Authorization'] = String(Authorization);
             }
 
-            if (xApiKey !== undefined && xApiKey !== null) {
-                localVarHeaderParameter['x-api-key'] = String(xApiKey);
+            if (x_api_key !== undefined && x_api_key !== null) {
+                localVarHeaderParameter['x-api-key'] = String(x_api_key);
             }
 
 
@@ -1372,14 +1372,14 @@ export const BranchesApiFp = function(configuration?: Configuration) {
          * @summary List Branches
          * @param {string} programId Identifier of the program.
          * @param {string} repositoryId Identifier of the repository
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBranches(programId: string, repositoryId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<BranchList> {
-            const localVarAxiosArgs = BranchesApiAxiosParamCreator(configuration).getBranches(programId, repositoryId, xGwImsOrgId, authorization, xApiKey, options);
+        getBranches(programId: string, repositoryId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<BranchList> {
+            const localVarAxiosArgs = BranchesApiAxiosParamCreator(configuration).getBranches(programId, repositoryId, x_gw_ims_org_id, Authorization, x_api_key, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -1399,14 +1399,14 @@ export const BranchesApiFactory = function (configuration?: Configuration, baseP
          * @summary List Branches
          * @param {string} programId Identifier of the program.
          * @param {string} repositoryId Identifier of the repository
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBranches(programId: string, repositoryId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any): AxiosPromise<BranchList> {
-            return BranchesApiFp(configuration).getBranches(programId, repositoryId, xGwImsOrgId, authorization, xApiKey, options)(axios, basePath);
+        getBranches(programId: string, repositoryId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): AxiosPromise<BranchList> {
+            return BranchesApiFp(configuration).getBranches(programId, repositoryId, x_gw_ims_org_id, Authorization, x_api_key, options)(axios, basePath);
         },
     };
 };
@@ -1423,15 +1423,15 @@ export class BranchesApi extends BaseAPI {
      * @summary List Branches
      * @param {string} programId Identifier of the program.
      * @param {string} repositoryId Identifier of the repository
-     * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-     * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-     * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+     * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+     * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+     * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BranchesApi
      */
-    public getBranches(programId: string, repositoryId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any) {
-        return BranchesApiFp(this.configuration).getBranches(programId, repositoryId, xGwImsOrgId, authorization, xApiKey, options)(this.axios, this.basePath);
+    public getBranches(programId: string, repositoryId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any) {
+        return BranchesApiFp(this.configuration).getBranches(programId, repositoryId, x_gw_ims_org_id, Authorization, x_api_key, options)(this.axios, this.basePath);
     }
 
 }
@@ -1448,13 +1448,13 @@ export const EnvironmentsApiAxiosParamCreator = function (configuration?: Config
          * @summary Get Environment
          * @param {string} programId Identifier of the program
          * @param {string} environmentId Identifier of the environment
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEnvironment(programId: string, environmentId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options: any = {}): RequestArgs {
+        getEnvironment(programId: string, environmentId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options: any = {}): RequestArgs {
             // verify required parameter 'programId' is not null or undefined
             if (programId === null || programId === undefined) {
                 throw new RequiredError('programId','Required parameter programId was null or undefined when calling getEnvironment.');
@@ -1463,17 +1463,17 @@ export const EnvironmentsApiAxiosParamCreator = function (configuration?: Config
             if (environmentId === null || environmentId === undefined) {
                 throw new RequiredError('environmentId','Required parameter environmentId was null or undefined when calling getEnvironment.');
             }
-            // verify required parameter 'xGwImsOrgId' is not null or undefined
-            if (xGwImsOrgId === null || xGwImsOrgId === undefined) {
-                throw new RequiredError('xGwImsOrgId','Required parameter xGwImsOrgId was null or undefined when calling getEnvironment.');
+            // verify required parameter 'x_gw_ims_org_id' is not null or undefined
+            if (x_gw_ims_org_id === null || x_gw_ims_org_id === undefined) {
+                throw new RequiredError('x_gw_ims_org_id','Required parameter x_gw_ims_org_id was null or undefined when calling getEnvironment.');
             }
-            // verify required parameter 'authorization' is not null or undefined
-            if (authorization === null || authorization === undefined) {
-                throw new RequiredError('authorization','Required parameter authorization was null or undefined when calling getEnvironment.');
+            // verify required parameter 'Authorization' is not null or undefined
+            if (Authorization === null || Authorization === undefined) {
+                throw new RequiredError('Authorization','Required parameter Authorization was null or undefined when calling getEnvironment.');
             }
-            // verify required parameter 'xApiKey' is not null or undefined
-            if (xApiKey === null || xApiKey === undefined) {
-                throw new RequiredError('xApiKey','Required parameter xApiKey was null or undefined when calling getEnvironment.');
+            // verify required parameter 'x_api_key' is not null or undefined
+            if (x_api_key === null || x_api_key === undefined) {
+                throw new RequiredError('x_api_key','Required parameter x_api_key was null or undefined when calling getEnvironment.');
             }
             const localVarPath = `/api/program/{programId}/environment/{environmentId}`
                 .replace(`{${"programId"}}`, encodeURIComponent(String(programId)))
@@ -1487,16 +1487,16 @@ export const EnvironmentsApiAxiosParamCreator = function (configuration?: Config
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (xGwImsOrgId !== undefined && xGwImsOrgId !== null) {
-                localVarHeaderParameter['x-gw-ims-org-id'] = String(xGwImsOrgId);
+            if (x_gw_ims_org_id !== undefined && x_gw_ims_org_id !== null) {
+                localVarHeaderParameter['x-gw-ims-org-id'] = String(x_gw_ims_org_id);
             }
 
-            if (authorization !== undefined && authorization !== null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
+            if (Authorization !== undefined && Authorization !== null) {
+                localVarHeaderParameter['Authorization'] = String(Authorization);
             }
 
-            if (xApiKey !== undefined && xApiKey !== null) {
-                localVarHeaderParameter['x-api-key'] = String(xApiKey);
+            if (x_api_key !== undefined && x_api_key !== null) {
+                localVarHeaderParameter['x-api-key'] = String(x_api_key);
             }
 
 
@@ -1515,29 +1515,29 @@ export const EnvironmentsApiAxiosParamCreator = function (configuration?: Config
          * Lists all environments in an program
          * @summary List Environments
          * @param {string} programId Identifier of the program
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {'dev' | 'stage' | 'prod'} [type] Type of the environment
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEnvironments(programId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, type?: 'dev' | 'stage' | 'prod', options: any = {}): RequestArgs {
+        getEnvironments(programId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, type?: 'dev' | 'stage' | 'prod', options: any = {}): RequestArgs {
             // verify required parameter 'programId' is not null or undefined
             if (programId === null || programId === undefined) {
                 throw new RequiredError('programId','Required parameter programId was null or undefined when calling getEnvironments.');
             }
-            // verify required parameter 'xGwImsOrgId' is not null or undefined
-            if (xGwImsOrgId === null || xGwImsOrgId === undefined) {
-                throw new RequiredError('xGwImsOrgId','Required parameter xGwImsOrgId was null or undefined when calling getEnvironments.');
+            // verify required parameter 'x_gw_ims_org_id' is not null or undefined
+            if (x_gw_ims_org_id === null || x_gw_ims_org_id === undefined) {
+                throw new RequiredError('x_gw_ims_org_id','Required parameter x_gw_ims_org_id was null or undefined when calling getEnvironments.');
             }
-            // verify required parameter 'authorization' is not null or undefined
-            if (authorization === null || authorization === undefined) {
-                throw new RequiredError('authorization','Required parameter authorization was null or undefined when calling getEnvironments.');
+            // verify required parameter 'Authorization' is not null or undefined
+            if (Authorization === null || Authorization === undefined) {
+                throw new RequiredError('Authorization','Required parameter Authorization was null or undefined when calling getEnvironments.');
             }
-            // verify required parameter 'xApiKey' is not null or undefined
-            if (xApiKey === null || xApiKey === undefined) {
-                throw new RequiredError('xApiKey','Required parameter xApiKey was null or undefined when calling getEnvironments.');
+            // verify required parameter 'x_api_key' is not null or undefined
+            if (x_api_key === null || x_api_key === undefined) {
+                throw new RequiredError('x_api_key','Required parameter x_api_key was null or undefined when calling getEnvironments.');
             }
             const localVarPath = `/api/program/{programId}/environments`
                 .replace(`{${"programId"}}`, encodeURIComponent(String(programId)));
@@ -1554,16 +1554,16 @@ export const EnvironmentsApiAxiosParamCreator = function (configuration?: Config
                 localVarQueryParameter['type'] = type;
             }
 
-            if (xGwImsOrgId !== undefined && xGwImsOrgId !== null) {
-                localVarHeaderParameter['x-gw-ims-org-id'] = String(xGwImsOrgId);
+            if (x_gw_ims_org_id !== undefined && x_gw_ims_org_id !== null) {
+                localVarHeaderParameter['x-gw-ims-org-id'] = String(x_gw_ims_org_id);
             }
 
-            if (authorization !== undefined && authorization !== null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
+            if (Authorization !== undefined && Authorization !== null) {
+                localVarHeaderParameter['Authorization'] = String(Authorization);
             }
 
-            if (xApiKey !== undefined && xApiKey !== null) {
-                localVarHeaderParameter['x-api-key'] = String(xApiKey);
+            if (x_api_key !== undefined && x_api_key !== null) {
+                localVarHeaderParameter['x-api-key'] = String(x_api_key);
             }
 
 
@@ -1592,14 +1592,14 @@ export const EnvironmentsApiFp = function(configuration?: Configuration) {
          * @summary Get Environment
          * @param {string} programId Identifier of the program
          * @param {string} environmentId Identifier of the environment
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEnvironment(programId: string, environmentId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Environment> {
-            const localVarAxiosArgs = EnvironmentsApiAxiosParamCreator(configuration).getEnvironment(programId, environmentId, xGwImsOrgId, authorization, xApiKey, options);
+        getEnvironment(programId: string, environmentId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Environment> {
+            const localVarAxiosArgs = EnvironmentsApiAxiosParamCreator(configuration).getEnvironment(programId, environmentId, x_gw_ims_org_id, Authorization, x_api_key, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -1609,15 +1609,15 @@ export const EnvironmentsApiFp = function(configuration?: Configuration) {
          * Lists all environments in an program
          * @summary List Environments
          * @param {string} programId Identifier of the program
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {'dev' | 'stage' | 'prod'} [type] Type of the environment
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEnvironments(programId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, type?: 'dev' | 'stage' | 'prod', options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentList> {
-            const localVarAxiosArgs = EnvironmentsApiAxiosParamCreator(configuration).getEnvironments(programId, xGwImsOrgId, authorization, xApiKey, type, options);
+        getEnvironments(programId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, type?: 'dev' | 'stage' | 'prod', options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentList> {
+            const localVarAxiosArgs = EnvironmentsApiAxiosParamCreator(configuration).getEnvironments(programId, x_gw_ims_org_id, Authorization, x_api_key, type, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -1637,28 +1637,28 @@ export const EnvironmentsApiFactory = function (configuration?: Configuration, b
          * @summary Get Environment
          * @param {string} programId Identifier of the program
          * @param {string} environmentId Identifier of the environment
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEnvironment(programId: string, environmentId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any): AxiosPromise<Environment> {
-            return EnvironmentsApiFp(configuration).getEnvironment(programId, environmentId, xGwImsOrgId, authorization, xApiKey, options)(axios, basePath);
+        getEnvironment(programId: string, environmentId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): AxiosPromise<Environment> {
+            return EnvironmentsApiFp(configuration).getEnvironment(programId, environmentId, x_gw_ims_org_id, Authorization, x_api_key, options)(axios, basePath);
         },
         /**
          * Lists all environments in an program
          * @summary List Environments
          * @param {string} programId Identifier of the program
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {'dev' | 'stage' | 'prod'} [type] Type of the environment
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEnvironments(programId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, type?: 'dev' | 'stage' | 'prod', options?: any): AxiosPromise<EnvironmentList> {
-            return EnvironmentsApiFp(configuration).getEnvironments(programId, xGwImsOrgId, authorization, xApiKey, type, options)(axios, basePath);
+        getEnvironments(programId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, type?: 'dev' | 'stage' | 'prod', options?: any): AxiosPromise<EnvironmentList> {
+            return EnvironmentsApiFp(configuration).getEnvironments(programId, x_gw_ims_org_id, Authorization, x_api_key, type, options)(axios, basePath);
         },
     };
 };
@@ -1675,31 +1675,31 @@ export class EnvironmentsApi extends BaseAPI {
      * @summary Get Environment
      * @param {string} programId Identifier of the program
      * @param {string} environmentId Identifier of the environment
-     * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-     * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-     * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+     * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+     * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+     * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EnvironmentsApi
      */
-    public getEnvironment(programId: string, environmentId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any) {
-        return EnvironmentsApiFp(this.configuration).getEnvironment(programId, environmentId, xGwImsOrgId, authorization, xApiKey, options)(this.axios, this.basePath);
+    public getEnvironment(programId: string, environmentId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any) {
+        return EnvironmentsApiFp(this.configuration).getEnvironment(programId, environmentId, x_gw_ims_org_id, Authorization, x_api_key, options)(this.axios, this.basePath);
     }
 
     /**
      * Lists all environments in an program
      * @summary List Environments
      * @param {string} programId Identifier of the program
-     * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-     * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-     * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+     * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+     * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+     * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
      * @param {'dev' | 'stage' | 'prod'} [type] Type of the environment
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EnvironmentsApi
      */
-    public getEnvironments(programId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, type?: 'dev' | 'stage' | 'prod', options?: any) {
-        return EnvironmentsApiFp(this.configuration).getEnvironments(programId, xGwImsOrgId, authorization, xApiKey, type, options)(this.axios, this.basePath);
+    public getEnvironments(programId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, type?: 'dev' | 'stage' | 'prod', options?: any) {
+        return EnvironmentsApiFp(this.configuration).getEnvironments(programId, x_gw_ims_org_id, Authorization, x_api_key, type, options)(this.axios, this.basePath);
     }
 
 }
@@ -1719,15 +1719,15 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
          * @param {string} executionId Identifier of the execution
          * @param {string} phaseId Identifier of the phase
          * @param {string} stepId Identifier of the step
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
-         * @param {string} contentType Must always be application/json
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} Content_Type Must always be application/json
          * @param {object} body Input for advance. See documentation for details.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        advancePipelineExecution(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, contentType: string, body: object, options: any = {}): RequestArgs {
+        advancePipelineExecution(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Content_Type: string, body: object, options: any = {}): RequestArgs {
             // verify required parameter 'programId' is not null or undefined
             if (programId === null || programId === undefined) {
                 throw new RequiredError('programId','Required parameter programId was null or undefined when calling advancePipelineExecution.');
@@ -1748,21 +1748,21 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
             if (stepId === null || stepId === undefined) {
                 throw new RequiredError('stepId','Required parameter stepId was null or undefined when calling advancePipelineExecution.');
             }
-            // verify required parameter 'xGwImsOrgId' is not null or undefined
-            if (xGwImsOrgId === null || xGwImsOrgId === undefined) {
-                throw new RequiredError('xGwImsOrgId','Required parameter xGwImsOrgId was null or undefined when calling advancePipelineExecution.');
+            // verify required parameter 'x_gw_ims_org_id' is not null or undefined
+            if (x_gw_ims_org_id === null || x_gw_ims_org_id === undefined) {
+                throw new RequiredError('x_gw_ims_org_id','Required parameter x_gw_ims_org_id was null or undefined when calling advancePipelineExecution.');
             }
-            // verify required parameter 'authorization' is not null or undefined
-            if (authorization === null || authorization === undefined) {
-                throw new RequiredError('authorization','Required parameter authorization was null or undefined when calling advancePipelineExecution.');
+            // verify required parameter 'Authorization' is not null or undefined
+            if (Authorization === null || Authorization === undefined) {
+                throw new RequiredError('Authorization','Required parameter Authorization was null or undefined when calling advancePipelineExecution.');
             }
-            // verify required parameter 'xApiKey' is not null or undefined
-            if (xApiKey === null || xApiKey === undefined) {
-                throw new RequiredError('xApiKey','Required parameter xApiKey was null or undefined when calling advancePipelineExecution.');
+            // verify required parameter 'x_api_key' is not null or undefined
+            if (x_api_key === null || x_api_key === undefined) {
+                throw new RequiredError('x_api_key','Required parameter x_api_key was null or undefined when calling advancePipelineExecution.');
             }
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError('contentType','Required parameter contentType was null or undefined when calling advancePipelineExecution.');
+            // verify required parameter 'Content_Type' is not null or undefined
+            if (Content_Type === null || Content_Type === undefined) {
+                throw new RequiredError('Content_Type','Required parameter Content_Type was null or undefined when calling advancePipelineExecution.');
             }
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
@@ -1783,20 +1783,20 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (xGwImsOrgId !== undefined && xGwImsOrgId !== null) {
-                localVarHeaderParameter['x-gw-ims-org-id'] = String(xGwImsOrgId);
+            if (x_gw_ims_org_id !== undefined && x_gw_ims_org_id !== null) {
+                localVarHeaderParameter['x-gw-ims-org-id'] = String(x_gw_ims_org_id);
             }
 
-            if (authorization !== undefined && authorization !== null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
+            if (Authorization !== undefined && Authorization !== null) {
+                localVarHeaderParameter['Authorization'] = String(Authorization);
             }
 
-            if (xApiKey !== undefined && xApiKey !== null) {
-                localVarHeaderParameter['x-api-key'] = String(xApiKey);
+            if (x_api_key !== undefined && x_api_key !== null) {
+                localVarHeaderParameter['x-api-key'] = String(x_api_key);
             }
 
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter['Content-Type'] = String(contentType);
+            if (Content_Type !== undefined && Content_Type !== null) {
+                localVarHeaderParameter['Content-Type'] = String(Content_Type);
             }
 
 
@@ -1823,15 +1823,15 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
          * @param {string} executionId Identifier of the execution
          * @param {string} phaseId Identifier of the phase
          * @param {string} stepId Identifier of the step
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
-         * @param {string} contentType Must always be application/json
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} Content_Type Must always be application/json
          * @param {object} body Input for advance. See documentation for details.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cancelPipelineExecutionStep(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, contentType: string, body: object, options: any = {}): RequestArgs {
+        cancelPipelineExecutionStep(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Content_Type: string, body: object, options: any = {}): RequestArgs {
             // verify required parameter 'programId' is not null or undefined
             if (programId === null || programId === undefined) {
                 throw new RequiredError('programId','Required parameter programId was null or undefined when calling cancelPipelineExecutionStep.');
@@ -1852,21 +1852,21 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
             if (stepId === null || stepId === undefined) {
                 throw new RequiredError('stepId','Required parameter stepId was null or undefined when calling cancelPipelineExecutionStep.');
             }
-            // verify required parameter 'xGwImsOrgId' is not null or undefined
-            if (xGwImsOrgId === null || xGwImsOrgId === undefined) {
-                throw new RequiredError('xGwImsOrgId','Required parameter xGwImsOrgId was null or undefined when calling cancelPipelineExecutionStep.');
+            // verify required parameter 'x_gw_ims_org_id' is not null or undefined
+            if (x_gw_ims_org_id === null || x_gw_ims_org_id === undefined) {
+                throw new RequiredError('x_gw_ims_org_id','Required parameter x_gw_ims_org_id was null or undefined when calling cancelPipelineExecutionStep.');
             }
-            // verify required parameter 'authorization' is not null or undefined
-            if (authorization === null || authorization === undefined) {
-                throw new RequiredError('authorization','Required parameter authorization was null or undefined when calling cancelPipelineExecutionStep.');
+            // verify required parameter 'Authorization' is not null or undefined
+            if (Authorization === null || Authorization === undefined) {
+                throw new RequiredError('Authorization','Required parameter Authorization was null or undefined when calling cancelPipelineExecutionStep.');
             }
-            // verify required parameter 'xApiKey' is not null or undefined
-            if (xApiKey === null || xApiKey === undefined) {
-                throw new RequiredError('xApiKey','Required parameter xApiKey was null or undefined when calling cancelPipelineExecutionStep.');
+            // verify required parameter 'x_api_key' is not null or undefined
+            if (x_api_key === null || x_api_key === undefined) {
+                throw new RequiredError('x_api_key','Required parameter x_api_key was null or undefined when calling cancelPipelineExecutionStep.');
             }
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError('contentType','Required parameter contentType was null or undefined when calling cancelPipelineExecutionStep.');
+            // verify required parameter 'Content_Type' is not null or undefined
+            if (Content_Type === null || Content_Type === undefined) {
+                throw new RequiredError('Content_Type','Required parameter Content_Type was null or undefined when calling cancelPipelineExecutionStep.');
             }
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
@@ -1887,20 +1887,20 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (xGwImsOrgId !== undefined && xGwImsOrgId !== null) {
-                localVarHeaderParameter['x-gw-ims-org-id'] = String(xGwImsOrgId);
+            if (x_gw_ims_org_id !== undefined && x_gw_ims_org_id !== null) {
+                localVarHeaderParameter['x-gw-ims-org-id'] = String(x_gw_ims_org_id);
             }
 
-            if (authorization !== undefined && authorization !== null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
+            if (Authorization !== undefined && Authorization !== null) {
+                localVarHeaderParameter['Authorization'] = String(Authorization);
             }
 
-            if (xApiKey !== undefined && xApiKey !== null) {
-                localVarHeaderParameter['x-api-key'] = String(xApiKey);
+            if (x_api_key !== undefined && x_api_key !== null) {
+                localVarHeaderParameter['x-api-key'] = String(x_api_key);
             }
 
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter['Content-Type'] = String(contentType);
+            if (Content_Type !== undefined && Content_Type !== null) {
+                localVarHeaderParameter['Content-Type'] = String(Content_Type);
             }
 
 
@@ -1924,13 +1924,13 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
          * @summary Get current pipeline execution
          * @param {string} programId Identifier of the program.
          * @param {string} pipelineId Identifier of the pipeline
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCurrentExecution(programId: string, pipelineId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options: any = {}): RequestArgs {
+        getCurrentExecution(programId: string, pipelineId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options: any = {}): RequestArgs {
             // verify required parameter 'programId' is not null or undefined
             if (programId === null || programId === undefined) {
                 throw new RequiredError('programId','Required parameter programId was null or undefined when calling getCurrentExecution.');
@@ -1939,17 +1939,17 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
             if (pipelineId === null || pipelineId === undefined) {
                 throw new RequiredError('pipelineId','Required parameter pipelineId was null or undefined when calling getCurrentExecution.');
             }
-            // verify required parameter 'xGwImsOrgId' is not null or undefined
-            if (xGwImsOrgId === null || xGwImsOrgId === undefined) {
-                throw new RequiredError('xGwImsOrgId','Required parameter xGwImsOrgId was null or undefined when calling getCurrentExecution.');
+            // verify required parameter 'x_gw_ims_org_id' is not null or undefined
+            if (x_gw_ims_org_id === null || x_gw_ims_org_id === undefined) {
+                throw new RequiredError('x_gw_ims_org_id','Required parameter x_gw_ims_org_id was null or undefined when calling getCurrentExecution.');
             }
-            // verify required parameter 'authorization' is not null or undefined
-            if (authorization === null || authorization === undefined) {
-                throw new RequiredError('authorization','Required parameter authorization was null or undefined when calling getCurrentExecution.');
+            // verify required parameter 'Authorization' is not null or undefined
+            if (Authorization === null || Authorization === undefined) {
+                throw new RequiredError('Authorization','Required parameter Authorization was null or undefined when calling getCurrentExecution.');
             }
-            // verify required parameter 'xApiKey' is not null or undefined
-            if (xApiKey === null || xApiKey === undefined) {
-                throw new RequiredError('xApiKey','Required parameter xApiKey was null or undefined when calling getCurrentExecution.');
+            // verify required parameter 'x_api_key' is not null or undefined
+            if (x_api_key === null || x_api_key === undefined) {
+                throw new RequiredError('x_api_key','Required parameter x_api_key was null or undefined when calling getCurrentExecution.');
             }
             const localVarPath = `/api/program/{programId}/pipeline/{pipelineId}/execution`
                 .replace(`{${"programId"}}`, encodeURIComponent(String(programId)))
@@ -1963,16 +1963,16 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (xGwImsOrgId !== undefined && xGwImsOrgId !== null) {
-                localVarHeaderParameter['x-gw-ims-org-id'] = String(xGwImsOrgId);
+            if (x_gw_ims_org_id !== undefined && x_gw_ims_org_id !== null) {
+                localVarHeaderParameter['x-gw-ims-org-id'] = String(x_gw_ims_org_id);
             }
 
-            if (authorization !== undefined && authorization !== null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
+            if (Authorization !== undefined && Authorization !== null) {
+                localVarHeaderParameter['Authorization'] = String(Authorization);
             }
 
-            if (xApiKey !== undefined && xApiKey !== null) {
-                localVarHeaderParameter['x-api-key'] = String(xApiKey);
+            if (x_api_key !== undefined && x_api_key !== null) {
+                localVarHeaderParameter['x-api-key'] = String(x_api_key);
             }
 
 
@@ -1993,13 +1993,13 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
          * @param {string} programId Identifier of the program.
          * @param {string} pipelineId Identifier of the pipeline
          * @param {string} executionId Identifier of the execution
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExecution(programId: string, pipelineId: string, executionId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options: any = {}): RequestArgs {
+        getExecution(programId: string, pipelineId: string, executionId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options: any = {}): RequestArgs {
             // verify required parameter 'programId' is not null or undefined
             if (programId === null || programId === undefined) {
                 throw new RequiredError('programId','Required parameter programId was null or undefined when calling getExecution.');
@@ -2012,17 +2012,17 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
             if (executionId === null || executionId === undefined) {
                 throw new RequiredError('executionId','Required parameter executionId was null or undefined when calling getExecution.');
             }
-            // verify required parameter 'xGwImsOrgId' is not null or undefined
-            if (xGwImsOrgId === null || xGwImsOrgId === undefined) {
-                throw new RequiredError('xGwImsOrgId','Required parameter xGwImsOrgId was null or undefined when calling getExecution.');
+            // verify required parameter 'x_gw_ims_org_id' is not null or undefined
+            if (x_gw_ims_org_id === null || x_gw_ims_org_id === undefined) {
+                throw new RequiredError('x_gw_ims_org_id','Required parameter x_gw_ims_org_id was null or undefined when calling getExecution.');
             }
-            // verify required parameter 'authorization' is not null or undefined
-            if (authorization === null || authorization === undefined) {
-                throw new RequiredError('authorization','Required parameter authorization was null or undefined when calling getExecution.');
+            // verify required parameter 'Authorization' is not null or undefined
+            if (Authorization === null || Authorization === undefined) {
+                throw new RequiredError('Authorization','Required parameter Authorization was null or undefined when calling getExecution.');
             }
-            // verify required parameter 'xApiKey' is not null or undefined
-            if (xApiKey === null || xApiKey === undefined) {
-                throw new RequiredError('xApiKey','Required parameter xApiKey was null or undefined when calling getExecution.');
+            // verify required parameter 'x_api_key' is not null or undefined
+            if (x_api_key === null || x_api_key === undefined) {
+                throw new RequiredError('x_api_key','Required parameter x_api_key was null or undefined when calling getExecution.');
             }
             const localVarPath = `/api/program/{programId}/pipeline/{pipelineId}/execution/{executionId}`
                 .replace(`{${"programId"}}`, encodeURIComponent(String(programId)))
@@ -2037,16 +2037,16 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (xGwImsOrgId !== undefined && xGwImsOrgId !== null) {
-                localVarHeaderParameter['x-gw-ims-org-id'] = String(xGwImsOrgId);
+            if (x_gw_ims_org_id !== undefined && x_gw_ims_org_id !== null) {
+                localVarHeaderParameter['x-gw-ims-org-id'] = String(x_gw_ims_org_id);
             }
 
-            if (authorization !== undefined && authorization !== null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
+            if (Authorization !== undefined && Authorization !== null) {
+                localVarHeaderParameter['Authorization'] = String(Authorization);
             }
 
-            if (xApiKey !== undefined && xApiKey !== null) {
-                localVarHeaderParameter['x-api-key'] = String(xApiKey);
+            if (x_api_key !== undefined && x_api_key !== null) {
+                localVarHeaderParameter['x-api-key'] = String(x_api_key);
             }
 
 
@@ -2066,15 +2066,15 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
          * @summary List Executions
          * @param {string} programId Identifier of the program.
          * @param {string} pipelineId Identifier of the pipeline
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {string} [start] Pagination start parameter
          * @param {number} [limit] Pagination limit parameter
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExecutions(programId: string, pipelineId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, start?: string, limit?: number, options: any = {}): RequestArgs {
+        getExecutions(programId: string, pipelineId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, start?: string, limit?: number, options: any = {}): RequestArgs {
             // verify required parameter 'programId' is not null or undefined
             if (programId === null || programId === undefined) {
                 throw new RequiredError('programId','Required parameter programId was null or undefined when calling getExecutions.');
@@ -2083,17 +2083,17 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
             if (pipelineId === null || pipelineId === undefined) {
                 throw new RequiredError('pipelineId','Required parameter pipelineId was null or undefined when calling getExecutions.');
             }
-            // verify required parameter 'xGwImsOrgId' is not null or undefined
-            if (xGwImsOrgId === null || xGwImsOrgId === undefined) {
-                throw new RequiredError('xGwImsOrgId','Required parameter xGwImsOrgId was null or undefined when calling getExecutions.');
+            // verify required parameter 'x_gw_ims_org_id' is not null or undefined
+            if (x_gw_ims_org_id === null || x_gw_ims_org_id === undefined) {
+                throw new RequiredError('x_gw_ims_org_id','Required parameter x_gw_ims_org_id was null or undefined when calling getExecutions.');
             }
-            // verify required parameter 'authorization' is not null or undefined
-            if (authorization === null || authorization === undefined) {
-                throw new RequiredError('authorization','Required parameter authorization was null or undefined when calling getExecutions.');
+            // verify required parameter 'Authorization' is not null or undefined
+            if (Authorization === null || Authorization === undefined) {
+                throw new RequiredError('Authorization','Required parameter Authorization was null or undefined when calling getExecutions.');
             }
-            // verify required parameter 'xApiKey' is not null or undefined
-            if (xApiKey === null || xApiKey === undefined) {
-                throw new RequiredError('xApiKey','Required parameter xApiKey was null or undefined when calling getExecutions.');
+            // verify required parameter 'x_api_key' is not null or undefined
+            if (x_api_key === null || x_api_key === undefined) {
+                throw new RequiredError('x_api_key','Required parameter x_api_key was null or undefined when calling getExecutions.');
             }
             const localVarPath = `/api/program/{programId}/pipeline/{pipelineId}/executions`
                 .replace(`{${"programId"}}`, encodeURIComponent(String(programId)))
@@ -2115,16 +2115,16 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
                 localVarQueryParameter['limit'] = limit;
             }
 
-            if (xGwImsOrgId !== undefined && xGwImsOrgId !== null) {
-                localVarHeaderParameter['x-gw-ims-org-id'] = String(xGwImsOrgId);
+            if (x_gw_ims_org_id !== undefined && x_gw_ims_org_id !== null) {
+                localVarHeaderParameter['x-gw-ims-org-id'] = String(x_gw_ims_org_id);
             }
 
-            if (authorization !== undefined && authorization !== null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
+            if (Authorization !== undefined && Authorization !== null) {
+                localVarHeaderParameter['Authorization'] = String(Authorization);
             }
 
-            if (xApiKey !== undefined && xApiKey !== null) {
-                localVarHeaderParameter['x-api-key'] = String(xApiKey);
+            if (x_api_key !== undefined && x_api_key !== null) {
+                localVarHeaderParameter['x-api-key'] = String(x_api_key);
             }
 
 
@@ -2147,14 +2147,14 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
          * @param {string} executionId Identifier of the execution
          * @param {string} phaseId Identifier of the phase
          * @param {string} stepId Identifier of the step
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
-         * @param {string} [accept] Specify application/json in this header to receive a JSON response. Otherwise, a 307 response code will be returned with a Location header.
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} [Accept] Specify application/json in this header to receive a JSON response. Otherwise, a 307 response code will be returned with a Location header.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getStepLogs(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, accept?: string, options: any = {}): RequestArgs {
+        getStepLogs(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Accept?: string, options: any = {}): RequestArgs {
             // verify required parameter 'programId' is not null or undefined
             if (programId === null || programId === undefined) {
                 throw new RequiredError('programId','Required parameter programId was null or undefined when calling getStepLogs.');
@@ -2175,17 +2175,17 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
             if (stepId === null || stepId === undefined) {
                 throw new RequiredError('stepId','Required parameter stepId was null or undefined when calling getStepLogs.');
             }
-            // verify required parameter 'xGwImsOrgId' is not null or undefined
-            if (xGwImsOrgId === null || xGwImsOrgId === undefined) {
-                throw new RequiredError('xGwImsOrgId','Required parameter xGwImsOrgId was null or undefined when calling getStepLogs.');
+            // verify required parameter 'x_gw_ims_org_id' is not null or undefined
+            if (x_gw_ims_org_id === null || x_gw_ims_org_id === undefined) {
+                throw new RequiredError('x_gw_ims_org_id','Required parameter x_gw_ims_org_id was null or undefined when calling getStepLogs.');
             }
-            // verify required parameter 'authorization' is not null or undefined
-            if (authorization === null || authorization === undefined) {
-                throw new RequiredError('authorization','Required parameter authorization was null or undefined when calling getStepLogs.');
+            // verify required parameter 'Authorization' is not null or undefined
+            if (Authorization === null || Authorization === undefined) {
+                throw new RequiredError('Authorization','Required parameter Authorization was null or undefined when calling getStepLogs.');
             }
-            // verify required parameter 'xApiKey' is not null or undefined
-            if (xApiKey === null || xApiKey === undefined) {
-                throw new RequiredError('xApiKey','Required parameter xApiKey was null or undefined when calling getStepLogs.');
+            // verify required parameter 'x_api_key' is not null or undefined
+            if (x_api_key === null || x_api_key === undefined) {
+                throw new RequiredError('x_api_key','Required parameter x_api_key was null or undefined when calling getStepLogs.');
             }
             const localVarPath = `/api/program/{programId}/pipeline/{pipelineId}/execution/{executionId}/phase/{phaseId}/step/{stepId}/logs`
                 .replace(`{${"programId"}}`, encodeURIComponent(String(programId)))
@@ -2202,20 +2202,20 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (accept !== undefined && accept !== null) {
-                localVarHeaderParameter['Accept'] = String(accept);
+            if (Accept !== undefined && Accept !== null) {
+                localVarHeaderParameter['Accept'] = String(Accept);
             }
 
-            if (xGwImsOrgId !== undefined && xGwImsOrgId !== null) {
-                localVarHeaderParameter['x-gw-ims-org-id'] = String(xGwImsOrgId);
+            if (x_gw_ims_org_id !== undefined && x_gw_ims_org_id !== null) {
+                localVarHeaderParameter['x-gw-ims-org-id'] = String(x_gw_ims_org_id);
             }
 
-            if (authorization !== undefined && authorization !== null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
+            if (Authorization !== undefined && Authorization !== null) {
+                localVarHeaderParameter['Authorization'] = String(Authorization);
             }
 
-            if (xApiKey !== undefined && xApiKey !== null) {
-                localVarHeaderParameter['x-api-key'] = String(xApiKey);
+            if (x_api_key !== undefined && x_api_key !== null) {
+                localVarHeaderParameter['x-api-key'] = String(x_api_key);
             }
 
 
@@ -2235,14 +2235,14 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
          * @summary Start the pipeline
          * @param {string} programId Identifier of the program.
          * @param {string} pipelineId Identifier of the pipeline
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
-         * @param {string} contentType Must always be application/json
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} Content_Type Must always be application/json
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        startPipeline(programId: string, pipelineId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, contentType: string, options: any = {}): RequestArgs {
+        startPipeline(programId: string, pipelineId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Content_Type: string, options: any = {}): RequestArgs {
             // verify required parameter 'programId' is not null or undefined
             if (programId === null || programId === undefined) {
                 throw new RequiredError('programId','Required parameter programId was null or undefined when calling startPipeline.');
@@ -2251,21 +2251,21 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
             if (pipelineId === null || pipelineId === undefined) {
                 throw new RequiredError('pipelineId','Required parameter pipelineId was null or undefined when calling startPipeline.');
             }
-            // verify required parameter 'xGwImsOrgId' is not null or undefined
-            if (xGwImsOrgId === null || xGwImsOrgId === undefined) {
-                throw new RequiredError('xGwImsOrgId','Required parameter xGwImsOrgId was null or undefined when calling startPipeline.');
+            // verify required parameter 'x_gw_ims_org_id' is not null or undefined
+            if (x_gw_ims_org_id === null || x_gw_ims_org_id === undefined) {
+                throw new RequiredError('x_gw_ims_org_id','Required parameter x_gw_ims_org_id was null or undefined when calling startPipeline.');
             }
-            // verify required parameter 'authorization' is not null or undefined
-            if (authorization === null || authorization === undefined) {
-                throw new RequiredError('authorization','Required parameter authorization was null or undefined when calling startPipeline.');
+            // verify required parameter 'Authorization' is not null or undefined
+            if (Authorization === null || Authorization === undefined) {
+                throw new RequiredError('Authorization','Required parameter Authorization was null or undefined when calling startPipeline.');
             }
-            // verify required parameter 'xApiKey' is not null or undefined
-            if (xApiKey === null || xApiKey === undefined) {
-                throw new RequiredError('xApiKey','Required parameter xApiKey was null or undefined when calling startPipeline.');
+            // verify required parameter 'x_api_key' is not null or undefined
+            if (x_api_key === null || x_api_key === undefined) {
+                throw new RequiredError('x_api_key','Required parameter x_api_key was null or undefined when calling startPipeline.');
             }
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError('contentType','Required parameter contentType was null or undefined when calling startPipeline.');
+            // verify required parameter 'Content_Type' is not null or undefined
+            if (Content_Type === null || Content_Type === undefined) {
+                throw new RequiredError('Content_Type','Required parameter Content_Type was null or undefined when calling startPipeline.');
             }
             const localVarPath = `/api/program/{programId}/pipeline/{pipelineId}/execution`
                 .replace(`{${"programId"}}`, encodeURIComponent(String(programId)))
@@ -2279,20 +2279,20 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (xGwImsOrgId !== undefined && xGwImsOrgId !== null) {
-                localVarHeaderParameter['x-gw-ims-org-id'] = String(xGwImsOrgId);
+            if (x_gw_ims_org_id !== undefined && x_gw_ims_org_id !== null) {
+                localVarHeaderParameter['x-gw-ims-org-id'] = String(x_gw_ims_org_id);
             }
 
-            if (authorization !== undefined && authorization !== null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
+            if (Authorization !== undefined && Authorization !== null) {
+                localVarHeaderParameter['Authorization'] = String(Authorization);
             }
 
-            if (xApiKey !== undefined && xApiKey !== null) {
-                localVarHeaderParameter['x-api-key'] = String(xApiKey);
+            if (x_api_key !== undefined && x_api_key !== null) {
+                localVarHeaderParameter['x-api-key'] = String(x_api_key);
             }
 
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter['Content-Type'] = String(contentType);
+            if (Content_Type !== undefined && Content_Type !== null) {
+                localVarHeaderParameter['Content-Type'] = String(Content_Type);
             }
 
 
@@ -2315,13 +2315,13 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
          * @param {string} executionId Identifier of the execution
          * @param {string} phaseId Identifier of the phase
          * @param {string} stepId Identifier of the step
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stepMetric(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options: any = {}): RequestArgs {
+        stepMetric(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options: any = {}): RequestArgs {
             // verify required parameter 'programId' is not null or undefined
             if (programId === null || programId === undefined) {
                 throw new RequiredError('programId','Required parameter programId was null or undefined when calling stepMetric.');
@@ -2342,17 +2342,17 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
             if (stepId === null || stepId === undefined) {
                 throw new RequiredError('stepId','Required parameter stepId was null or undefined when calling stepMetric.');
             }
-            // verify required parameter 'xGwImsOrgId' is not null or undefined
-            if (xGwImsOrgId === null || xGwImsOrgId === undefined) {
-                throw new RequiredError('xGwImsOrgId','Required parameter xGwImsOrgId was null or undefined when calling stepMetric.');
+            // verify required parameter 'x_gw_ims_org_id' is not null or undefined
+            if (x_gw_ims_org_id === null || x_gw_ims_org_id === undefined) {
+                throw new RequiredError('x_gw_ims_org_id','Required parameter x_gw_ims_org_id was null or undefined when calling stepMetric.');
             }
-            // verify required parameter 'authorization' is not null or undefined
-            if (authorization === null || authorization === undefined) {
-                throw new RequiredError('authorization','Required parameter authorization was null or undefined when calling stepMetric.');
+            // verify required parameter 'Authorization' is not null or undefined
+            if (Authorization === null || Authorization === undefined) {
+                throw new RequiredError('Authorization','Required parameter Authorization was null or undefined when calling stepMetric.');
             }
-            // verify required parameter 'xApiKey' is not null or undefined
-            if (xApiKey === null || xApiKey === undefined) {
-                throw new RequiredError('xApiKey','Required parameter xApiKey was null or undefined when calling stepMetric.');
+            // verify required parameter 'x_api_key' is not null or undefined
+            if (x_api_key === null || x_api_key === undefined) {
+                throw new RequiredError('x_api_key','Required parameter x_api_key was null or undefined when calling stepMetric.');
             }
             const localVarPath = `/api/program/{programId}/pipeline/{pipelineId}/execution/{executionId}/phase/{phaseId}/step/{stepId}/metrics`
                 .replace(`{${"programId"}}`, encodeURIComponent(String(programId)))
@@ -2369,16 +2369,16 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (xGwImsOrgId !== undefined && xGwImsOrgId !== null) {
-                localVarHeaderParameter['x-gw-ims-org-id'] = String(xGwImsOrgId);
+            if (x_gw_ims_org_id !== undefined && x_gw_ims_org_id !== null) {
+                localVarHeaderParameter['x-gw-ims-org-id'] = String(x_gw_ims_org_id);
             }
 
-            if (authorization !== undefined && authorization !== null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
+            if (Authorization !== undefined && Authorization !== null) {
+                localVarHeaderParameter['Authorization'] = String(Authorization);
             }
 
-            if (xApiKey !== undefined && xApiKey !== null) {
-                localVarHeaderParameter['x-api-key'] = String(xApiKey);
+            if (x_api_key !== undefined && x_api_key !== null) {
+                localVarHeaderParameter['x-api-key'] = String(x_api_key);
             }
 
 
@@ -2401,13 +2401,13 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
          * @param {string} executionId Identifier of the execution
          * @param {string} phaseId Identifier of the phase
          * @param {string} stepId Identifier of the step
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stepState(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options: any = {}): RequestArgs {
+        stepState(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options: any = {}): RequestArgs {
             // verify required parameter 'programId' is not null or undefined
             if (programId === null || programId === undefined) {
                 throw new RequiredError('programId','Required parameter programId was null or undefined when calling stepState.');
@@ -2428,17 +2428,17 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
             if (stepId === null || stepId === undefined) {
                 throw new RequiredError('stepId','Required parameter stepId was null or undefined when calling stepState.');
             }
-            // verify required parameter 'xGwImsOrgId' is not null or undefined
-            if (xGwImsOrgId === null || xGwImsOrgId === undefined) {
-                throw new RequiredError('xGwImsOrgId','Required parameter xGwImsOrgId was null or undefined when calling stepState.');
+            // verify required parameter 'x_gw_ims_org_id' is not null or undefined
+            if (x_gw_ims_org_id === null || x_gw_ims_org_id === undefined) {
+                throw new RequiredError('x_gw_ims_org_id','Required parameter x_gw_ims_org_id was null or undefined when calling stepState.');
             }
-            // verify required parameter 'authorization' is not null or undefined
-            if (authorization === null || authorization === undefined) {
-                throw new RequiredError('authorization','Required parameter authorization was null or undefined when calling stepState.');
+            // verify required parameter 'Authorization' is not null or undefined
+            if (Authorization === null || Authorization === undefined) {
+                throw new RequiredError('Authorization','Required parameter Authorization was null or undefined when calling stepState.');
             }
-            // verify required parameter 'xApiKey' is not null or undefined
-            if (xApiKey === null || xApiKey === undefined) {
-                throw new RequiredError('xApiKey','Required parameter xApiKey was null or undefined when calling stepState.');
+            // verify required parameter 'x_api_key' is not null or undefined
+            if (x_api_key === null || x_api_key === undefined) {
+                throw new RequiredError('x_api_key','Required parameter x_api_key was null or undefined when calling stepState.');
             }
             const localVarPath = `/api/program/{programId}/pipeline/{pipelineId}/execution/{executionId}/phase/{phaseId}/step/{stepId}`
                 .replace(`{${"programId"}}`, encodeURIComponent(String(programId)))
@@ -2455,16 +2455,16 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (xGwImsOrgId !== undefined && xGwImsOrgId !== null) {
-                localVarHeaderParameter['x-gw-ims-org-id'] = String(xGwImsOrgId);
+            if (x_gw_ims_org_id !== undefined && x_gw_ims_org_id !== null) {
+                localVarHeaderParameter['x-gw-ims-org-id'] = String(x_gw_ims_org_id);
             }
 
-            if (authorization !== undefined && authorization !== null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
+            if (Authorization !== undefined && Authorization !== null) {
+                localVarHeaderParameter['Authorization'] = String(Authorization);
             }
 
-            if (xApiKey !== undefined && xApiKey !== null) {
-                localVarHeaderParameter['x-api-key'] = String(xApiKey);
+            if (x_api_key !== undefined && x_api_key !== null) {
+                localVarHeaderParameter['x-api-key'] = String(x_api_key);
             }
 
 
@@ -2496,16 +2496,16 @@ export const PipelineExecutionApiFp = function(configuration?: Configuration) {
          * @param {string} executionId Identifier of the execution
          * @param {string} phaseId Identifier of the phase
          * @param {string} stepId Identifier of the step
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
-         * @param {string} contentType Must always be application/json
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} Content_Type Must always be application/json
          * @param {object} body Input for advance. See documentation for details.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        advancePipelineExecution(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, contentType: string, body: object, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
-            const localVarAxiosArgs = PipelineExecutionApiAxiosParamCreator(configuration).advancePipelineExecution(programId, pipelineId, executionId, phaseId, stepId, xGwImsOrgId, authorization, xApiKey, contentType, body, options);
+        advancePipelineExecution(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Content_Type: string, body: object, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
+            const localVarAxiosArgs = PipelineExecutionApiAxiosParamCreator(configuration).advancePipelineExecution(programId, pipelineId, executionId, phaseId, stepId, x_gw_ims_org_id, Authorization, x_api_key, Content_Type, body, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2519,16 +2519,16 @@ export const PipelineExecutionApiFp = function(configuration?: Configuration) {
          * @param {string} executionId Identifier of the execution
          * @param {string} phaseId Identifier of the phase
          * @param {string} stepId Identifier of the step
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
-         * @param {string} contentType Must always be application/json
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} Content_Type Must always be application/json
          * @param {object} body Input for advance. See documentation for details.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cancelPipelineExecutionStep(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, contentType: string, body: object, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
-            const localVarAxiosArgs = PipelineExecutionApiAxiosParamCreator(configuration).cancelPipelineExecutionStep(programId, pipelineId, executionId, phaseId, stepId, xGwImsOrgId, authorization, xApiKey, contentType, body, options);
+        cancelPipelineExecutionStep(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Content_Type: string, body: object, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
+            const localVarAxiosArgs = PipelineExecutionApiAxiosParamCreator(configuration).cancelPipelineExecutionStep(programId, pipelineId, executionId, phaseId, stepId, x_gw_ims_org_id, Authorization, x_api_key, Content_Type, body, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2539,14 +2539,14 @@ export const PipelineExecutionApiFp = function(configuration?: Configuration) {
          * @summary Get current pipeline execution
          * @param {string} programId Identifier of the program.
          * @param {string} pipelineId Identifier of the pipeline
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCurrentExecution(programId: string, pipelineId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineExecution> {
-            const localVarAxiosArgs = PipelineExecutionApiAxiosParamCreator(configuration).getCurrentExecution(programId, pipelineId, xGwImsOrgId, authorization, xApiKey, options);
+        getCurrentExecution(programId: string, pipelineId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineExecution> {
+            const localVarAxiosArgs = PipelineExecutionApiAxiosParamCreator(configuration).getCurrentExecution(programId, pipelineId, x_gw_ims_org_id, Authorization, x_api_key, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2558,14 +2558,14 @@ export const PipelineExecutionApiFp = function(configuration?: Configuration) {
          * @param {string} programId Identifier of the program.
          * @param {string} pipelineId Identifier of the pipeline
          * @param {string} executionId Identifier of the execution
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExecution(programId: string, pipelineId: string, executionId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineExecution> {
-            const localVarAxiosArgs = PipelineExecutionApiAxiosParamCreator(configuration).getExecution(programId, pipelineId, executionId, xGwImsOrgId, authorization, xApiKey, options);
+        getExecution(programId: string, pipelineId: string, executionId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineExecution> {
+            const localVarAxiosArgs = PipelineExecutionApiAxiosParamCreator(configuration).getExecution(programId, pipelineId, executionId, x_gw_ims_org_id, Authorization, x_api_key, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2576,16 +2576,16 @@ export const PipelineExecutionApiFp = function(configuration?: Configuration) {
          * @summary List Executions
          * @param {string} programId Identifier of the program.
          * @param {string} pipelineId Identifier of the pipeline
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {string} [start] Pagination start parameter
          * @param {number} [limit] Pagination limit parameter
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExecutions(programId: string, pipelineId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, start?: string, limit?: number, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineExecutionListRepresentation> {
-            const localVarAxiosArgs = PipelineExecutionApiAxiosParamCreator(configuration).getExecutions(programId, pipelineId, xGwImsOrgId, authorization, xApiKey, start, limit, options);
+        getExecutions(programId: string, pipelineId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, start?: string, limit?: number, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineExecutionListRepresentation> {
+            const localVarAxiosArgs = PipelineExecutionApiAxiosParamCreator(configuration).getExecutions(programId, pipelineId, x_gw_ims_org_id, Authorization, x_api_key, start, limit, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2599,15 +2599,15 @@ export const PipelineExecutionApiFp = function(configuration?: Configuration) {
          * @param {string} executionId Identifier of the execution
          * @param {string} phaseId Identifier of the phase
          * @param {string} stepId Identifier of the step
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
-         * @param {string} [accept] Specify application/json in this header to receive a JSON response. Otherwise, a 307 response code will be returned with a Location header.
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} [Accept] Specify application/json in this header to receive a JSON response. Otherwise, a 307 response code will be returned with a Location header.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getStepLogs(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, accept?: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
-            const localVarAxiosArgs = PipelineExecutionApiAxiosParamCreator(configuration).getStepLogs(programId, pipelineId, executionId, phaseId, stepId, xGwImsOrgId, authorization, xApiKey, accept, options);
+        getStepLogs(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Accept?: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
+            const localVarAxiosArgs = PipelineExecutionApiAxiosParamCreator(configuration).getStepLogs(programId, pipelineId, executionId, phaseId, stepId, x_gw_ims_org_id, Authorization, x_api_key, Accept, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2618,15 +2618,15 @@ export const PipelineExecutionApiFp = function(configuration?: Configuration) {
          * @summary Start the pipeline
          * @param {string} programId Identifier of the program.
          * @param {string} pipelineId Identifier of the pipeline
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
-         * @param {string} contentType Must always be application/json
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} Content_Type Must always be application/json
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        startPipeline(programId: string, pipelineId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, contentType: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
-            const localVarAxiosArgs = PipelineExecutionApiAxiosParamCreator(configuration).startPipeline(programId, pipelineId, xGwImsOrgId, authorization, xApiKey, contentType, options);
+        startPipeline(programId: string, pipelineId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Content_Type: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
+            const localVarAxiosArgs = PipelineExecutionApiAxiosParamCreator(configuration).startPipeline(programId, pipelineId, x_gw_ims_org_id, Authorization, x_api_key, Content_Type, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2640,14 +2640,14 @@ export const PipelineExecutionApiFp = function(configuration?: Configuration) {
          * @param {string} executionId Identifier of the execution
          * @param {string} phaseId Identifier of the phase
          * @param {string} stepId Identifier of the step
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stepMetric(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineStepMetrics> {
-            const localVarAxiosArgs = PipelineExecutionApiAxiosParamCreator(configuration).stepMetric(programId, pipelineId, executionId, phaseId, stepId, xGwImsOrgId, authorization, xApiKey, options);
+        stepMetric(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineStepMetrics> {
+            const localVarAxiosArgs = PipelineExecutionApiAxiosParamCreator(configuration).stepMetric(programId, pipelineId, executionId, phaseId, stepId, x_gw_ims_org_id, Authorization, x_api_key, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2661,14 +2661,14 @@ export const PipelineExecutionApiFp = function(configuration?: Configuration) {
          * @param {string} executionId Identifier of the execution
          * @param {string} phaseId Identifier of the phase
          * @param {string} stepId Identifier of the step
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stepState(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineExecutionStepState> {
-            const localVarAxiosArgs = PipelineExecutionApiAxiosParamCreator(configuration).stepState(programId, pipelineId, executionId, phaseId, stepId, xGwImsOrgId, authorization, xApiKey, options);
+        stepState(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineExecutionStepState> {
+            const localVarAxiosArgs = PipelineExecutionApiAxiosParamCreator(configuration).stepState(programId, pipelineId, executionId, phaseId, stepId, x_gw_ims_org_id, Authorization, x_api_key, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2691,16 +2691,16 @@ export const PipelineExecutionApiFactory = function (configuration?: Configurati
          * @param {string} executionId Identifier of the execution
          * @param {string} phaseId Identifier of the phase
          * @param {string} stepId Identifier of the step
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
-         * @param {string} contentType Must always be application/json
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} Content_Type Must always be application/json
          * @param {object} body Input for advance. See documentation for details.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        advancePipelineExecution(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, contentType: string, body: object, options?: any): AxiosPromise<void> {
-            return PipelineExecutionApiFp(configuration).advancePipelineExecution(programId, pipelineId, executionId, phaseId, stepId, xGwImsOrgId, authorization, xApiKey, contentType, body, options)(axios, basePath);
+        advancePipelineExecution(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Content_Type: string, body: object, options?: any): AxiosPromise<void> {
+            return PipelineExecutionApiFp(configuration).advancePipelineExecution(programId, pipelineId, executionId, phaseId, stepId, x_gw_ims_org_id, Authorization, x_api_key, Content_Type, body, options)(axios, basePath);
         },
         /**
          * Post to this url in order to cancel the current pipeline execution. Link is present in output only in that case.
@@ -2710,30 +2710,30 @@ export const PipelineExecutionApiFactory = function (configuration?: Configurati
          * @param {string} executionId Identifier of the execution
          * @param {string} phaseId Identifier of the phase
          * @param {string} stepId Identifier of the step
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
-         * @param {string} contentType Must always be application/json
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} Content_Type Must always be application/json
          * @param {object} body Input for advance. See documentation for details.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cancelPipelineExecutionStep(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, contentType: string, body: object, options?: any): AxiosPromise<void> {
-            return PipelineExecutionApiFp(configuration).cancelPipelineExecutionStep(programId, pipelineId, executionId, phaseId, stepId, xGwImsOrgId, authorization, xApiKey, contentType, body, options)(axios, basePath);
+        cancelPipelineExecutionStep(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Content_Type: string, body: object, options?: any): AxiosPromise<void> {
+            return PipelineExecutionApiFp(configuration).cancelPipelineExecutionStep(programId, pipelineId, executionId, phaseId, stepId, x_gw_ims_org_id, Authorization, x_api_key, Content_Type, body, options)(axios, basePath);
         },
         /**
          * Returns current pipeline execution if any.
          * @summary Get current pipeline execution
          * @param {string} programId Identifier of the program.
          * @param {string} pipelineId Identifier of the pipeline
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCurrentExecution(programId: string, pipelineId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any): AxiosPromise<PipelineExecution> {
-            return PipelineExecutionApiFp(configuration).getCurrentExecution(programId, pipelineId, xGwImsOrgId, authorization, xApiKey, options)(axios, basePath);
+        getCurrentExecution(programId: string, pipelineId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): AxiosPromise<PipelineExecution> {
+            return PipelineExecutionApiFp(configuration).getCurrentExecution(programId, pipelineId, x_gw_ims_org_id, Authorization, x_api_key, options)(axios, basePath);
         },
         /**
          * Returns a pipeline execution by id
@@ -2741,30 +2741,30 @@ export const PipelineExecutionApiFactory = function (configuration?: Configurati
          * @param {string} programId Identifier of the program.
          * @param {string} pipelineId Identifier of the pipeline
          * @param {string} executionId Identifier of the execution
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExecution(programId: string, pipelineId: string, executionId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any): AxiosPromise<PipelineExecution> {
-            return PipelineExecutionApiFp(configuration).getExecution(programId, pipelineId, executionId, xGwImsOrgId, authorization, xApiKey, options)(axios, basePath);
+        getExecution(programId: string, pipelineId: string, executionId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): AxiosPromise<PipelineExecution> {
+            return PipelineExecutionApiFp(configuration).getExecution(programId, pipelineId, executionId, x_gw_ims_org_id, Authorization, x_api_key, options)(axios, basePath);
         },
         /**
          * Returns the history of pipeline executions in a newest to oldest order
          * @summary List Executions
          * @param {string} programId Identifier of the program.
          * @param {string} pipelineId Identifier of the pipeline
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {string} [start] Pagination start parameter
          * @param {number} [limit] Pagination limit parameter
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExecutions(programId: string, pipelineId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, start?: string, limit?: number, options?: any): AxiosPromise<PipelineExecutionListRepresentation> {
-            return PipelineExecutionApiFp(configuration).getExecutions(programId, pipelineId, xGwImsOrgId, authorization, xApiKey, start, limit, options)(axios, basePath);
+        getExecutions(programId: string, pipelineId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, start?: string, limit?: number, options?: any): AxiosPromise<PipelineExecutionListRepresentation> {
+            return PipelineExecutionApiFp(configuration).getExecutions(programId, pipelineId, x_gw_ims_org_id, Authorization, x_api_key, start, limit, options)(axios, basePath);
         },
         /**
          * Get the logs associated with a step.
@@ -2774,30 +2774,30 @@ export const PipelineExecutionApiFactory = function (configuration?: Configurati
          * @param {string} executionId Identifier of the execution
          * @param {string} phaseId Identifier of the phase
          * @param {string} stepId Identifier of the step
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
-         * @param {string} [accept] Specify application/json in this header to receive a JSON response. Otherwise, a 307 response code will be returned with a Location header.
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} [Accept] Specify application/json in this header to receive a JSON response. Otherwise, a 307 response code will be returned with a Location header.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getStepLogs(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, accept?: string, options?: any): AxiosPromise<void> {
-            return PipelineExecutionApiFp(configuration).getStepLogs(programId, pipelineId, executionId, phaseId, stepId, xGwImsOrgId, authorization, xApiKey, accept, options)(axios, basePath);
+        getStepLogs(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Accept?: string, options?: any): AxiosPromise<void> {
+            return PipelineExecutionApiFp(configuration).getStepLogs(programId, pipelineId, executionId, phaseId, stepId, x_gw_ims_org_id, Authorization, x_api_key, Accept, options)(axios, basePath);
         },
         /**
          * Starts the Pipeline. This works only if the pipeline is not already started.
          * @summary Start the pipeline
          * @param {string} programId Identifier of the program.
          * @param {string} pipelineId Identifier of the pipeline
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
-         * @param {string} contentType Must always be application/json
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} Content_Type Must always be application/json
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        startPipeline(programId: string, pipelineId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, contentType: string, options?: any): AxiosPromise<void> {
-            return PipelineExecutionApiFp(configuration).startPipeline(programId, pipelineId, xGwImsOrgId, authorization, xApiKey, contentType, options)(axios, basePath);
+        startPipeline(programId: string, pipelineId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Content_Type: string, options?: any): AxiosPromise<void> {
+            return PipelineExecutionApiFp(configuration).startPipeline(programId, pipelineId, x_gw_ims_org_id, Authorization, x_api_key, Content_Type, options)(axios, basePath);
         },
         /**
          * 
@@ -2807,14 +2807,14 @@ export const PipelineExecutionApiFactory = function (configuration?: Configurati
          * @param {string} executionId Identifier of the execution
          * @param {string} phaseId Identifier of the phase
          * @param {string} stepId Identifier of the step
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stepMetric(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any): AxiosPromise<PipelineStepMetrics> {
-            return PipelineExecutionApiFp(configuration).stepMetric(programId, pipelineId, executionId, phaseId, stepId, xGwImsOrgId, authorization, xApiKey, options)(axios, basePath);
+        stepMetric(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): AxiosPromise<PipelineStepMetrics> {
+            return PipelineExecutionApiFp(configuration).stepMetric(programId, pipelineId, executionId, phaseId, stepId, x_gw_ims_org_id, Authorization, x_api_key, options)(axios, basePath);
         },
         /**
          * 
@@ -2824,14 +2824,14 @@ export const PipelineExecutionApiFactory = function (configuration?: Configurati
          * @param {string} executionId Identifier of the execution
          * @param {string} phaseId Identifier of the phase
          * @param {string} stepId Identifier of the step
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stepState(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any): AxiosPromise<PipelineExecutionStepState> {
-            return PipelineExecutionApiFp(configuration).stepState(programId, pipelineId, executionId, phaseId, stepId, xGwImsOrgId, authorization, xApiKey, options)(axios, basePath);
+        stepState(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): AxiosPromise<PipelineExecutionStepState> {
+            return PipelineExecutionApiFp(configuration).stepState(programId, pipelineId, executionId, phaseId, stepId, x_gw_ims_org_id, Authorization, x_api_key, options)(axios, basePath);
         },
     };
 };
@@ -2851,17 +2851,17 @@ export class PipelineExecutionApi extends BaseAPI {
      * @param {string} executionId Identifier of the execution
      * @param {string} phaseId Identifier of the phase
      * @param {string} stepId Identifier of the step
-     * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-     * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-     * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
-     * @param {string} contentType Must always be application/json
+     * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+     * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+     * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+     * @param {string} Content_Type Must always be application/json
      * @param {object} body Input for advance. See documentation for details.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PipelineExecutionApi
      */
-    public advancePipelineExecution(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, contentType: string, body: object, options?: any) {
-        return PipelineExecutionApiFp(this.configuration).advancePipelineExecution(programId, pipelineId, executionId, phaseId, stepId, xGwImsOrgId, authorization, xApiKey, contentType, body, options)(this.axios, this.basePath);
+    public advancePipelineExecution(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Content_Type: string, body: object, options?: any) {
+        return PipelineExecutionApiFp(this.configuration).advancePipelineExecution(programId, pipelineId, executionId, phaseId, stepId, x_gw_ims_org_id, Authorization, x_api_key, Content_Type, body, options)(this.axios, this.basePath);
     }
 
     /**
@@ -2872,17 +2872,17 @@ export class PipelineExecutionApi extends BaseAPI {
      * @param {string} executionId Identifier of the execution
      * @param {string} phaseId Identifier of the phase
      * @param {string} stepId Identifier of the step
-     * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-     * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-     * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
-     * @param {string} contentType Must always be application/json
+     * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+     * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+     * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+     * @param {string} Content_Type Must always be application/json
      * @param {object} body Input for advance. See documentation for details.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PipelineExecutionApi
      */
-    public cancelPipelineExecutionStep(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, contentType: string, body: object, options?: any) {
-        return PipelineExecutionApiFp(this.configuration).cancelPipelineExecutionStep(programId, pipelineId, executionId, phaseId, stepId, xGwImsOrgId, authorization, xApiKey, contentType, body, options)(this.axios, this.basePath);
+    public cancelPipelineExecutionStep(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Content_Type: string, body: object, options?: any) {
+        return PipelineExecutionApiFp(this.configuration).cancelPipelineExecutionStep(programId, pipelineId, executionId, phaseId, stepId, x_gw_ims_org_id, Authorization, x_api_key, Content_Type, body, options)(this.axios, this.basePath);
     }
 
     /**
@@ -2890,15 +2890,15 @@ export class PipelineExecutionApi extends BaseAPI {
      * @summary Get current pipeline execution
      * @param {string} programId Identifier of the program.
      * @param {string} pipelineId Identifier of the pipeline
-     * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-     * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-     * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+     * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+     * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+     * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PipelineExecutionApi
      */
-    public getCurrentExecution(programId: string, pipelineId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any) {
-        return PipelineExecutionApiFp(this.configuration).getCurrentExecution(programId, pipelineId, xGwImsOrgId, authorization, xApiKey, options)(this.axios, this.basePath);
+    public getCurrentExecution(programId: string, pipelineId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any) {
+        return PipelineExecutionApiFp(this.configuration).getCurrentExecution(programId, pipelineId, x_gw_ims_org_id, Authorization, x_api_key, options)(this.axios, this.basePath);
     }
 
     /**
@@ -2907,15 +2907,15 @@ export class PipelineExecutionApi extends BaseAPI {
      * @param {string} programId Identifier of the program.
      * @param {string} pipelineId Identifier of the pipeline
      * @param {string} executionId Identifier of the execution
-     * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-     * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-     * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+     * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+     * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+     * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PipelineExecutionApi
      */
-    public getExecution(programId: string, pipelineId: string, executionId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any) {
-        return PipelineExecutionApiFp(this.configuration).getExecution(programId, pipelineId, executionId, xGwImsOrgId, authorization, xApiKey, options)(this.axios, this.basePath);
+    public getExecution(programId: string, pipelineId: string, executionId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any) {
+        return PipelineExecutionApiFp(this.configuration).getExecution(programId, pipelineId, executionId, x_gw_ims_org_id, Authorization, x_api_key, options)(this.axios, this.basePath);
     }
 
     /**
@@ -2923,17 +2923,17 @@ export class PipelineExecutionApi extends BaseAPI {
      * @summary List Executions
      * @param {string} programId Identifier of the program.
      * @param {string} pipelineId Identifier of the pipeline
-     * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-     * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-     * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+     * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+     * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+     * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
      * @param {string} [start] Pagination start parameter
      * @param {number} [limit] Pagination limit parameter
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PipelineExecutionApi
      */
-    public getExecutions(programId: string, pipelineId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, start?: string, limit?: number, options?: any) {
-        return PipelineExecutionApiFp(this.configuration).getExecutions(programId, pipelineId, xGwImsOrgId, authorization, xApiKey, start, limit, options)(this.axios, this.basePath);
+    public getExecutions(programId: string, pipelineId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, start?: string, limit?: number, options?: any) {
+        return PipelineExecutionApiFp(this.configuration).getExecutions(programId, pipelineId, x_gw_ims_org_id, Authorization, x_api_key, start, limit, options)(this.axios, this.basePath);
     }
 
     /**
@@ -2944,16 +2944,16 @@ export class PipelineExecutionApi extends BaseAPI {
      * @param {string} executionId Identifier of the execution
      * @param {string} phaseId Identifier of the phase
      * @param {string} stepId Identifier of the step
-     * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-     * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-     * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
-     * @param {string} [accept] Specify application/json in this header to receive a JSON response. Otherwise, a 307 response code will be returned with a Location header.
+     * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+     * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+     * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+     * @param {string} [Accept] Specify application/json in this header to receive a JSON response. Otherwise, a 307 response code will be returned with a Location header.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PipelineExecutionApi
      */
-    public getStepLogs(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, accept?: string, options?: any) {
-        return PipelineExecutionApiFp(this.configuration).getStepLogs(programId, pipelineId, executionId, phaseId, stepId, xGwImsOrgId, authorization, xApiKey, accept, options)(this.axios, this.basePath);
+    public getStepLogs(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Accept?: string, options?: any) {
+        return PipelineExecutionApiFp(this.configuration).getStepLogs(programId, pipelineId, executionId, phaseId, stepId, x_gw_ims_org_id, Authorization, x_api_key, Accept, options)(this.axios, this.basePath);
     }
 
     /**
@@ -2961,16 +2961,16 @@ export class PipelineExecutionApi extends BaseAPI {
      * @summary Start the pipeline
      * @param {string} programId Identifier of the program.
      * @param {string} pipelineId Identifier of the pipeline
-     * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-     * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-     * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
-     * @param {string} contentType Must always be application/json
+     * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+     * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+     * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+     * @param {string} Content_Type Must always be application/json
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PipelineExecutionApi
      */
-    public startPipeline(programId: string, pipelineId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, contentType: string, options?: any) {
-        return PipelineExecutionApiFp(this.configuration).startPipeline(programId, pipelineId, xGwImsOrgId, authorization, xApiKey, contentType, options)(this.axios, this.basePath);
+    public startPipeline(programId: string, pipelineId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Content_Type: string, options?: any) {
+        return PipelineExecutionApiFp(this.configuration).startPipeline(programId, pipelineId, x_gw_ims_org_id, Authorization, x_api_key, Content_Type, options)(this.axios, this.basePath);
     }
 
     /**
@@ -2981,15 +2981,15 @@ export class PipelineExecutionApi extends BaseAPI {
      * @param {string} executionId Identifier of the execution
      * @param {string} phaseId Identifier of the phase
      * @param {string} stepId Identifier of the step
-     * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-     * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-     * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+     * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+     * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+     * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PipelineExecutionApi
      */
-    public stepMetric(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any) {
-        return PipelineExecutionApiFp(this.configuration).stepMetric(programId, pipelineId, executionId, phaseId, stepId, xGwImsOrgId, authorization, xApiKey, options)(this.axios, this.basePath);
+    public stepMetric(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any) {
+        return PipelineExecutionApiFp(this.configuration).stepMetric(programId, pipelineId, executionId, phaseId, stepId, x_gw_ims_org_id, Authorization, x_api_key, options)(this.axios, this.basePath);
     }
 
     /**
@@ -3000,15 +3000,15 @@ export class PipelineExecutionApi extends BaseAPI {
      * @param {string} executionId Identifier of the execution
      * @param {string} phaseId Identifier of the phase
      * @param {string} stepId Identifier of the step
-     * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-     * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-     * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+     * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+     * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+     * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PipelineExecutionApi
      */
-    public stepState(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any) {
-        return PipelineExecutionApiFp(this.configuration).stepState(programId, pipelineId, executionId, phaseId, stepId, xGwImsOrgId, authorization, xApiKey, options)(this.axios, this.basePath);
+    public stepState(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any) {
+        return PipelineExecutionApiFp(this.configuration).stepState(programId, pipelineId, executionId, phaseId, stepId, x_gw_ims_org_id, Authorization, x_api_key, options)(this.axios, this.basePath);
     }
 
 }
@@ -3025,13 +3025,13 @@ export const PipelinesApiAxiosParamCreator = function (configuration?: Configura
          * @summary Delete a Pipeline
          * @param {string} programId Identifier of the program
          * @param {string} pipelineId Identifier of the pipeline
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deletePipeline(programId: string, pipelineId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options: any = {}): RequestArgs {
+        deletePipeline(programId: string, pipelineId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options: any = {}): RequestArgs {
             // verify required parameter 'programId' is not null or undefined
             if (programId === null || programId === undefined) {
                 throw new RequiredError('programId','Required parameter programId was null or undefined when calling deletePipeline.');
@@ -3040,17 +3040,17 @@ export const PipelinesApiAxiosParamCreator = function (configuration?: Configura
             if (pipelineId === null || pipelineId === undefined) {
                 throw new RequiredError('pipelineId','Required parameter pipelineId was null or undefined when calling deletePipeline.');
             }
-            // verify required parameter 'xGwImsOrgId' is not null or undefined
-            if (xGwImsOrgId === null || xGwImsOrgId === undefined) {
-                throw new RequiredError('xGwImsOrgId','Required parameter xGwImsOrgId was null or undefined when calling deletePipeline.');
+            // verify required parameter 'x_gw_ims_org_id' is not null or undefined
+            if (x_gw_ims_org_id === null || x_gw_ims_org_id === undefined) {
+                throw new RequiredError('x_gw_ims_org_id','Required parameter x_gw_ims_org_id was null or undefined when calling deletePipeline.');
             }
-            // verify required parameter 'authorization' is not null or undefined
-            if (authorization === null || authorization === undefined) {
-                throw new RequiredError('authorization','Required parameter authorization was null or undefined when calling deletePipeline.');
+            // verify required parameter 'Authorization' is not null or undefined
+            if (Authorization === null || Authorization === undefined) {
+                throw new RequiredError('Authorization','Required parameter Authorization was null or undefined when calling deletePipeline.');
             }
-            // verify required parameter 'xApiKey' is not null or undefined
-            if (xApiKey === null || xApiKey === undefined) {
-                throw new RequiredError('xApiKey','Required parameter xApiKey was null or undefined when calling deletePipeline.');
+            // verify required parameter 'x_api_key' is not null or undefined
+            if (x_api_key === null || x_api_key === undefined) {
+                throw new RequiredError('x_api_key','Required parameter x_api_key was null or undefined when calling deletePipeline.');
             }
             const localVarPath = `/api/program/{programId}/pipeline/{pipelineId}`
                 .replace(`{${"programId"}}`, encodeURIComponent(String(programId)))
@@ -3064,16 +3064,16 @@ export const PipelinesApiAxiosParamCreator = function (configuration?: Configura
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (xGwImsOrgId !== undefined && xGwImsOrgId !== null) {
-                localVarHeaderParameter['x-gw-ims-org-id'] = String(xGwImsOrgId);
+            if (x_gw_ims_org_id !== undefined && x_gw_ims_org_id !== null) {
+                localVarHeaderParameter['x-gw-ims-org-id'] = String(x_gw_ims_org_id);
             }
 
-            if (authorization !== undefined && authorization !== null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
+            if (Authorization !== undefined && Authorization !== null) {
+                localVarHeaderParameter['Authorization'] = String(Authorization);
             }
 
-            if (xApiKey !== undefined && xApiKey !== null) {
-                localVarHeaderParameter['x-api-key'] = String(xApiKey);
+            if (x_api_key !== undefined && x_api_key !== null) {
+                localVarHeaderParameter['x-api-key'] = String(x_api_key);
             }
 
 
@@ -3093,13 +3093,13 @@ export const PipelinesApiAxiosParamCreator = function (configuration?: Configura
          * @summary Get Pipeline
          * @param {string} programId Identifier of the program
          * @param {string} pipelineId Identifier of the pipeline
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPipeline(programId: string, pipelineId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options: any = {}): RequestArgs {
+        getPipeline(programId: string, pipelineId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options: any = {}): RequestArgs {
             // verify required parameter 'programId' is not null or undefined
             if (programId === null || programId === undefined) {
                 throw new RequiredError('programId','Required parameter programId was null or undefined when calling getPipeline.');
@@ -3108,17 +3108,17 @@ export const PipelinesApiAxiosParamCreator = function (configuration?: Configura
             if (pipelineId === null || pipelineId === undefined) {
                 throw new RequiredError('pipelineId','Required parameter pipelineId was null or undefined when calling getPipeline.');
             }
-            // verify required parameter 'xGwImsOrgId' is not null or undefined
-            if (xGwImsOrgId === null || xGwImsOrgId === undefined) {
-                throw new RequiredError('xGwImsOrgId','Required parameter xGwImsOrgId was null or undefined when calling getPipeline.');
+            // verify required parameter 'x_gw_ims_org_id' is not null or undefined
+            if (x_gw_ims_org_id === null || x_gw_ims_org_id === undefined) {
+                throw new RequiredError('x_gw_ims_org_id','Required parameter x_gw_ims_org_id was null or undefined when calling getPipeline.');
             }
-            // verify required parameter 'authorization' is not null or undefined
-            if (authorization === null || authorization === undefined) {
-                throw new RequiredError('authorization','Required parameter authorization was null or undefined when calling getPipeline.');
+            // verify required parameter 'Authorization' is not null or undefined
+            if (Authorization === null || Authorization === undefined) {
+                throw new RequiredError('Authorization','Required parameter Authorization was null or undefined when calling getPipeline.');
             }
-            // verify required parameter 'xApiKey' is not null or undefined
-            if (xApiKey === null || xApiKey === undefined) {
-                throw new RequiredError('xApiKey','Required parameter xApiKey was null or undefined when calling getPipeline.');
+            // verify required parameter 'x_api_key' is not null or undefined
+            if (x_api_key === null || x_api_key === undefined) {
+                throw new RequiredError('x_api_key','Required parameter x_api_key was null or undefined when calling getPipeline.');
             }
             const localVarPath = `/api/program/{programId}/pipeline/{pipelineId}`
                 .replace(`{${"programId"}}`, encodeURIComponent(String(programId)))
@@ -3132,16 +3132,16 @@ export const PipelinesApiAxiosParamCreator = function (configuration?: Configura
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (xGwImsOrgId !== undefined && xGwImsOrgId !== null) {
-                localVarHeaderParameter['x-gw-ims-org-id'] = String(xGwImsOrgId);
+            if (x_gw_ims_org_id !== undefined && x_gw_ims_org_id !== null) {
+                localVarHeaderParameter['x-gw-ims-org-id'] = String(x_gw_ims_org_id);
             }
 
-            if (authorization !== undefined && authorization !== null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
+            if (Authorization !== undefined && Authorization !== null) {
+                localVarHeaderParameter['Authorization'] = String(Authorization);
             }
 
-            if (xApiKey !== undefined && xApiKey !== null) {
-                localVarHeaderParameter['x-api-key'] = String(xApiKey);
+            if (x_api_key !== undefined && x_api_key !== null) {
+                localVarHeaderParameter['x-api-key'] = String(x_api_key);
             }
 
 
@@ -3160,28 +3160,28 @@ export const PipelinesApiAxiosParamCreator = function (configuration?: Configura
          * Returns all the pipelines that the requesting user has access to in an program
          * @summary List Pipelines
          * @param {string} programId Identifier of the program
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPipelines(programId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options: any = {}): RequestArgs {
+        getPipelines(programId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options: any = {}): RequestArgs {
             // verify required parameter 'programId' is not null or undefined
             if (programId === null || programId === undefined) {
                 throw new RequiredError('programId','Required parameter programId was null or undefined when calling getPipelines.');
             }
-            // verify required parameter 'xGwImsOrgId' is not null or undefined
-            if (xGwImsOrgId === null || xGwImsOrgId === undefined) {
-                throw new RequiredError('xGwImsOrgId','Required parameter xGwImsOrgId was null or undefined when calling getPipelines.');
+            // verify required parameter 'x_gw_ims_org_id' is not null or undefined
+            if (x_gw_ims_org_id === null || x_gw_ims_org_id === undefined) {
+                throw new RequiredError('x_gw_ims_org_id','Required parameter x_gw_ims_org_id was null or undefined when calling getPipelines.');
             }
-            // verify required parameter 'authorization' is not null or undefined
-            if (authorization === null || authorization === undefined) {
-                throw new RequiredError('authorization','Required parameter authorization was null or undefined when calling getPipelines.');
+            // verify required parameter 'Authorization' is not null or undefined
+            if (Authorization === null || Authorization === undefined) {
+                throw new RequiredError('Authorization','Required parameter Authorization was null or undefined when calling getPipelines.');
             }
-            // verify required parameter 'xApiKey' is not null or undefined
-            if (xApiKey === null || xApiKey === undefined) {
-                throw new RequiredError('xApiKey','Required parameter xApiKey was null or undefined when calling getPipelines.');
+            // verify required parameter 'x_api_key' is not null or undefined
+            if (x_api_key === null || x_api_key === undefined) {
+                throw new RequiredError('x_api_key','Required parameter x_api_key was null or undefined when calling getPipelines.');
             }
             const localVarPath = `/api/program/{programId}/pipelines`
                 .replace(`{${"programId"}}`, encodeURIComponent(String(programId)));
@@ -3194,16 +3194,16 @@ export const PipelinesApiAxiosParamCreator = function (configuration?: Configura
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (xGwImsOrgId !== undefined && xGwImsOrgId !== null) {
-                localVarHeaderParameter['x-gw-ims-org-id'] = String(xGwImsOrgId);
+            if (x_gw_ims_org_id !== undefined && x_gw_ims_org_id !== null) {
+                localVarHeaderParameter['x-gw-ims-org-id'] = String(x_gw_ims_org_id);
             }
 
-            if (authorization !== undefined && authorization !== null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
+            if (Authorization !== undefined && Authorization !== null) {
+                localVarHeaderParameter['Authorization'] = String(Authorization);
             }
 
-            if (xApiKey !== undefined && xApiKey !== null) {
-                localVarHeaderParameter['x-api-key'] = String(xApiKey);
+            if (x_api_key !== undefined && x_api_key !== null) {
+                localVarHeaderParameter['x-api-key'] = String(x_api_key);
             }
 
 
@@ -3223,15 +3223,15 @@ export const PipelinesApiAxiosParamCreator = function (configuration?: Configura
          * @summary Patches Pipeline
          * @param {string} programId Identifier of the program
          * @param {string} pipelineId Identifier of the pipeline
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
-         * @param {string} contentType Must always be application/json
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} Content_Type Must always be application/json
          * @param {Pipeline} body The updated Pipeline
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchPipeline(programId: string, pipelineId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, contentType: string, body: Pipeline, options: any = {}): RequestArgs {
+        patchPipeline(programId: string, pipelineId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Content_Type: string, body: Pipeline, options: any = {}): RequestArgs {
             // verify required parameter 'programId' is not null or undefined
             if (programId === null || programId === undefined) {
                 throw new RequiredError('programId','Required parameter programId was null or undefined when calling patchPipeline.');
@@ -3240,21 +3240,21 @@ export const PipelinesApiAxiosParamCreator = function (configuration?: Configura
             if (pipelineId === null || pipelineId === undefined) {
                 throw new RequiredError('pipelineId','Required parameter pipelineId was null or undefined when calling patchPipeline.');
             }
-            // verify required parameter 'xGwImsOrgId' is not null or undefined
-            if (xGwImsOrgId === null || xGwImsOrgId === undefined) {
-                throw new RequiredError('xGwImsOrgId','Required parameter xGwImsOrgId was null or undefined when calling patchPipeline.');
+            // verify required parameter 'x_gw_ims_org_id' is not null or undefined
+            if (x_gw_ims_org_id === null || x_gw_ims_org_id === undefined) {
+                throw new RequiredError('x_gw_ims_org_id','Required parameter x_gw_ims_org_id was null or undefined when calling patchPipeline.');
             }
-            // verify required parameter 'authorization' is not null or undefined
-            if (authorization === null || authorization === undefined) {
-                throw new RequiredError('authorization','Required parameter authorization was null or undefined when calling patchPipeline.');
+            // verify required parameter 'Authorization' is not null or undefined
+            if (Authorization === null || Authorization === undefined) {
+                throw new RequiredError('Authorization','Required parameter Authorization was null or undefined when calling patchPipeline.');
             }
-            // verify required parameter 'xApiKey' is not null or undefined
-            if (xApiKey === null || xApiKey === undefined) {
-                throw new RequiredError('xApiKey','Required parameter xApiKey was null or undefined when calling patchPipeline.');
+            // verify required parameter 'x_api_key' is not null or undefined
+            if (x_api_key === null || x_api_key === undefined) {
+                throw new RequiredError('x_api_key','Required parameter x_api_key was null or undefined when calling patchPipeline.');
             }
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError('contentType','Required parameter contentType was null or undefined when calling patchPipeline.');
+            // verify required parameter 'Content_Type' is not null or undefined
+            if (Content_Type === null || Content_Type === undefined) {
+                throw new RequiredError('Content_Type','Required parameter Content_Type was null or undefined when calling patchPipeline.');
             }
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
@@ -3272,20 +3272,20 @@ export const PipelinesApiAxiosParamCreator = function (configuration?: Configura
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (xGwImsOrgId !== undefined && xGwImsOrgId !== null) {
-                localVarHeaderParameter['x-gw-ims-org-id'] = String(xGwImsOrgId);
+            if (x_gw_ims_org_id !== undefined && x_gw_ims_org_id !== null) {
+                localVarHeaderParameter['x-gw-ims-org-id'] = String(x_gw_ims_org_id);
             }
 
-            if (authorization !== undefined && authorization !== null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
+            if (Authorization !== undefined && Authorization !== null) {
+                localVarHeaderParameter['Authorization'] = String(Authorization);
             }
 
-            if (xApiKey !== undefined && xApiKey !== null) {
-                localVarHeaderParameter['x-api-key'] = String(xApiKey);
+            if (x_api_key !== undefined && x_api_key !== null) {
+                localVarHeaderParameter['x-api-key'] = String(x_api_key);
             }
 
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter['Content-Type'] = String(contentType);
+            if (Content_Type !== undefined && Content_Type !== null) {
+                localVarHeaderParameter['Content-Type'] = String(Content_Type);
             }
 
 
@@ -3318,14 +3318,14 @@ export const PipelinesApiFp = function(configuration?: Configuration) {
          * @summary Delete a Pipeline
          * @param {string} programId Identifier of the program
          * @param {string} pipelineId Identifier of the pipeline
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deletePipeline(programId: string, pipelineId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
-            const localVarAxiosArgs = PipelinesApiAxiosParamCreator(configuration).deletePipeline(programId, pipelineId, xGwImsOrgId, authorization, xApiKey, options);
+        deletePipeline(programId: string, pipelineId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
+            const localVarAxiosArgs = PipelinesApiAxiosParamCreator(configuration).deletePipeline(programId, pipelineId, x_gw_ims_org_id, Authorization, x_api_key, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3336,14 +3336,14 @@ export const PipelinesApiFp = function(configuration?: Configuration) {
          * @summary Get Pipeline
          * @param {string} programId Identifier of the program
          * @param {string} pipelineId Identifier of the pipeline
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPipeline(programId: string, pipelineId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Pipeline> {
-            const localVarAxiosArgs = PipelinesApiAxiosParamCreator(configuration).getPipeline(programId, pipelineId, xGwImsOrgId, authorization, xApiKey, options);
+        getPipeline(programId: string, pipelineId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Pipeline> {
+            const localVarAxiosArgs = PipelinesApiAxiosParamCreator(configuration).getPipeline(programId, pipelineId, x_gw_ims_org_id, Authorization, x_api_key, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3353,14 +3353,14 @@ export const PipelinesApiFp = function(configuration?: Configuration) {
          * Returns all the pipelines that the requesting user has access to in an program
          * @summary List Pipelines
          * @param {string} programId Identifier of the program
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPipelines(programId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineList> {
-            const localVarAxiosArgs = PipelinesApiAxiosParamCreator(configuration).getPipelines(programId, xGwImsOrgId, authorization, xApiKey, options);
+        getPipelines(programId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineList> {
+            const localVarAxiosArgs = PipelinesApiAxiosParamCreator(configuration).getPipelines(programId, x_gw_ims_org_id, Authorization, x_api_key, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3371,16 +3371,16 @@ export const PipelinesApiFp = function(configuration?: Configuration) {
          * @summary Patches Pipeline
          * @param {string} programId Identifier of the program
          * @param {string} pipelineId Identifier of the pipeline
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
-         * @param {string} contentType Must always be application/json
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} Content_Type Must always be application/json
          * @param {Pipeline} body The updated Pipeline
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchPipeline(programId: string, pipelineId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, contentType: string, body: Pipeline, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Pipeline> {
-            const localVarAxiosArgs = PipelinesApiAxiosParamCreator(configuration).patchPipeline(programId, pipelineId, xGwImsOrgId, authorization, xApiKey, contentType, body, options);
+        patchPipeline(programId: string, pipelineId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Content_Type: string, body: Pipeline, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Pipeline> {
+            const localVarAxiosArgs = PipelinesApiAxiosParamCreator(configuration).patchPipeline(programId, pipelineId, x_gw_ims_org_id, Authorization, x_api_key, Content_Type, body, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3400,57 +3400,57 @@ export const PipelinesApiFactory = function (configuration?: Configuration, base
          * @summary Delete a Pipeline
          * @param {string} programId Identifier of the program
          * @param {string} pipelineId Identifier of the pipeline
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deletePipeline(programId: string, pipelineId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any): AxiosPromise<void> {
-            return PipelinesApiFp(configuration).deletePipeline(programId, pipelineId, xGwImsOrgId, authorization, xApiKey, options)(axios, basePath);
+        deletePipeline(programId: string, pipelineId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): AxiosPromise<void> {
+            return PipelinesApiFp(configuration).deletePipeline(programId, pipelineId, x_gw_ims_org_id, Authorization, x_api_key, options)(axios, basePath);
         },
         /**
          * Returns a pipeline by its id
          * @summary Get Pipeline
          * @param {string} programId Identifier of the program
          * @param {string} pipelineId Identifier of the pipeline
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPipeline(programId: string, pipelineId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any): AxiosPromise<Pipeline> {
-            return PipelinesApiFp(configuration).getPipeline(programId, pipelineId, xGwImsOrgId, authorization, xApiKey, options)(axios, basePath);
+        getPipeline(programId: string, pipelineId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): AxiosPromise<Pipeline> {
+            return PipelinesApiFp(configuration).getPipeline(programId, pipelineId, x_gw_ims_org_id, Authorization, x_api_key, options)(axios, basePath);
         },
         /**
          * Returns all the pipelines that the requesting user has access to in an program
          * @summary List Pipelines
          * @param {string} programId Identifier of the program
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPipelines(programId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any): AxiosPromise<PipelineList> {
-            return PipelinesApiFp(configuration).getPipelines(programId, xGwImsOrgId, authorization, xApiKey, options)(axios, basePath);
+        getPipelines(programId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): AxiosPromise<PipelineList> {
+            return PipelinesApiFp(configuration).getPipelines(programId, x_gw_ims_org_id, Authorization, x_api_key, options)(axios, basePath);
         },
         /**
          * Patches a pipeline within an program.
          * @summary Patches Pipeline
          * @param {string} programId Identifier of the program
          * @param {string} pipelineId Identifier of the pipeline
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
-         * @param {string} contentType Must always be application/json
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} Content_Type Must always be application/json
          * @param {Pipeline} body The updated Pipeline
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchPipeline(programId: string, pipelineId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, contentType: string, body: Pipeline, options?: any): AxiosPromise<Pipeline> {
-            return PipelinesApiFp(configuration).patchPipeline(programId, pipelineId, xGwImsOrgId, authorization, xApiKey, contentType, body, options)(axios, basePath);
+        patchPipeline(programId: string, pipelineId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Content_Type: string, body: Pipeline, options?: any): AxiosPromise<Pipeline> {
+            return PipelinesApiFp(configuration).patchPipeline(programId, pipelineId, x_gw_ims_org_id, Authorization, x_api_key, Content_Type, body, options)(axios, basePath);
         },
     };
 };
@@ -3467,15 +3467,15 @@ export class PipelinesApi extends BaseAPI {
      * @summary Delete a Pipeline
      * @param {string} programId Identifier of the program
      * @param {string} pipelineId Identifier of the pipeline
-     * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-     * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-     * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+     * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+     * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+     * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PipelinesApi
      */
-    public deletePipeline(programId: string, pipelineId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any) {
-        return PipelinesApiFp(this.configuration).deletePipeline(programId, pipelineId, xGwImsOrgId, authorization, xApiKey, options)(this.axios, this.basePath);
+    public deletePipeline(programId: string, pipelineId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any) {
+        return PipelinesApiFp(this.configuration).deletePipeline(programId, pipelineId, x_gw_ims_org_id, Authorization, x_api_key, options)(this.axios, this.basePath);
     }
 
     /**
@@ -3483,30 +3483,30 @@ export class PipelinesApi extends BaseAPI {
      * @summary Get Pipeline
      * @param {string} programId Identifier of the program
      * @param {string} pipelineId Identifier of the pipeline
-     * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-     * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-     * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+     * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+     * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+     * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PipelinesApi
      */
-    public getPipeline(programId: string, pipelineId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any) {
-        return PipelinesApiFp(this.configuration).getPipeline(programId, pipelineId, xGwImsOrgId, authorization, xApiKey, options)(this.axios, this.basePath);
+    public getPipeline(programId: string, pipelineId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any) {
+        return PipelinesApiFp(this.configuration).getPipeline(programId, pipelineId, x_gw_ims_org_id, Authorization, x_api_key, options)(this.axios, this.basePath);
     }
 
     /**
      * Returns all the pipelines that the requesting user has access to in an program
      * @summary List Pipelines
      * @param {string} programId Identifier of the program
-     * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-     * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-     * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+     * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+     * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+     * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PipelinesApi
      */
-    public getPipelines(programId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any) {
-        return PipelinesApiFp(this.configuration).getPipelines(programId, xGwImsOrgId, authorization, xApiKey, options)(this.axios, this.basePath);
+    public getPipelines(programId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any) {
+        return PipelinesApiFp(this.configuration).getPipelines(programId, x_gw_ims_org_id, Authorization, x_api_key, options)(this.axios, this.basePath);
     }
 
     /**
@@ -3514,17 +3514,17 @@ export class PipelinesApi extends BaseAPI {
      * @summary Patches Pipeline
      * @param {string} programId Identifier of the program
      * @param {string} pipelineId Identifier of the pipeline
-     * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-     * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-     * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
-     * @param {string} contentType Must always be application/json
+     * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+     * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+     * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+     * @param {string} Content_Type Must always be application/json
      * @param {Pipeline} body The updated Pipeline
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PipelinesApi
      */
-    public patchPipeline(programId: string, pipelineId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, contentType: string, body: Pipeline, options?: any) {
-        return PipelinesApiFp(this.configuration).patchPipeline(programId, pipelineId, xGwImsOrgId, authorization, xApiKey, contentType, body, options)(this.axios, this.basePath);
+    public patchPipeline(programId: string, pipelineId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Content_Type: string, body: Pipeline, options?: any) {
+        return PipelinesApiFp(this.configuration).patchPipeline(programId, pipelineId, x_gw_ims_org_id, Authorization, x_api_key, Content_Type, body, options)(this.axios, this.basePath);
     }
 
 }
@@ -3540,28 +3540,28 @@ export const ProgramsApiAxiosParamCreator = function (configuration?: Configurat
          * Returns a program by its id
          * @summary Get Program
          * @param {string} programId Identifier of the program
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProgram(programId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options: any = {}): RequestArgs {
+        getProgram(programId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options: any = {}): RequestArgs {
             // verify required parameter 'programId' is not null or undefined
             if (programId === null || programId === undefined) {
                 throw new RequiredError('programId','Required parameter programId was null or undefined when calling getProgram.');
             }
-            // verify required parameter 'xGwImsOrgId' is not null or undefined
-            if (xGwImsOrgId === null || xGwImsOrgId === undefined) {
-                throw new RequiredError('xGwImsOrgId','Required parameter xGwImsOrgId was null or undefined when calling getProgram.');
+            // verify required parameter 'x_gw_ims_org_id' is not null or undefined
+            if (x_gw_ims_org_id === null || x_gw_ims_org_id === undefined) {
+                throw new RequiredError('x_gw_ims_org_id','Required parameter x_gw_ims_org_id was null or undefined when calling getProgram.');
             }
-            // verify required parameter 'authorization' is not null or undefined
-            if (authorization === null || authorization === undefined) {
-                throw new RequiredError('authorization','Required parameter authorization was null or undefined when calling getProgram.');
+            // verify required parameter 'Authorization' is not null or undefined
+            if (Authorization === null || Authorization === undefined) {
+                throw new RequiredError('Authorization','Required parameter Authorization was null or undefined when calling getProgram.');
             }
-            // verify required parameter 'xApiKey' is not null or undefined
-            if (xApiKey === null || xApiKey === undefined) {
-                throw new RequiredError('xApiKey','Required parameter xApiKey was null or undefined when calling getProgram.');
+            // verify required parameter 'x_api_key' is not null or undefined
+            if (x_api_key === null || x_api_key === undefined) {
+                throw new RequiredError('x_api_key','Required parameter x_api_key was null or undefined when calling getProgram.');
             }
             const localVarPath = `/api/program/{programId}`
                 .replace(`{${"programId"}}`, encodeURIComponent(String(programId)));
@@ -3574,16 +3574,16 @@ export const ProgramsApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (xGwImsOrgId !== undefined && xGwImsOrgId !== null) {
-                localVarHeaderParameter['x-gw-ims-org-id'] = String(xGwImsOrgId);
+            if (x_gw_ims_org_id !== undefined && x_gw_ims_org_id !== null) {
+                localVarHeaderParameter['x-gw-ims-org-id'] = String(x_gw_ims_org_id);
             }
 
-            if (authorization !== undefined && authorization !== null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
+            if (Authorization !== undefined && Authorization !== null) {
+                localVarHeaderParameter['Authorization'] = String(Authorization);
             }
 
-            if (xApiKey !== undefined && xApiKey !== null) {
-                localVarHeaderParameter['x-api-key'] = String(xApiKey);
+            if (x_api_key !== undefined && x_api_key !== null) {
+                localVarHeaderParameter['x-api-key'] = String(x_api_key);
             }
 
 
@@ -3601,24 +3601,24 @@ export const ProgramsApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * Returns all programs that the requesting user has access to
          * @summary Lists Programs
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPrograms(xGwImsOrgId: string, authorization: string, xApiKey: string, options: any = {}): RequestArgs {
-            // verify required parameter 'xGwImsOrgId' is not null or undefined
-            if (xGwImsOrgId === null || xGwImsOrgId === undefined) {
-                throw new RequiredError('xGwImsOrgId','Required parameter xGwImsOrgId was null or undefined when calling getPrograms.');
+        getPrograms(x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options: any = {}): RequestArgs {
+            // verify required parameter 'x_gw_ims_org_id' is not null or undefined
+            if (x_gw_ims_org_id === null || x_gw_ims_org_id === undefined) {
+                throw new RequiredError('x_gw_ims_org_id','Required parameter x_gw_ims_org_id was null or undefined when calling getPrograms.');
             }
-            // verify required parameter 'authorization' is not null or undefined
-            if (authorization === null || authorization === undefined) {
-                throw new RequiredError('authorization','Required parameter authorization was null or undefined when calling getPrograms.');
+            // verify required parameter 'Authorization' is not null or undefined
+            if (Authorization === null || Authorization === undefined) {
+                throw new RequiredError('Authorization','Required parameter Authorization was null or undefined when calling getPrograms.');
             }
-            // verify required parameter 'xApiKey' is not null or undefined
-            if (xApiKey === null || xApiKey === undefined) {
-                throw new RequiredError('xApiKey','Required parameter xApiKey was null or undefined when calling getPrograms.');
+            // verify required parameter 'x_api_key' is not null or undefined
+            if (x_api_key === null || x_api_key === undefined) {
+                throw new RequiredError('x_api_key','Required parameter x_api_key was null or undefined when calling getPrograms.');
             }
             const localVarPath = `/api/programs`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -3630,16 +3630,16 @@ export const ProgramsApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (xGwImsOrgId !== undefined && xGwImsOrgId !== null) {
-                localVarHeaderParameter['x-gw-ims-org-id'] = String(xGwImsOrgId);
+            if (x_gw_ims_org_id !== undefined && x_gw_ims_org_id !== null) {
+                localVarHeaderParameter['x-gw-ims-org-id'] = String(x_gw_ims_org_id);
             }
 
-            if (authorization !== undefined && authorization !== null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
+            if (Authorization !== undefined && Authorization !== null) {
+                localVarHeaderParameter['Authorization'] = String(Authorization);
             }
 
-            if (xApiKey !== undefined && xApiKey !== null) {
-                localVarHeaderParameter['x-api-key'] = String(xApiKey);
+            if (x_api_key !== undefined && x_api_key !== null) {
+                localVarHeaderParameter['x-api-key'] = String(x_api_key);
             }
 
 
@@ -3667,14 +3667,14 @@ export const ProgramsApiFp = function(configuration?: Configuration) {
          * Returns a program by its id
          * @summary Get Program
          * @param {string} programId Identifier of the program
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProgram(programId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Program> {
-            const localVarAxiosArgs = ProgramsApiAxiosParamCreator(configuration).getProgram(programId, xGwImsOrgId, authorization, xApiKey, options);
+        getProgram(programId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Program> {
+            const localVarAxiosArgs = ProgramsApiAxiosParamCreator(configuration).getProgram(programId, x_gw_ims_org_id, Authorization, x_api_key, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3683,14 +3683,14 @@ export const ProgramsApiFp = function(configuration?: Configuration) {
         /**
          * Returns all programs that the requesting user has access to
          * @summary Lists Programs
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPrograms(xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProgramList> {
-            const localVarAxiosArgs = ProgramsApiAxiosParamCreator(configuration).getPrograms(xGwImsOrgId, authorization, xApiKey, options);
+        getPrograms(x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProgramList> {
+            const localVarAxiosArgs = ProgramsApiAxiosParamCreator(configuration).getPrograms(x_gw_ims_org_id, Authorization, x_api_key, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3709,26 +3709,26 @@ export const ProgramsApiFactory = function (configuration?: Configuration, baseP
          * Returns a program by its id
          * @summary Get Program
          * @param {string} programId Identifier of the program
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProgram(programId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any): AxiosPromise<Program> {
-            return ProgramsApiFp(configuration).getProgram(programId, xGwImsOrgId, authorization, xApiKey, options)(axios, basePath);
+        getProgram(programId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): AxiosPromise<Program> {
+            return ProgramsApiFp(configuration).getProgram(programId, x_gw_ims_org_id, Authorization, x_api_key, options)(axios, basePath);
         },
         /**
          * Returns all programs that the requesting user has access to
          * @summary Lists Programs
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPrograms(xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any): AxiosPromise<ProgramList> {
-            return ProgramsApiFp(configuration).getPrograms(xGwImsOrgId, authorization, xApiKey, options)(axios, basePath);
+        getPrograms(x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): AxiosPromise<ProgramList> {
+            return ProgramsApiFp(configuration).getPrograms(x_gw_ims_org_id, Authorization, x_api_key, options)(axios, basePath);
         },
     };
 };
@@ -3744,29 +3744,29 @@ export class ProgramsApi extends BaseAPI {
      * Returns a program by its id
      * @summary Get Program
      * @param {string} programId Identifier of the program
-     * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-     * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-     * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+     * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+     * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+     * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProgramsApi
      */
-    public getProgram(programId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any) {
-        return ProgramsApiFp(this.configuration).getProgram(programId, xGwImsOrgId, authorization, xApiKey, options)(this.axios, this.basePath);
+    public getProgram(programId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any) {
+        return ProgramsApiFp(this.configuration).getProgram(programId, x_gw_ims_org_id, Authorization, x_api_key, options)(this.axios, this.basePath);
     }
 
     /**
      * Returns all programs that the requesting user has access to
      * @summary Lists Programs
-     * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-     * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-     * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+     * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+     * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+     * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProgramsApi
      */
-    public getPrograms(xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any) {
-        return ProgramsApiFp(this.configuration).getPrograms(xGwImsOrgId, authorization, xApiKey, options)(this.axios, this.basePath);
+    public getPrograms(x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any) {
+        return ProgramsApiFp(this.configuration).getPrograms(x_gw_ims_org_id, Authorization, x_api_key, options)(this.axios, this.basePath);
     }
 
 }
@@ -3782,28 +3782,28 @@ export const RepositoriesApiAxiosParamCreator = function (configuration?: Config
          * Lists all Repositories in an program
          * @summary Lists Repositories
          * @param {string} programId Identifier of the program
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRepositories(programId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options: any = {}): RequestArgs {
+        getRepositories(programId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options: any = {}): RequestArgs {
             // verify required parameter 'programId' is not null or undefined
             if (programId === null || programId === undefined) {
                 throw new RequiredError('programId','Required parameter programId was null or undefined when calling getRepositories.');
             }
-            // verify required parameter 'xGwImsOrgId' is not null or undefined
-            if (xGwImsOrgId === null || xGwImsOrgId === undefined) {
-                throw new RequiredError('xGwImsOrgId','Required parameter xGwImsOrgId was null or undefined when calling getRepositories.');
+            // verify required parameter 'x_gw_ims_org_id' is not null or undefined
+            if (x_gw_ims_org_id === null || x_gw_ims_org_id === undefined) {
+                throw new RequiredError('x_gw_ims_org_id','Required parameter x_gw_ims_org_id was null or undefined when calling getRepositories.');
             }
-            // verify required parameter 'authorization' is not null or undefined
-            if (authorization === null || authorization === undefined) {
-                throw new RequiredError('authorization','Required parameter authorization was null or undefined when calling getRepositories.');
+            // verify required parameter 'Authorization' is not null or undefined
+            if (Authorization === null || Authorization === undefined) {
+                throw new RequiredError('Authorization','Required parameter Authorization was null or undefined when calling getRepositories.');
             }
-            // verify required parameter 'xApiKey' is not null or undefined
-            if (xApiKey === null || xApiKey === undefined) {
-                throw new RequiredError('xApiKey','Required parameter xApiKey was null or undefined when calling getRepositories.');
+            // verify required parameter 'x_api_key' is not null or undefined
+            if (x_api_key === null || x_api_key === undefined) {
+                throw new RequiredError('x_api_key','Required parameter x_api_key was null or undefined when calling getRepositories.');
             }
             const localVarPath = `/api/program/{programId}/repositories`
                 .replace(`{${"programId"}}`, encodeURIComponent(String(programId)));
@@ -3816,16 +3816,16 @@ export const RepositoriesApiAxiosParamCreator = function (configuration?: Config
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (xGwImsOrgId !== undefined && xGwImsOrgId !== null) {
-                localVarHeaderParameter['x-gw-ims-org-id'] = String(xGwImsOrgId);
+            if (x_gw_ims_org_id !== undefined && x_gw_ims_org_id !== null) {
+                localVarHeaderParameter['x-gw-ims-org-id'] = String(x_gw_ims_org_id);
             }
 
-            if (authorization !== undefined && authorization !== null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
+            if (Authorization !== undefined && Authorization !== null) {
+                localVarHeaderParameter['Authorization'] = String(Authorization);
             }
 
-            if (xApiKey !== undefined && xApiKey !== null) {
-                localVarHeaderParameter['x-api-key'] = String(xApiKey);
+            if (x_api_key !== undefined && x_api_key !== null) {
+                localVarHeaderParameter['x-api-key'] = String(x_api_key);
             }
 
 
@@ -3845,13 +3845,13 @@ export const RepositoriesApiAxiosParamCreator = function (configuration?: Config
          * @summary Get Repository
          * @param {string} programId Identifier of the program
          * @param {string} repositoryId Identifier of the repository
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRepository(programId: string, repositoryId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options: any = {}): RequestArgs {
+        getRepository(programId: string, repositoryId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options: any = {}): RequestArgs {
             // verify required parameter 'programId' is not null or undefined
             if (programId === null || programId === undefined) {
                 throw new RequiredError('programId','Required parameter programId was null or undefined when calling getRepository.');
@@ -3860,17 +3860,17 @@ export const RepositoriesApiAxiosParamCreator = function (configuration?: Config
             if (repositoryId === null || repositoryId === undefined) {
                 throw new RequiredError('repositoryId','Required parameter repositoryId was null or undefined when calling getRepository.');
             }
-            // verify required parameter 'xGwImsOrgId' is not null or undefined
-            if (xGwImsOrgId === null || xGwImsOrgId === undefined) {
-                throw new RequiredError('xGwImsOrgId','Required parameter xGwImsOrgId was null or undefined when calling getRepository.');
+            // verify required parameter 'x_gw_ims_org_id' is not null or undefined
+            if (x_gw_ims_org_id === null || x_gw_ims_org_id === undefined) {
+                throw new RequiredError('x_gw_ims_org_id','Required parameter x_gw_ims_org_id was null or undefined when calling getRepository.');
             }
-            // verify required parameter 'authorization' is not null or undefined
-            if (authorization === null || authorization === undefined) {
-                throw new RequiredError('authorization','Required parameter authorization was null or undefined when calling getRepository.');
+            // verify required parameter 'Authorization' is not null or undefined
+            if (Authorization === null || Authorization === undefined) {
+                throw new RequiredError('Authorization','Required parameter Authorization was null or undefined when calling getRepository.');
             }
-            // verify required parameter 'xApiKey' is not null or undefined
-            if (xApiKey === null || xApiKey === undefined) {
-                throw new RequiredError('xApiKey','Required parameter xApiKey was null or undefined when calling getRepository.');
+            // verify required parameter 'x_api_key' is not null or undefined
+            if (x_api_key === null || x_api_key === undefined) {
+                throw new RequiredError('x_api_key','Required parameter x_api_key was null or undefined when calling getRepository.');
             }
             const localVarPath = `/api/program/{programId}/repository/{repositoryId}`
                 .replace(`{${"programId"}}`, encodeURIComponent(String(programId)))
@@ -3884,16 +3884,16 @@ export const RepositoriesApiAxiosParamCreator = function (configuration?: Config
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (xGwImsOrgId !== undefined && xGwImsOrgId !== null) {
-                localVarHeaderParameter['x-gw-ims-org-id'] = String(xGwImsOrgId);
+            if (x_gw_ims_org_id !== undefined && x_gw_ims_org_id !== null) {
+                localVarHeaderParameter['x-gw-ims-org-id'] = String(x_gw_ims_org_id);
             }
 
-            if (authorization !== undefined && authorization !== null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
+            if (Authorization !== undefined && Authorization !== null) {
+                localVarHeaderParameter['Authorization'] = String(Authorization);
             }
 
-            if (xApiKey !== undefined && xApiKey !== null) {
-                localVarHeaderParameter['x-api-key'] = String(xApiKey);
+            if (x_api_key !== undefined && x_api_key !== null) {
+                localVarHeaderParameter['x-api-key'] = String(x_api_key);
             }
 
 
@@ -3921,14 +3921,14 @@ export const RepositoriesApiFp = function(configuration?: Configuration) {
          * Lists all Repositories in an program
          * @summary Lists Repositories
          * @param {string} programId Identifier of the program
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRepositories(programId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<RepositoryList> {
-            const localVarAxiosArgs = RepositoriesApiAxiosParamCreator(configuration).getRepositories(programId, xGwImsOrgId, authorization, xApiKey, options);
+        getRepositories(programId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<RepositoryList> {
+            const localVarAxiosArgs = RepositoriesApiAxiosParamCreator(configuration).getRepositories(programId, x_gw_ims_org_id, Authorization, x_api_key, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3939,14 +3939,14 @@ export const RepositoriesApiFp = function(configuration?: Configuration) {
          * @summary Get Repository
          * @param {string} programId Identifier of the program
          * @param {string} repositoryId Identifier of the repository
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRepository(programId: string, repositoryId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Repository> {
-            const localVarAxiosArgs = RepositoriesApiAxiosParamCreator(configuration).getRepository(programId, repositoryId, xGwImsOrgId, authorization, xApiKey, options);
+        getRepository(programId: string, repositoryId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Repository> {
+            const localVarAxiosArgs = RepositoriesApiAxiosParamCreator(configuration).getRepository(programId, repositoryId, x_gw_ims_org_id, Authorization, x_api_key, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3965,28 +3965,28 @@ export const RepositoriesApiFactory = function (configuration?: Configuration, b
          * Lists all Repositories in an program
          * @summary Lists Repositories
          * @param {string} programId Identifier of the program
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRepositories(programId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any): AxiosPromise<RepositoryList> {
-            return RepositoriesApiFp(configuration).getRepositories(programId, xGwImsOrgId, authorization, xApiKey, options)(axios, basePath);
+        getRepositories(programId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): AxiosPromise<RepositoryList> {
+            return RepositoriesApiFp(configuration).getRepositories(programId, x_gw_ims_org_id, Authorization, x_api_key, options)(axios, basePath);
         },
         /**
          * Returns an repository by its id
          * @summary Get Repository
          * @param {string} programId Identifier of the program
          * @param {string} repositoryId Identifier of the repository
-         * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-         * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-         * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRepository(programId: string, repositoryId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any): AxiosPromise<Repository> {
-            return RepositoriesApiFp(configuration).getRepository(programId, repositoryId, xGwImsOrgId, authorization, xApiKey, options)(axios, basePath);
+        getRepository(programId: string, repositoryId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): AxiosPromise<Repository> {
+            return RepositoriesApiFp(configuration).getRepository(programId, repositoryId, x_gw_ims_org_id, Authorization, x_api_key, options)(axios, basePath);
         },
     };
 };
@@ -4002,15 +4002,15 @@ export class RepositoriesApi extends BaseAPI {
      * Lists all Repositories in an program
      * @summary Lists Repositories
      * @param {string} programId Identifier of the program
-     * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-     * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-     * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+     * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+     * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+     * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RepositoriesApi
      */
-    public getRepositories(programId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any) {
-        return RepositoriesApiFp(this.configuration).getRepositories(programId, xGwImsOrgId, authorization, xApiKey, options)(this.axios, this.basePath);
+    public getRepositories(programId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any) {
+        return RepositoriesApiFp(this.configuration).getRepositories(programId, x_gw_ims_org_id, Authorization, x_api_key, options)(this.axios, this.basePath);
     }
 
     /**
@@ -4018,15 +4018,15 @@ export class RepositoriesApi extends BaseAPI {
      * @summary Get Repository
      * @param {string} programId Identifier of the program
      * @param {string} repositoryId Identifier of the repository
-     * @param {string} xGwImsOrgId IMS organization ID that the request is being made under.
-     * @param {string} authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
-     * @param {string} xApiKey IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+     * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+     * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+     * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RepositoriesApi
      */
-    public getRepository(programId: string, repositoryId: string, xGwImsOrgId: string, authorization: string, xApiKey: string, options?: any) {
-        return RepositoriesApiFp(this.configuration).getRepository(programId, repositoryId, xGwImsOrgId, authorization, xApiKey, options)(this.axios, this.basePath);
+    public getRepository(programId: string, repositoryId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any) {
+        return RepositoriesApiFp(this.configuration).getRepository(programId, repositoryId, x_gw_ims_org_id, Authorization, x_api_key, options)(this.axios, this.basePath);
     }
 
 }

@@ -9,5 +9,5 @@ npm intsall -g openapi-generator
 in this directory, run
 
 ```sh
-npx openapi-generator generate -i api_open-api.yaml -g typescript-axios -o typescript-axios
+npx openapi-generator generate -i api_open-api.yaml -g typescript-axios -o typescript-axios -pmodelPropertyNaming=original -penumPropertyNaming=original
 ```

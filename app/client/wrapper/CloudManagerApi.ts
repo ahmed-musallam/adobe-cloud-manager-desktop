@@ -67,12 +67,13 @@ export default class CloudManagerApi {
       response =>
         deepRenameKeys(response, (key: string) => {
           // an unfortunate thing to do, really... the generated API interfaces
-          // have keys names "embedded" but the ACTUAL response retunrs keys "_embedded"
-          // so we rename them here ¯\_(ツ)_/¯
-          if (key === "_embedded") {
-            return "embedded";
-          } else if (key === "_links") {
-            return "links";
+          // for links have properties like: http__ns_adobe_com_adobecloud_rel_program
+          // but the actual response has properties like: http://ns.adobe.com/adobecloud/rel/program
+          // so we do this so that the generated TS API works without having to mess with it.
+          if (key && key.startsWith("http://ns.adobe.com")) {
+            return key
+              .replace("http://ns.adobe.com", "http__ns_adobe_com") // first part is strange, replace it on its own
+              .replace(/\//g, "_"); // slash to underscore
           } else return key;
         }),
       async error => {
