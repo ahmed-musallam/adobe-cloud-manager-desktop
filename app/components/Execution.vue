@@ -46,7 +46,14 @@
           >last updated: <em>{{ step.updatedAt | date }}</em
           ><br
         /></span>
-        <button is="coral-button" v-if="hasLog(step)" @click="getLog(step)">
+        <button
+          is="coral-button"
+          v-if="
+            hasLog(step) &&
+              execution.status !== 'RUNNING'
+          "
+          @click="getLog(step)"
+        >
           Download Log
         </button>
         <!--
@@ -97,28 +104,36 @@
       Status
     },
     async created() {
-      var client = await this.$CloudManagerApi;
-      try {
-        this.$showLoadingScreen();
-        const programId = this.$route.params.programId;
-        const pipelineId = this.$route.params.pipelineId;
-        const executionId = this.$route.params.executionId;
-        if (programId && pipelineId && executionId) {
-          const response = await client.pipelineExecution.getExecution(
-            programId,
-            pipelineId,
-            executionId
-          );
-          this.execution = response.data;
-          mutations.setExecution(this.execution.id || "");
-        }
-        this.$hideLoadingScreen();
-      } catch (err) {
-        console.error(err);
-      }
+      this.$showLoadingScreen();
+      this.execution = await this.getExecution();
+      mutations.setExecution(this?.execution?.id as string);
+      this.$hideLoadingScreen();
+      this.$poll(this.getExecution, (data: PipelineExecution) => {
+        console.log("polled and got: ", data);
+        this.execution = data;
+      });
     },
 
     methods: {
+      async getExecution(): Promise<PipelineExecution> {
+        var client = await this.$CloudManagerApi;
+        try {
+          const programId = this.$route.params.programId;
+          const pipelineId = this.$route.params.pipelineId;
+          const executionId = this.$route.params.executionId;
+          if (programId && pipelineId && executionId) {
+            const response = await client.pipelineExecution.getExecution(
+              programId,
+              pipelineId,
+              executionId
+            );
+            return response.data;
+          }
+        } catch (err) {
+          console.error(err);
+        }
+        return {};
+      },
       hasLog(step: PipelineExecutionStepState) {
         return step?._links?.http__ns_adobe_com_adobecloud_rel_pipeline_logs
           ?.href;

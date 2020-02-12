@@ -1,5 +1,6 @@
 import VueRouter, { Route } from 'vue-router'
 import CloudManagerApi, { CloudManagerApiInstance } from "./app/client/wrapper/CloudManagerApi";
+import { AxiosResponse } from 'axios';
 
 // declare global variables
 declare const electronStore;
@@ -19,6 +20,9 @@ declare module 'vue/types/vue' {
     $showLoadingScreen: Function
     $hideLoadingScreen: Function
     $CloudManagerApi: Promise<CloudManagerApiInstance>
+    $poll: <T> (
+      fn: () => Promise<any>,
+      onData: (data: T) => void) => void
   }
   interface CoralEvent extends Event {
     detail: {

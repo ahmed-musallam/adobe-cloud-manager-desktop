@@ -9,6 +9,7 @@ import App from "./App";
 import router from "./router";
 import { loadingActions } from "./components/LoadingStore";
 import CloudManagerApi from "./client/wrapper/CloudManagerApi";
+import { AxiosResponse } from "axios";
 
 // Plugins
 Vue.use(Router);
@@ -22,6 +23,37 @@ Vue.use({
       loadingActions.hide();
     };
     vue.prototype.$CloudManagerApi = CloudManagerApi.getInstance();
+    vue.prototype.$poll = async function poll<T>(
+      fn: () => Promise<any>,
+      onData: (data: T) => void,
+      throttle?: number
+    ) {
+      const _throttle = throttle || 5000;
+      let lastPollStarted: number;
+      async function _poll<T>(
+        _fn: () => Promise<any>,
+        _onData: (data: T) => void
+      ) {
+        lastPollStarted = new Date().getTime();
+        let response = await _fn();
+        if (response.status !== 200) {
+          // Get and show the message
+          onData(response);
+          const lastPollFinished = new Date().getTime();
+          const elapsed = lastPollFinished - lastPollStarted;
+          if (elapsed < _throttle) {
+            await new Promise(resolve =>
+              setTimeout(resolve, _throttle - elapsed)
+            );
+          }
+          // Call subscribe() again to get the next message
+          await _poll(_fn, _onData);
+        } else {
+          console.error("Got non-200 response while polling: ", response);
+        }
+      }
+      _poll(fn, onData);
+    };
   }
 });
 
