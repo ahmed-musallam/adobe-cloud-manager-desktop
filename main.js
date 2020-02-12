@@ -5,7 +5,7 @@ const debug = !!process.env.DEBUG_E;
 const mb = menubar({
   icon: path.join(__dirname, "icon/icon.png"),
   browserWindow: {
-    width: 400,
+    width: 500,
     height: 600,
     resizable: false,
     alwaysOnTop: debug, // debug

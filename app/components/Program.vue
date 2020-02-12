@@ -29,13 +29,13 @@
           </coral-card-content>
           <coral-card-info>
             <coral-tag v-if="pipeline.status == 'IDLE'" color="green">{{
-              pipeline.status.toLowerCase()
+              pipeline.status | lowercase
             }}</coral-tag>
             <coral-tag v-if="pipeline.status == 'BUSY'" color="cyan">{{
-              pipeline.status.toLowerCase()
+              pipeline.status | lowercase
             }}</coral-tag>
             <coral-tag v-if="pipeline.status == 'WAITING'" color="yellow">{{
-              pipeline.status.toLowerCase()
+              pipeline.status | lowercase
             }}</coral-tag>
           </coral-card-info>
         </coral-card>
@@ -80,7 +80,7 @@
           const pipelinesResponse = await client.pipelines.getPipelines(
             this.program?.id || ""
           );
-          this.pipelines = pipelinesResponse.data?.embedded?.pipelines || [];
+          this.pipelines = pipelinesResponse.data?._embedded?.pipelines || [];
           this.$hideLoadingScreen();
         } catch (err) {
           console.error(err);

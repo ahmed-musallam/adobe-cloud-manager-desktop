@@ -41,6 +41,10 @@ Vue.filter("date", function(value: string) {
   }).format(date);
 });
 
+Vue.filter("lowercase", function(value: string) {
+  return value?.toLowerCase();
+});
+
 Vue.filter("limit", function(value: string, limit: number) {
   if (!value) return "";
   value = value.toString();

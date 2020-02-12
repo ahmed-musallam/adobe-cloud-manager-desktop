@@ -74,7 +74,7 @@
       try {
         this.$showLoadingScreen();
         const result = await client.programs.getPrograms();
-        this.programs = result.data.embedded?.programs;
+        this.programs = result.data._embedded?.programs;
         this.$hideLoadingScreen();
       } catch (err) {
         console.error(err);

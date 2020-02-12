@@ -15,7 +15,7 @@
     "gulp": "gulp"
   },
   "lint-staged": {
-    "*.{js,json,css,vue}": [
+    "./app/*.{js,json,css,vue}": [
       "prettier --vue-indent-script-and-styl --writee",
       "git add"
     ]

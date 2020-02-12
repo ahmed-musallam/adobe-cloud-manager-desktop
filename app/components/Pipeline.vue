@@ -25,25 +25,50 @@
           <td is="coral-table-cell">{{ execution.id }}</td>
           <td is="coral-table-cell">{{ execution.createdAt | date }}</td>
           <td is="coral-table-cell">
-            <router-link
-              class="no-decoration"
-              :to="
-                '/program/' +
-                  $route.params.programId +
-                  '/pipeline/' +
-                  $route.params.pipelineId +
-                  '/execution/' +
-                  execution.id
-              "
+            <coral-buttongroup selectionmode="single">
+              <coral-buttonlist>
+                <router-link
+                  class="no-decoration"
+                  :to="
+                    '/program/' +
+                      $route.params.programId +
+                      '/pipeline/' +
+                      $route.params.pipelineId +
+                      '/execution/' +
+                      execution.id
+                  "
+                >
+                  <button is="coral-button" icon="viewOn" title="view"></button>
+                </router-link>
+                <button
+                  is="coral-button"
+                  icon="moreVertical"
+                  title="more"
+                  :id="'target-' + execution.id"
+                ></button>
+              </coral-buttonlist>
+            </coral-buttongroup>
+            <coral-popover
+              :target="'#target-' + execution.id"
+              placement="bottom"
             >
-              <button is="coral-button" variant="action">
-                detail
-              </button>
-            </router-link>
+              <coral-buttonlist>
+                <button is="coral-buttonlist-item" icon="play">Start</button>
+                <button is="coral-buttonlist-item">Third Action</button>
+                <button is="coral-buttonlist-item" icon="close" coral-close>
+                  Close Menu
+                </button>
+              </coral-buttonlist>
+            </coral-popover>
           </td>
         </tr>
       </tbody>
     </table>
+    <coral-drawer style="white-space: pre;">
+      <textarea style="width:100%;height:500px">
+        {{ JSON.stringify(executions, null, 4) }}
+      </textarea>
+    </coral-drawer>
   </div>
 </template>
 
@@ -85,9 +110,8 @@
             this.$route.params.programId,
             this.$route.params.pipelineId
           );
-          this.executions = executionsResult.data.embedded?.executions as Array<
-            PipelineExecution
-          >;
+          this.executions = executionsResult.data._embedded
+            ?.executions as Array<PipelineExecution>;
           this.executions[0].status;
         }
         this.$hideLoadingScreen();
@@ -99,7 +123,7 @@
     methods: {
       getVariant(status: PipelineExecutionStatusEnum): string {
         switch (status) {
-          case PipelineExecutionStatusEnum.NOTSTARTED:
+          case PipelineExecutionStatusEnum.NOT_STARTED:
           case PipelineExecutionStatusEnum.RUNNING:
             return "info";
             break;
