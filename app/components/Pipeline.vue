@@ -38,7 +38,11 @@
                       execution.id
                   "
                 >
-                  <button is="coral-button" icon="viewOn" title="view"></button>
+                  <button
+                    is="coral-button"
+                    icon="Visibility"
+                    title="view"
+                  ></button>
                 </router-link>
                 <button
                   is="coral-button"
@@ -53,8 +57,13 @@
               placement="bottom"
             >
               <coral-buttonlist>
-                <button is="coral-buttonlist-item" icon="play">Start</button>
-                <button is="coral-buttonlist-item">Third Action</button>
+                <button
+                  v-if="execution.status == 'RUNNING'"
+                  is="coral-buttonlist-item"
+                  icon="StopCircle"
+                >
+                  Stop
+                </button>
                 <button is="coral-buttonlist-item" icon="close" coral-close>
                   Close Menu
                 </button>

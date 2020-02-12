@@ -31,7 +31,7 @@ Vue.use({
     };
     vue.prototype.$poll = async function poll<T>(
       fn: () => Promise<any>,
-      onData: (data: T) => void,
+      onData: (data: T) => boolean,
       throttle?: number
     ) {
       const _throttle = throttle || 5000;
@@ -44,7 +44,10 @@ Vue.use({
         let response = await _fn();
         if (response.status !== 200) {
           // Get and show the message
-          onData(response);
+          var stopPolling = onData(response);
+          if (stopPolling) {
+            return;
+          }
           const lastPollFinished = new Date().getTime();
           const elapsed = lastPollFinished - lastPollStarted;
           if (elapsed < _throttle) {

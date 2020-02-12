@@ -105,10 +105,13 @@
       this.execution = await this.getExecution();
       mutations.setExecution(this?.execution?.id as string);
       this.$hideLoadingScreen();
-      this.$poll(this.getExecution, (data: PipelineExecution) => {
-        console.log("polled and got: ", data);
-        this.execution = data;
-      });
+      if (this.execution.status !== PipelineExecutionStatusEnum.FINISHED) {
+        this.$poll(this.getExecution, (data: PipelineExecution) => {
+          //console.log("polled and got: ", data);
+          this.execution = data;
+          return this.execution.status === PipelineExecutionStatusEnum.FINISHED;
+        });
+      }
     },
 
     methods: {

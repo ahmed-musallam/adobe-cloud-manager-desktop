@@ -26,7 +26,7 @@
     <button
       is="coral-button"
       @click="showSecret = !showSecret"
-      icon="viewOn"
+      icon="Visibility"
       variant="quietaction"
       style=""
     ></button>
