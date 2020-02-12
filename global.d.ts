@@ -20,6 +20,7 @@ declare module 'vue/types/vue' {
     $showLoadingScreen: Function
     $hideLoadingScreen: Function
     $CloudManagerApi: Promise<CloudManagerApiInstance>
+    $downloadFile: (url: string) => void
     $poll: <T> (
       fn: () => Promise<any>,
       onData: (data: T) => void) => void

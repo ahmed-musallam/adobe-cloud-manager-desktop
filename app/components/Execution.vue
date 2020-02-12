@@ -48,10 +48,7 @@
         /></span>
         <button
           is="coral-button"
-          v-if="
-            hasLog(step) &&
-              execution.status !== 'RUNNING'
-          "
+          v-if="hasLog(step) && step.status !== 'RUNNING'"
           @click="getLog(step)"
         >
           Download Log
@@ -165,7 +162,7 @@
         // @ts-ignore
         const downloadLink: string = result?.data?.redirect;
         if (downloadLink) {
-          location.href = downloadLink;
+          this.$downloadFile(downloadLink);
         }
       },
       getVariant(status: PipelineExecutionStatusEnum): string {

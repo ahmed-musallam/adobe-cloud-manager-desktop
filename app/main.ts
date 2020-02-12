@@ -23,6 +23,12 @@ Vue.use({
       loadingActions.hide();
     };
     vue.prototype.$CloudManagerApi = CloudManagerApi.getInstance();
+    vue.prototype.$downloadFile = (url: string) => {
+      var link = document.createElement("a");
+      link.href = url;
+      link.download = url.substring(url.lastIndexOf("/") + 1, url.length);
+      link.click();
+    };
     vue.prototype.$poll = async function poll<T>(
       fn: () => Promise<any>,
       onData: (data: T) => void,
