@@ -2,6 +2,7 @@ import Router from "vue-router";
 import Program from "./components/Program";
 import Pipeline from "./components/Pipeline";
 import Execution from "./components/Execution";
+import Environment from "./components/Environment";
 import Settings from "./components/Settings";
 
 export default new Router({
@@ -9,6 +10,10 @@ export default new Router({
     {
       path: "/program/:programId",
       component: Program
+    },
+    {
+      path: "/program/:programId/environment/:environmentId",
+      component: Environment
     },
     {
       path: "/program/:programId/pipeline/:pipelineId",
