@@ -80,7 +80,7 @@ export default class CloudManagerApi {
           } else return key;
         }),
       async error => {
-        if (401 === error.response.status) {
+        if (401 === error?.response?.status) {
           console.log(
             "Got 401 with existing access token, attempting to get a new one"
           );
