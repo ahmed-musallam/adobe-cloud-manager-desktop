@@ -18,6 +18,7 @@ import globalAxios from "axios";
 import AuthStore from "../../util/AuthStore";
 import Axios from "axios";
 import deepRenameKeys from "deep-rename-keys";
+import LinksService from "./LinksService";
 
 export interface CloudManagerApiInstance {
   branches: BrachesService;
@@ -26,6 +27,7 @@ export interface CloudManagerApiInstance {
   pipelines: PipelinesService;
   programs: ProgramsService;
   repositories: RepositoriesService;
+  links: LinksService;
 }
 export default class CloudManagerApi {
   private static instance: CloudManagerApiInstance | undefined;
@@ -34,6 +36,7 @@ export default class CloudManagerApi {
     const authParams = await AuthParams.getDefault();
     if (!CloudManagerApi.instance) {
       CloudManagerApi.instance = {
+        links: new LinksService(authParams, undefined),
         branches: new BrachesService(authParams, new BranchesApi()),
         environments: new EnvironmentsService(
           authParams,

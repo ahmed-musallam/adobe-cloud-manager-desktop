@@ -14,7 +14,8 @@ type AnyAPI =
   | PipelineExecutionApi
   | PipelinesApi
   | ProgramsApi
-  | RepositoriesApi;
+  | RepositoriesApi
+  | undefined;
 export class BaseService<T extends AnyAPI> {
   protected orgId: string;
   protected authorization: string;
