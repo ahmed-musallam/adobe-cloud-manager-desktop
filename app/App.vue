@@ -8,11 +8,28 @@
             :key="program.id"
             :href="'/program/' + program.id"
             is="coral-shell-workspace"
+            @click="log"
             >{{ program.name }}</span
           >
         </coral-shell-workspaces>
       </coral-shell-header-content>
       <coral-shell-header-actions>
+        <button
+          is="coral-button"
+          icon="ChevronLeft"
+          variant="quietaction"
+          style="margin-left: 0;"
+          @click="goBack"
+          :disabled="!history.length"
+        ></button>
+        <button
+          is="coral-button"
+          icon="ChevronRight"
+          variant="quietaction"
+          style="margin-left: 0;"
+          @click="goForward"
+        ></button>
+
         <router-link to="/settings" role="link" tabindex="0">
           <button
             is="coral-button"
@@ -25,7 +42,6 @@
     </coral-shell-header>
     <coral-shell-content>
       <!-- Main application goes here -->
-      <Breadcrumb></Breadcrumb>
       <section class="u-coral-padding-horizontal">
         <router-view></router-view>
       </section>
@@ -35,7 +51,6 @@
 </template>
 
 <script lang="ts">
-  import Breadcrumb from "./components/Breadcrumb.vue";
   import Loading from "./components/Loading.vue";
   import { AxiosRequestConfig } from "axios";
   import { store } from "./components/BreadcrumbStore";
@@ -49,13 +64,13 @@
   export default Vue.extend({
     name: "App",
     components: {
-      Breadcrumb,
       Loading
     },
     data() {
       return {
         programs: {} as EmbeddedProgram[] | undefined,
-        state: {}
+        state: {},
+        history: history
       };
     },
     mounted() {
@@ -68,7 +83,6 @@
         }
       });
     },
-
     async created() {
       const client = await this.$CloudManagerApi;
       try {
@@ -80,6 +94,11 @@
         console.error(err);
         this.$hideLoadingScreen();
       }
+    },
+    methods: {
+      goBack: history.back,
+      goForward: history.forward,
+      log: console.log
     }
   });
 </script>

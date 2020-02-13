@@ -7,7 +7,6 @@
           <th is="coral-table-headercell">Status</th>
           <th is="coral-table-headercell">Id</th>
           <th is="coral-table-headercell">Started</th>
-          <th is="coral-table-headercell">more</th>
           <th></th>
         </tr>
       </thead>
@@ -25,52 +24,6 @@
           </td>
           <td is="coral-table-cell">{{ execution.id }}</td>
           <td is="coral-table-cell">{{ execution.createdAt | date }}</td>
-          <td is="coral-table-cell">
-            <coral-buttongroup selectionmode="single">
-              <coral-buttonlist>
-                <router-link
-                  class="no-decoration"
-                  :to="
-                    '/program/' +
-                      $route.params.programId +
-                      '/pipeline/' +
-                      $route.params.pipelineId +
-                      '/execution/' +
-                      execution.id
-                  "
-                >
-                  <button
-                    is="coral-button"
-                    icon="Visibility"
-                    title="view"
-                  ></button>
-                </router-link>
-                <button
-                  is="coral-button"
-                  icon="moreVertical"
-                  title="more"
-                  :id="'target-' + execution.id"
-                ></button>
-              </coral-buttonlist>
-            </coral-buttongroup>
-            <coral-popover
-              :target="'#target-' + execution.id"
-              placement="bottom"
-            >
-              <coral-buttonlist>
-                <button
-                  v-if="execution.status == 'RUNNING'"
-                  is="coral-buttonlist-item"
-                  icon="StopCircle"
-                >
-                  Stop
-                </button>
-                <button is="coral-buttonlist-item" icon="close" coral-close>
-                  Close Menu
-                </button>
-              </coral-buttonlist>
-            </coral-popover>
-          </td>
         </tr>
       </tbody>
     </table>
