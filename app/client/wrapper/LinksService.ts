@@ -12,8 +12,17 @@ interface TemplateParams {
  * Service for requesting HalLinks that adobe did not document ¯\_(ツ)_/¯
  */
 export default class LinksService extends BaseService<undefined> {
-  getLink(link: HalLink, templateParams?: TemplateParams) {
+  getLink(
+    link: HalLink,
+    templateParams?: TemplateParams,
+    linkTransformer?: (link: string) => string
+  ) {
     let href = String(link?.href);
+    if (linkTransformer) {
+      const temp = linkTransformer(href);
+      console.log("transformed!: ", temp);
+      href = temp ? temp : href;
+    }
     if (link?.templated) {
       var template = UriTemplate.parse(href);
       href = template.expand(templateParams);

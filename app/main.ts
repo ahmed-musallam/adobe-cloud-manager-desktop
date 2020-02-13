@@ -84,6 +84,20 @@ Vue.filter("date", function(value: string) {
   }).format(date);
 });
 
+Vue.filter("dateNoTime", function(value: string) {
+  if (!value) return "";
+  value = value.toString();
+  var date = new Date(value);
+  return Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric"
+    // hour: "numeric",
+    // minute: "numeric",
+    // second: "numeric"
+  }).format(date);
+});
+
 Vue.filter("lowercase", function(value: string) {
   return value?.toLowerCase();
 });
