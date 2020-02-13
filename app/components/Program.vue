@@ -70,8 +70,8 @@
   import { mutations } from "./BreadcrumbStore";
   import { async } from "q";
   import { Pipeline, Program, Environment } from "../client";
-
-  export default {
+  import Vue from "vue";
+  export default Vue.extend({
     name: "Program",
 
     data() {
@@ -120,10 +120,9 @@
           this.program?.id || ""
         );
         this.pipelines = pipelinesResponse.data?._embedded?.pipelines || [];
-        this.$hideLoadingScreen();
       }
     }
-  };
+  });
 </script>
 
 <style scoped>
