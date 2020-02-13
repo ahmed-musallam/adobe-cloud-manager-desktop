@@ -9,7 +9,6 @@ import App from "./App";
 import router from "./router";
 import { loadingActions } from "./components/LoadingStore";
 import CloudManagerApi from "./client/wrapper/CloudManagerApi";
-import { AxiosResponse } from "axios";
 
 // Plugins
 Vue.use(Router);
@@ -21,6 +20,9 @@ Vue.use({
     };
     vue.prototype.$hideLoadingScreen = () => {
       loadingActions.hide();
+    };
+    vue.prototype.$openExternalLink = (link: string) => {
+      electron.shell.openExternal(link);
     };
     vue.prototype.$CloudManagerApi = CloudManagerApi.getInstance();
     vue.prototype.$downloadFile = (url: string) => {
