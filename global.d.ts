@@ -30,8 +30,12 @@ declare module 'vue/types/vue' {
     detail: {
       selection: HTMLElement
     };
+    target: CoralElement
   }
   interface CoralElement extends HTMLElement {
-    on(name: string, handler:(e: CoralEvent) => void): void
+    on(name: string, handler:(e: CoralEvent) => void): void,
+    selectedItem: CoralElement
+    value: string
+
   }
 }
