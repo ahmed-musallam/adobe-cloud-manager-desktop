@@ -16,6 +16,7 @@
           is="coral-table-row"
           v-for="execution in executions"
           :key="execution.id"
+          @click="goToExecution(execution.id)"
         >
           <td is="coral-table-cell">
             <coral-status :variant="getVariant(execution.status)">{{
@@ -130,6 +131,10 @@
     },
 
     methods: {
+      goToExecution(executionId: string) {
+        const path = `/program/${this.$route.params.programId}/pipeline/${this.$route.params.pipelineId}/execution/${executionId}`;
+        this.$router.push({ path });
+      },
       getVariant(status: PipelineExecutionStatusEnum): string {
         switch (status) {
           case PipelineExecutionStatusEnum.NOT_STARTED:

@@ -87,7 +87,7 @@
   import Vue from "vue";
 
   export default Vue.extend({
-    name: "Program",
+    name: "Execution",
 
     data() {
       return {
