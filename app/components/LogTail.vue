@@ -26,7 +26,7 @@
       const url = this.$route.query.url;
       if (url) {
         let contentLength = await this.getContentLength(String(url));
-        console.log(`initial content length: ${contentLength}`);
+        //console.log(`initial content length: ${contentLength}`);
         this.tailPromise = this.tail(String(url), contentLength);
       }
     },

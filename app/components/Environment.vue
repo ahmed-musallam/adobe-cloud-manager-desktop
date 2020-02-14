@@ -60,7 +60,7 @@
             <th is="coral-table-headercell">Service</th>
             <th is="coral-table-headercell">Log File</th>
             <th is="coral-table-headercell">Date</th>
-            <th is="coral-table-headercell">Download/Tail</th>
+            <th is="coral-table-headercell">Download / Tail</th>
           </tr>
         </thead>
         <tbody is="coral-table-body">
@@ -77,6 +77,7 @@
                 is="coral-button"
                 icon="download"
                 variant="action"
+                title="download"
                 v-if="
                   logDownload._links
                     .http__ns_adobe_com_adobecloud_rel_logs_download
@@ -87,6 +88,7 @@
                 is="coral-button"
                 icon="ViewDetail"
                 variant="action"
+                title="tail"
                 v-if="
                   logDownload._links.http__ns_adobe_com_adobecloud_rel_logs_tail
                 "

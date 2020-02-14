@@ -21,7 +21,7 @@
       variant="quietaction"
       icon="close"
       @click="quitApp"
-      style="position: absolute;bottom: 5px;right: 5px;"
+      style="position: fixed;bottom: 5px;right: 5px;"
     >
       Quit
     </button>
