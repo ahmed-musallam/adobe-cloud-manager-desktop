@@ -1,6 +1,17 @@
 <template>
   <div style="overflow-x:scroll">
-    <span v-for="(chunk, i) in dataChunks" :key="i">{{ chunk }}</span>
+    <div class="bottom-right">
+      <coral-wait size="M" v-if="loading && !error"></coral-wait>
+    </div>
+    <coral-banner variant="error" v-if="error">
+      <coral-banner-header>Error</coral-banner-header>
+      <coral-banner-content>{{ error }}</coral-banner-content>
+    </coral-banner>
+    <div id="log-scroll-area" class="clusterize-scroll">
+      <ol id="log-content-area" class="clusterize-content">
+        <li class="clusterize-no-data">Loading data...</li>
+      </ol>
+    </div>
   </div>
 </template>
 
@@ -14,48 +25,67 @@
   } from "../client";
 
   export default Vue.extend({
-    name: "Status",
+    name: "LogTailApp",
     data() {
       return {
         tailPromise: new Promise(resolve => ""),
         signal: globalAxios.CancelToken.source(),
-        dataChunks: [] as string[]
+        dataChunks: [] as string[],
+        clusterize: {} as any,
+        loading: true,
+        error: ""
       };
     },
     async created() {
-      const url = this.$route.query.url;
+      const params = new URLSearchParams(location.search);
+      const url = params.get(`url`);
+      console.log(`here we are!`);
+      console.log(`location.search: ${location.search}`);
+      console.log(`url: ${url}`);
       if (url) {
         let contentLength = await this.getContentLength(String(url));
         //console.log(`initial content length: ${contentLength}`);
         this.tailPromise = this.tail(String(url), contentLength);
+        this.clusterize = new Clusterize({
+          rows: [],
+          scrollId: "log-scroll-area",
+          contentId: "log-content-area"
+        });
       }
-    },
-    beforeRouteLeave(to, from, next) {
-      this.signal.cancel("Cancelling Tailing");
-      next();
     },
     methods: {
       async getContentLength(url: string) {
-        const resp = await globalAxios.head(url);
+        const client = await this.$CloudManagerApi;
+        const resp = await client.logs.head(url);
         return parseInt(resp.headers["content-length"]);
       },
       async getLog(url: string, startLimit: number) {
+        const client = await this.$CloudManagerApi;
         //console.log("getting log at: ", { startLimit });
-        const res = await globalAxios.get(url, {
-          headers: {
-            Range: "bytes=" + startLimit + "-"
-          },
-          cancelToken: this.signal.token
-        });
+        const res = await client.logs.get(
+          url + `&date=${new Date().getTime()}`,
+          {
+            headers: {
+              Range: "bytes=" + startLimit + "-"
+            },
+            cancelToken: this.signal.token
+          }
+        );
         return res;
       },
       addToLog(data: string) {
-        this.dataChunks.push(data);
+        const _data = data.split("\n").map(line => `<li>${line}<li>`);
+        this.clusterize.append(_data);
+      },
+      throwError(msg: string) {
+        this.loading = false;
+        this.error = msg;
+        throw new Error(msg);
       },
       async tail(url: string, initialStart?: number) {
         let currentStart = 0;
         if (initialStart) {
-          currentStart = initialStart - 500;
+          currentStart = initialStart - 1000; // initial chunk
         }
         let currentContentLength = 0;
         for (;;) {
@@ -82,11 +112,11 @@
               //console.log("got 416")!;
               await this.$sleep(2000); // sleep 2 seconds and try again
             } else if (errorStatus === 404) {
-              throw new Error(
+              this.throwError(
                 `Logs not found! ${errorResponse.request.url} (${errorResponse.status} ${errorResponse.statusText})`
               );
             } else {
-              throw new Error(
+              this.throwError(
                 `Cannot get tail logs: ${errorResponse.request.url} (${errorResponse.status} ${errorResponse.statusText})`
               );
             }
@@ -98,4 +128,19 @@
   });
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+  #log-scroll-area {
+    height: 100%;
+    max-height: 100%;
+  }
+  #log-content-area {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .bottom-right {
+    position: fixed;
+    bottom: 5px;
+    right: 5px;
+  }
+</style>

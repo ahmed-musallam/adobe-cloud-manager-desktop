@@ -45,6 +45,7 @@
     "@adobe/jwt-auth": "^0.3.1",
     "@spectrum-css/breadcrumb": "^2.0.3",
     "axios": "^0.19.2",
+    "clusterize.js": "^0.18.1",
     "deep-rename-keys": "^0.2.1",
     "keytar": "^5.0.0",
     "menubar": "^8.0.0",

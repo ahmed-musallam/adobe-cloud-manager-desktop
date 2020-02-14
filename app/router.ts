@@ -4,7 +4,6 @@ import Pipeline from "./components/Pipeline";
 import Execution from "./components/Execution";
 import Environment from "./components/Environment";
 import Settings from "./components/Settings";
-import LogTail from "./components/LogTail";
 
 export default new Router({
   routes: [
@@ -15,12 +14,7 @@ export default new Router({
     {
       path: "/program/:programId/environment/:environmentId",
       component: Environment
-    },
-    {
-      path: "/program/:programId/environment/:environmentId/logtail",
-      name: 'logtail',
-      component: LogTail
-    },
+    }
     {
       path: "/program/:programId/pipeline/:pipelineId",
       component: Pipeline

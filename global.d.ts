@@ -7,6 +7,7 @@ declare const electronStore;
 declare const adobeAuth;
 declare const keytar;
 declare const electron;
+declare const Clusterize;
 
 declare module '*.vue' {
   import Vue from 'vue';

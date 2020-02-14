@@ -243,27 +243,42 @@
         this.$downloadFile(download.redirect);
       },
       async tailLog(logDownload: LogDownloadHalLink) {
-        // this.$showLoadingScreen();
-        /*
-        const client = await this.$CloudManagerApi;
-        const result = await globalAxios.get(
-          
-        );*/
-
-        // this.$hideLoadingScreen();
         const logUrl =
           logDownload?._links?.http__ns_adobe_com_adobecloud_rel_logs_tail
             ?.href || "";
-        this.$router.push({
-          name: "logtail",
-          params: {
-            programId: this.$route.params.programId,
-            environmentId: this.$route.params.environmentId
-          },
-          query: { url: logUrl }
+        console.log("tailing: ", logUrl);
+        let logWindow = new electron.remote.BrowserWindow({
+          show: false,
+          webPreferences: {
+            preload: location.pathname.replace("index.html", "preload.js")
+          }
         });
-        // //const download = result.data as LogDownlodResult;
-        // //this.$downloadFile(download.redirect);
+        const logTailPath = location.pathname.replace(
+          "index.html",
+          "logTail.html"
+        );
+        //logWindow.openDevTools();
+        logWindow.loadURL(
+          `file://${logTailPath}?url=${encodeURIComponent(logUrl)}`
+        );
+        logWindow.once("ready-to-show", () => {
+          //logWindow.reload();
+          logWindow.show();
+        });
+
+        logWindow.on("closed", () => {
+          logWindow = null;
+        });
+        return logWindow;
+
+        // this.$router.push({
+        //   name: "logtail",
+        //   params: {
+        //     programId: this.$route.params.programId,
+        //     environmentId: this.$route.params.environmentId
+        //   },
+        //   query: { url: logUrl }
+        // });
       },
       filterLogs() {
         this.filteredLogDownloads = this.logDownloads.filter(l => {
