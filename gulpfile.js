@@ -101,8 +101,10 @@ function bundleTask(watch) {
 }
 
 function electronTask(debug) {
-  process.env.DEBUG_E = true;
-  return (electron = () => spawnAndLog("electron", ["."]));
+  return (electron = () => {
+    process.env.DEBUG_E = debug;
+    spawnAndLog("electron", ["."])
+  });
 }
 
 async function packageTask(cb) {

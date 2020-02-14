@@ -16,7 +16,8 @@ const mb = menubar({
     }
   },
   showDockIcon: debug, // debug
-  windowPosition: debug ? "topLeft" : undefined // debug
+  windowPosition: debug ? "topLeft" : undefined, // debug
+  preloadWindow: true
 });
 
 mb.on("ready", () => {
