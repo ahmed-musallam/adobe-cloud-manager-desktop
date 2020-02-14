@@ -52,6 +52,24 @@
           }}</coral-tag>
         </coral-card-info>
       </coral-card>
+      <coral-quickactions target="_prev">
+        <coral-quickactions-item
+          v-if="pipeline.status == 'IDLE'"
+          type="anchor"
+          icon="play"
+          @click.stop.prevent="startPipeline(pipeline)"
+        >
+        </coral-quickactions-item>
+        <!--
+          <coral-quickactions-item
+          v-if="pipeline.status !== 'IDLE'"
+          type="anchor"
+          icon="stop"
+          @click.stop.prevent="stopPipeline(pipeline)"
+          ></coral-quickactions-item
+        >
+        -->
+      </coral-quickactions>
     </router-link>
     <div>
       <coral-drawer style="white-space: pre;">
@@ -120,7 +138,24 @@
           this.program?.id || ""
         );
         this.pipelines = pipelinesResponse.data?._embedded?.pipelines || [];
-      }
+      },
+      async startPipeline(pipeline: Pipeline) {
+        this.$showLoadingScreen();
+        try {
+          var client = await this.$CloudManagerApi;
+          var response = await client.pipelineExecution.startPipeline(
+            String(pipeline.programId),
+            String(pipeline.id),
+            "application/json"
+          );
+          this.log("start pipeline response: ", response);
+          await this.loadProgram(String(this.program.id));
+        } catch (err) {
+          console.error(err);
+        }
+        this.$hideLoadingScreen();
+      },
+      log: console.log
     }
   });
 </script>

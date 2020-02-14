@@ -1,6 +1,7 @@
 const { menubar } = require("menubar");
 const path = require("path");
-const debug = !!process.env.DEBUG_E;
+let debug = process.env.DEBUG_E;
+debug = debug === true || debug === "true";
 
 const mb = menubar({
   icon: path.join(__dirname, "icon/icon.png"),

@@ -77,13 +77,20 @@
                 is="coral-button"
                 icon="download"
                 variant="action"
+                v-if="
+                  logDownload._links
+                    .http__ns_adobe_com_adobecloud_rel_logs_download
+                "
                 @click="downloadLog(logDownload)"
               ></button>
               <button
                 is="coral-button"
                 icon="ViewDetail"
                 variant="action"
-                @click="downloadLog(logDownload)"
+                v-if="
+                  logDownload._links.http__ns_adobe_com_adobecloud_rel_logs_tail
+                "
+                @click="tailLog(logDownload)"
               ></button>
             </td>
           </tr>
@@ -108,6 +115,7 @@
   import Vue from "vue";
   import Select, { Option } from "./Select.vue";
   import { CoralEvent } from "vue/types/vue";
+  import globalAxios from "axios";
 
   interface UndocumentedLogOption {
     service: string;
@@ -119,6 +127,7 @@
   interface LogDownloadHalLink extends HalLink {
     _links: {
       http__ns_adobe_com_adobecloud_rel_logs_download: HalLink;
+      http__ns_adobe_com_adobecloud_rel_logs_tail: HalLink;
     };
   }
   interface LogHalLink extends HalLink {
@@ -231,9 +240,31 @@
         const download = result.data as LogDownlodResult;
         this.$downloadFile(download.redirect);
       },
+      async tailLog(logDownload: LogDownloadHalLink) {
+        // this.$showLoadingScreen();
+        /*
+        const client = await this.$CloudManagerApi;
+        const result = await globalAxios.get(
+          
+        );*/
+
+        // this.$hideLoadingScreen();
+        const logUrl =
+          logDownload?._links?.http__ns_adobe_com_adobecloud_rel_logs_tail
+            ?.href || "";
+        this.$router.push({
+          name: "logtail",
+          params: {
+            programId: this.$route.params.programId,
+            environmentId: this.$route.params.environmentId
+          },
+          query: { url: logUrl }
+        });
+        // //const download = result.data as LogDownlodResult;
+        // //this.$downloadFile(download.redirect);
+      },
       filterLogs() {
         this.filteredLogDownloads = this.logDownloads.filter(l => {
-          console.log(this.filter);
           return (
             !this.filter ||
             // @ts-ignore // undocumented adobe api
@@ -242,10 +273,8 @@
             l.name.indexOf(this.filter) !== -1
           );
         });
-        this.log("filtered", this.filteredLogDownloads);
         this.$forceUpdate();
-      },
-      log: console.log
+      }
     }
   });
 </script>

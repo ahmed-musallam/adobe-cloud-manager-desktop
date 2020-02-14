@@ -24,6 +24,8 @@ Vue.use({
     vue.prototype.$openExternalLink = (link: string) => {
       electron.shell.openExternal(link);
     };
+    vue.prototype.$sleep = async (msec: number) =>
+      new Promise(resolve => setTimeout(resolve, msec));
     vue.prototype.$CloudManagerApi = CloudManagerApi.getInstance();
     vue.prototype.$downloadFile = (url: string) => {
       var link = document.createElement("a");

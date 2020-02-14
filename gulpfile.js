@@ -50,7 +50,8 @@ function toWildRegex(str) {
 
 // spawn proccess and pipe output to stdout and stderr
 function spawnAndLog(command, params) {
-  const cp = spawn(command, params);
+  var env = Object.create(process.env);
+  const cp = spawn(command, params, { env: env });
   if (debug) {
     cp.stdout.pipe(process.stdout);
   }
@@ -59,7 +60,8 @@ function spawnAndLog(command, params) {
 }
 
 async function execAndLog(command) {
-  const cp = await exec(command);
+  var env = Object.create(process.env);
+  const cp = await exec(command, { env: env });
   if (debug) {
     console.log(cp.stdout);
   }
@@ -99,7 +101,7 @@ function bundleTask(watch) {
 }
 
 function electronTask(debug) {
-  process.env.DEBUG_E = !!debug;
+  process.env.DEBUG_E = true;
   return (electron = () => spawnAndLog("electron", ["."]));
 }
 
@@ -142,13 +144,14 @@ exports["ui:watch"] = series(
 exports["electron:watch"] = parallel(
   this["prettier:watch"],
   this["ui:watch"],
-  electronTask()
+  electronTask(false)
 );
+
 exports["electron:watch:debug"] = parallel(
   this["prettier:watch"],
   this["ui:watch"],
   electronTask(true)
 );
+
 exports["electron:package"] = parallel(packageTask);
 exports["electron:dmg"] = series(packageTask, dmgTask(PACKAGER_OPTIONS));
-exports.default = exports["electron:watch"];

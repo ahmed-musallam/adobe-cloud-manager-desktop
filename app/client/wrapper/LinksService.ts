@@ -15,20 +15,20 @@ export default class LinksService extends BaseService<undefined> {
   getLink(
     link: HalLink,
     templateParams?: TemplateParams,
-    linkTransformer?: (link: string) => string
+    linkTransformer?: (link: string) => string,
+    isAbsolute?: boolean
   ) {
     let href = String(link?.href);
     if (linkTransformer) {
       const temp = linkTransformer(href);
-      console.log("transformed!: ", temp);
       href = temp ? temp : href;
     }
     if (link?.templated) {
       var template = UriTemplate.parse(href);
       href = template.expand(templateParams);
     }
-    console.log("[LinksService] getting href: ", href);
-    return globalAxios.get(BASE_PATH + String(href), {
+    href = isAbsolute ? href : BASE_PATH + String(href);
+    return globalAxios.get(href, {
       headers: {
         "Content-Type": "application/json",
         "x-api-key": this.apiKey,
