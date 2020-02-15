@@ -296,12 +296,4 @@
   });
 </script>
 
-<style scoped>
-  .flex {
-    display: flex;
-  }
-  .flex-half {
-    flex: 1 0 49%;
-    padding: 5px;
-  }
-</style>
+<style scoped></style>
