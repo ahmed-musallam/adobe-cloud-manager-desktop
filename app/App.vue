@@ -16,20 +16,28 @@
       <coral-shell-header-actions>
         <button
           is="coral-button"
+          icon="home"
+          title="Program Home"
+          variant="quietaction"
+          style="margin-left: 0;"
+          @click="goHome"
+        ></button>
+        <button
+          is="coral-button"
           icon="ChevronLeft"
+          title="Back"
           variant="quietaction"
           style="margin-left: 0;"
           @click="goBack"
-          :disabled="!history.length"
         ></button>
         <button
           is="coral-button"
           icon="ChevronRight"
+          title="Forward"
           variant="quietaction"
           style="margin-left: 0;"
           @click="goForward"
         ></button>
-
         <router-link to="/settings" role="link" tabindex="0">
           <button
             is="coral-button"
@@ -56,7 +64,12 @@
   import { store } from "./components/BreadcrumbStore";
   import Vue from "vue";
   import { CoralElement } from "vue/types/vue";
-  import { ProgramList, ProgramListEmbedded, EmbeddedProgram } from "./client";
+  import {
+    ProgramList,
+    ProgramListEmbedded,
+    EmbeddedProgram,
+    Program
+  } from "./client";
   import CloudManagerApi, {
     CloudManagerApiInstance
   } from "./client/wrapper/CloudManagerApi";
@@ -70,15 +83,17 @@
       return {
         programs: {} as EmbeddedProgram[] | undefined,
         state: {},
-        history: history
+        history: history,
+        currentProgramHref: ""
       };
     },
     mounted() {
       const workspaces = this.$refs.workspaces as CoralElement;
       workspaces.on("coral-shell-workspaces:change", e => {
         const href = e.detail.selection.getAttribute("href") || "";
+        // safeguard against same route navigation
         if (this.$route.path !== href) {
-          // safeguard against page refresh
+          this.currentProgramHref = href;
           this.$router.push({ path: href });
         }
       });
@@ -96,8 +111,25 @@
       }
     },
     methods: {
-      goBack: history.back,
-      goForward: history.forward,
+      goBack() {
+        this.$router.go(-1);
+      },
+      goForward() {
+        this.$router.go(1);
+      },
+      goHome() {
+        if (this.$route.params.programId) {
+          this.$router.push({
+            name: "program",
+            params: { programId: this.$route.params.programId }
+          });
+        } else {
+          console.log("nav to: ", this.currentProgramHref);
+          this.$router.push({
+            path: this.currentProgramHref
+          });
+        }
+      },
       log: console.log
     }
   });

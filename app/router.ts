@@ -9,12 +9,13 @@ export default new Router({
   routes: [
     {
       path: "/program/:programId",
-      component: Program
+      component: Program,
+      name: "program"
     },
     {
       path: "/program/:programId/environment/:environmentId",
       component: Environment
-    }
+    },
     {
       path: "/program/:programId/pipeline/:pipelineId",
       component: Pipeline
