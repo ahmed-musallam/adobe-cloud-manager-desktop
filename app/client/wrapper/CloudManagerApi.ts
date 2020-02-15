@@ -35,8 +35,8 @@ export default class CloudManagerApi {
   private static instance: CloudManagerApiInstance | undefined;
   private static interceptionSetup = false;
   static async getInstance(): Promise<CloudManagerApiInstance> {
-    const authParams = await AuthParams.getDefault();
     if (!CloudManagerApi.instance) {
+      const authParams = await AuthParams.getDefault();
       CloudManagerApi.instance = {
         logs: new LogsService(authParams, undefined),
         links: new LinksService(authParams, undefined),

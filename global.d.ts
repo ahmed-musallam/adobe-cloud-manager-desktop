@@ -1,13 +1,14 @@
 import VueRouter, { Route } from 'vue-router'
 import CloudManagerApi, { CloudManagerApiInstance } from "./app/client/wrapper/CloudManagerApi";
 import { AxiosResponse } from 'axios';
+import Vue from 'vue';
 
 // declare global variables
-declare const electronStore;
-declare const adobeAuth;
-declare const keytar;
-declare const electron;
-declare const Clusterize;
+declare const electronStore: any;
+declare const adobeAuth: any;
+declare const keytar: any;
+declare const electron: any;
+declare const Clusterize: any;
 
 declare module '*.vue' {
   import Vue from 'vue';
