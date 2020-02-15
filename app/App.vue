@@ -46,8 +46,35 @@
             style="margin-right: 0.5em;"
           ></button>
         </router-link>
+        <coral-shell-menubar>
+          <coral-shell-menubar-item
+            menu="#menu_user"
+            iconsize="M"
+            iconvariant="circle"
+            icon="userCircleColor"
+          ></coral-shell-menubar-item>
+        </coral-shell-menubar>
       </coral-shell-header-actions>
     </coral-shell-header>
+    <!-- USER -->
+    <coral-shell-menu id="menu_user">
+      <coral-shell-user>
+        <coral-shell-user-name>Shantanu Narayen</coral-shell-user-name>
+        <coral-shell-user-heading
+          >this is a test one two three</coral-shell-user-heading
+        >
+        <coral-shell-user-content>
+          <div>
+            <a is="coral-anchorbutton" variant="quiet" href="#profile"
+              >Edit Account</a
+            >
+          </div>
+        </coral-shell-user-content>
+        <coral-shell-user-footer>
+          <a is="coral-anchorbutton" href="#signout">Switch Account</a>
+        </coral-shell-user-footer>
+      </coral-shell-user>
+    </coral-shell-menu>
     <coral-shell-content>
       <!-- Main application goes here -->
       <section class="u-coral-padding-horizontal">
