@@ -65,14 +65,23 @@
         >
         <coral-shell-user-content>
           <div>
-            <a is="coral-anchorbutton" variant="quiet" href="#profile"
-              >Edit Account</a
+            <a
+              is="coral-anchorbutton"
+              variant="quiet"
+              icon="userEdit"
+              href="#profile"
+              >Manage Account</a
+            >
+            <br />
+            <a
+              is="coral-anchorbutton"
+              variant="quiet"
+              icon="userAdd"
+              href="#profile"
+              >Add Another Account</a
             >
           </div>
         </coral-shell-user-content>
-        <coral-shell-user-footer>
-          <a is="coral-anchorbutton" href="#signout">Switch Account</a>
-        </coral-shell-user-footer>
       </coral-shell-user>
     </coral-shell-menu>
     <coral-shell-content>
@@ -162,4 +171,11 @@
   });
 </script>
 
-<style scoped></style>
+<style>
+  /* user image*/
+  ._coral-Shell-user-image {
+    width: 20%;
+    margin: 0;
+    float: left;
+  }
+</style>
