@@ -6,9 +6,9 @@ import Vue from 'vue';
 // declare global variables
 declare const electronStore: any;
 declare const adobeAuth: any;
-declare const keytar: any;
 declare const electron: any;
 declare const Clusterize: any;
+declare const keytar: Keytar;
 
 declare module '*.vue' {
   import Vue from 'vue';
@@ -41,4 +41,12 @@ declare module 'vue/types/vue' {
     value: string
 
   }
+}
+
+declare interface Keytar {
+  getPassword(service: string, account: string): Promise<string | null>
+  setPassword(service: string, account: string, password: string): Promise<void>
+  deletePassword(service: string, account: string): Promise<boolean>
+  findPassword(service: string): Promise<string | null>
+  findCredentials(service: string): Promise<Array<{ account: string, password: string}>>
 }

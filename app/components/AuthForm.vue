@@ -93,13 +93,14 @@
       SecretInput
     },
     async created() {
-      this.accessToken = await AuthStore.getAccessToken();
+      const account = await AuthStore.getCurrentAccount();
+      this.accessToken = account.getAccessToken();
       this.auth = {
-        apiKey: await AuthStore.getApiKey(),
-        clientSecret: await AuthStore.getClientSecret(),
-        orgId: await AuthStore.getOrgId(),
-        techAcct: await AuthStore.getTechAcct(),
-        privateKey: await AuthStore.getPrivateKey()
+        apiKey: account.getApiKey(),
+        clientSecret: account.getClientSecret(),
+        orgId: account.getOrgId(),
+        techAcct: account.getTechAcct(),
+        privateKey: account.getPrivateKey()
       };
     },
     methods: {
@@ -117,49 +118,21 @@
           this.$forceUpdate(); // for some reason reactivity is lost, so forcing update....
         }, 5000);
       },
-      handleSave() {
+      async handleSave() {
         var err = false;
+        const account = await AuthStore.getCurrentAccount();
         try {
-          AuthStore.setApiKey(this.auth.apiKey);
-          AuthStore.setClientSecret(this.auth.clientSecret);
-          AuthStore.setOrgId(this.auth.orgId);
-          AuthStore.setTechAcct(this.auth.techAcct);
-          AuthStore.setPrivateKey(this.auth.privateKey); // yeah, I know.. no encryption.. blah blah blah
+          account.setApiKey(this.auth.apiKey);
+          account.setClientSecret(this.auth.clientSecret);
+          account.setOrgId(this.auth.orgId);
+          account.setTechAcct(this.auth.techAcct);
+          account.setPrivateKey(this.auth.privateKey); // yeah, I know.. no encryption.. blah blah blah
         } catch (e) {
           this.handleAfterSave(true);
           throw e;
         }
         this.handleAfterSave(false);
       }
-      /*
-      handleRefreshToken() {
-        const cmp = this;
-        cmp.loading = true;
-        AuthUtil.getAccessToken()
-          .then(accessToken => { d
-            console.debug("Success! got token: ", accessToken);
-            this.accessToken = accessToken;
-            AuthStore.setAccessToken(accessToken);
-            CMApiClient.refresh(); // refresh the client after obtaining new access token
-            cmp.loading = false;
-            cmp.handleRefreshTokenResult();
-          })
-          .catch(err => {
-            console.error(err);
-            cmp.loading = false;
-            cmp.handleRefreshTokenResult(true);
-            this.accessToken = err;
-          });
-      },
-      handleRefreshTokenResult(fail) {
-        this.refreshResultFail = !!fail;
-        this.showRefreshResult = true;
-        setTimeout(() => {
-          this.showRefreshResult = false;
-          this.$forceUpdate(); // for some reason reactivity is lost, so forcing update....
-        }, 3000);
-      }
-      */
     }
   });
 </script>

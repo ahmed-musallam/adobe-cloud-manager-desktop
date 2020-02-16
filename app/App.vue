@@ -73,6 +73,7 @@
               >Manage Account</a
             >
             <br />
+            <!--
             <a
               is="coral-anchorbutton"
               variant="quiet"
@@ -80,6 +81,7 @@
               href="#profile"
               >Add Another Account</a
             >
+            -->
           </div>
         </coral-shell-user-content>
       </coral-shell-user>

@@ -89,7 +89,7 @@ export default class CloudManagerApi {
           );
           try {
             const access_token = await AuthUtil.getAccessToken();
-            AuthStore.setAccessToken(access_token);
+            (await AuthStore.getCurrentAccount()).setAccessToken(access_token);
             console.log(
               "Got the token!, saving it and retrying the same request."
             );
