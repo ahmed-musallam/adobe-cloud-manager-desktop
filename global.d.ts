@@ -8,8 +8,12 @@ declare const electronStore: any;
 declare const adobeAuth: any;
 declare const electron: any;
 declare const Clusterize: any;
-declare const keytar: Keytar;
 
+declare global {
+  interface Window { 
+    keytar: Keytar;
+  }
+}
 declare module '*.vue' {
   import Vue from 'vue';
   export default Vue;

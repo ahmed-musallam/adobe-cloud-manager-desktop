@@ -12,13 +12,18 @@ interface KeytarCredintial {
   account: string;
   password: string;
 }
+
 class Account {
-  constructor(private name: string) {}
+  constructor(protected name: string) {}
   private getPassword(key: string) {
-    return keytar.getPassword(KEYTAR_SERVICE, `${this.name}-${key}`);
+    return window.keytar.getPassword(KEYTAR_SERVICE, `${this.name}-${key}`);
   }
   private setPassword(key: string, val: string) {
-    return keytar.setPassword(KEYTAR_SERVICE, `${this.name}-${key}`, val);
+    return window.keytar.setPassword(
+      KEYTAR_SERVICE,
+      `${this.name}-${key}`,
+      val
+    );
   }
 
   getName = () => this.name;
@@ -38,6 +43,22 @@ class Account {
   setAccessToken = (val: string) => this.setPassword(ACCESS_TOKEN, val);
 }
 
+class DeletableAccount extends Account {
+  private deletePassword(key: string) {
+    return window.keytar.deletePassword(KEYTAR_SERVICE, `${this.name}-${key}`);
+  }
+  delete() {
+    [
+      CLIENT_SECRET,
+      API_KEY,
+      TECH_ACCT,
+      ORG_ID,
+      PRIVATE_KEY,
+      ACCESS_TOKEN
+    ].forEach(this.deletePassword);
+  }
+}
+
 export const currentAccountStore = Vue.observable({
   accountName: ""
 });
@@ -47,7 +68,7 @@ export default class AuthStore {
     if (!account) {
       return Promise.reject("Cannot get account with empty name")!;
     }
-    const creds = await keytar.findCredentials(KEYTAR_SERVICE);
+    const creds = await window.keytar.findCredentials(KEYTAR_SERVICE);
     const accountExists = creds?.some((cred: KeytarCredintial) =>
       cred?.account?.startsWith(account)
     );
@@ -65,7 +86,7 @@ export default class AuthStore {
   }
 
   static async getAccounts(): Promise<Account[]> {
-    const creds: KeytarCredintial[] = await keytar.findCredentials(
+    const creds: KeytarCredintial[] = await window.keytar.findCredentials(
       KEYTAR_SERVICE
     );
     console.log("got accounts:", creds);
@@ -93,5 +114,9 @@ export default class AuthStore {
   }
   static newAccount(name: string) {
     return new Account(name);
+  }
+  static async deleteAccount(name: string) {
+    const account = (await this.getAccount(name)) as DeletableAccount;
+    account?.delete();
   }
 }

@@ -1,5 +1,4 @@
 import AuthStore from "../../util/AuthStore";
-import AuthUtil from "../../util/AuthUtil";
 export default class AuthParams {
   public orgId: string;
   public authorization: string;
