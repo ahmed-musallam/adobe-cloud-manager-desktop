@@ -13,7 +13,7 @@ interface KeytarCredintial {
   password: string;
 }
 
-class Account {
+export class Account {
   constructor(protected name: string) {}
   private getPassword(key: string) {
     return window.keytar.getPassword(KEYTAR_SERVICE, `${this.name}-${key}`);
@@ -41,6 +41,41 @@ class Account {
   setOrgId = (val: string) => this.setPassword(ORG_ID, val);
   setPrivateKey = (val: string) => this.setPassword(PRIVATE_KEY, val);
   setAccessToken = (val: string) => this.setPassword(ACCESS_TOKEN, val);
+}
+
+export class InMemoryAccount extends Account {
+  slientSecret = "";
+  apiKey = "";
+  techAcct = "";
+  orgId = "";
+  privateKey = "";
+  accessToken = "";
+
+  getClientSecret = async () => this.slientSecret;
+  getApiKey = async () => this.apiKey;
+  getTechAcct = async () => this.techAcct;
+  getOrgId = async () => this.orgId;
+  getPrivateKey = async () => this.privateKey;
+  getAccessToken = async () => this.accessToken;
+
+  setClientSecret = async (slientSecret: string) => {
+    this.slientSecret = slientSecret;
+  };
+  setApiKey = async (apiKey: string) => {
+    this.apiKey = apiKey;
+  };
+  setTechAcct = async (techAcct: string) => {
+    this.techAcct = techAcct;
+  };
+  setOrgId = async (orgId: string) => {
+    this.orgId = orgId;
+  };
+  setPrivateKey = async (privateKey: string) => {
+    this.privateKey = privateKey;
+  };
+  setAccessToken = async (accessToken: string) => {
+    this.accessToken = accessToken;
+  };
 }
 
 class DeletableAccount extends Account {
@@ -85,20 +120,28 @@ export default class AuthStore {
     } else return undefined;
   }
 
-  static async getAccounts(): Promise<Account[]> {
+  static async getAccounts(excludeCurrent = false): Promise<Account[]> {
     const creds: KeytarCredintial[] = await window.keytar.findCredentials(
       KEYTAR_SERVICE
     );
     console.log("got accounts:", creds);
 
-    const accountNames = creds
+    let accountNames = creds
       ?.map((o: KeytarCredintial) => AuthStore.getAccountFromKey(o.account))
       .filter(acc => !!acc);
+
+    if (excludeCurrent) {
+      const currentAccount = await this.getCurrentAccount();
+      accountNames = accountNames.filter(
+        acc => acc !== currentAccount?.getName()
+      );
+    }
+
     const uniqueAccountNames = [...new Set(accountNames)];
     return uniqueAccountNames.map(acc => new Account(String(acc)));
   }
 
-  static async getCurrentAccount() {
+  static async getCurrentAccount(): Promise<Account> {
     let account: Account;
     try {
       account = await AuthStore.getAccount(currentAccountStore.accountName);

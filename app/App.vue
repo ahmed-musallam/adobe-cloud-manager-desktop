@@ -69,19 +69,20 @@
               is="coral-anchorbutton"
               variant="quiet"
               icon="userEdit"
-              href="#profile"
+              @click="editAccount"
               >Manage Account</a
             >
             <br />
-            <!--
             <a
               is="coral-anchorbutton"
               variant="quiet"
               icon="userAdd"
-              href="#profile"
+              @click="addAccount"
               >Add Another Account</a
             >
-            -->
+            <div v-for="(acc, i) in accounts" :key="i">
+              account {{ i }}: {{ acc.getName() }}
+            </div>
           </div>
         </coral-shell-user-content>
       </coral-shell-user>
@@ -91,6 +92,12 @@
       <section class="u-coral-padding-horizontal">
         <router-view></router-view>
       </section>
+      <AuthFormDialog
+        :show="authDialogShow"
+        :mode="authDialogMode"
+        :account="account"
+        @close="authDialogShow = false"
+      ></AuthFormDialog>
       <Loading></Loading>
     </coral-shell-content>
   </coral-shell>
@@ -98,6 +105,9 @@
 
 <script lang="ts">
   import Loading from "./components/Loading.vue";
+  import AuthFormDialog, {
+    AuthFormDialogMode
+  } from "./components/AuthFormDialog.vue";
   import { AxiosRequestConfig } from "axios";
   import { store } from "./components/BreadcrumbStore";
   import Vue from "vue";
@@ -111,18 +121,24 @@
   import CloudManagerApi, {
     CloudManagerApiInstance
   } from "./client/wrapper/CloudManagerApi";
+  import AuthStore, { Account } from "./util/AuthStore";
 
   export default Vue.extend({
     name: "App",
     components: {
-      Loading
+      Loading,
+      AuthFormDialog
     },
     data() {
       return {
         programs: {} as EmbeddedProgram[] | undefined,
         state: {},
         history: history,
-        currentProgramHref: ""
+        currentProgramHref: "",
+        authDialogShow: false,
+        authDialogMode: AuthFormDialogMode.EDIT,
+        account: ""
+        accounts: [] as Account[]
       };
     },
     mounted() {
@@ -137,6 +153,7 @@
       });
     },
     async created() {
+      this.accounts = await AuthStore.getAccounts();
       const client = await this.$CloudManagerApi;
       try {
         this.$showLoadingScreen();
@@ -167,6 +184,16 @@
             path: this.currentProgramHref
           });
         }
+      },
+      editAccount() {
+        this.account = "prft account"; // TODO: make dynamic
+        this.authDialogMode = AuthFormDialogMode.EDIT;
+        this.authDialogShow = true;
+      },
+      addAccount() {
+        this.account = "";
+        this.authDialogMode = AuthFormDialogMode.ADD;
+        this.authDialogShow = true;
       },
       log: console.log
     }

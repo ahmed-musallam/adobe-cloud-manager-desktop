@@ -1,16 +1,21 @@
-import AuthStore from "./AuthStore";
+import AuthStore, { Account } from "./AuthStore";
 
 export default class AuthUtil {
   private constructor() {}
 
-  static async getAccessToken(): Promise<string> {
-    const account = await AuthStore.getCurrentAccount();
+  static async getAccessToken(account?: Account): Promise<string> {
+    let currentAccount: Account;
+    if (account) {
+      currentAccount = account;
+    } else {
+      currentAccount = await AuthStore.getCurrentAccount();
+    }
     return adobeAuth({
-      clientId: await account.getApiKey(),
-      clientSecret: await account.getClientSecret(),
-      privateKey: await account.getPrivateKey(),
-      technicalAccountId: await account.getTechAcct(),
-      orgId: await account.getOrgId(),
+      clientId: await currentAccount.getApiKey(),
+      clientSecret: await currentAccount.getClientSecret(),
+      privateKey: await currentAccount.getPrivateKey(),
+      technicalAccountId: await currentAccount.getTechAcct(),
+      orgId: await currentAccount.getOrgId(),
       metaScopes: ["https://ims-na1.adobelogin.com/s/ent_cloudmgr_sdk"]
     }).then(
       (tokenResponse: { access_token: any }) => tokenResponse.access_token
