@@ -103,7 +103,7 @@ function bundleTask(watch) {
 function electronTask(debug) {
   return (electron = () => {
     process.env.DEBUG_E = debug;
-    return spawnAndLog("electron", ["."])
+    return spawnAndLog("electron", ["."]);
   });
 }
 
