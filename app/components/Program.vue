@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div v-if="environments.length">
+    <div>
       <h3>Environments:</h3>
-      <coral-buttonlist>
+      <coral-buttonlist v-if="environments.length">
         <router-link
           :to="'/program/' + program.id + '/environment/' + environment.id"
           v-for="environment in environments"
@@ -13,6 +13,7 @@
           </button>
         </router-link>
       </coral-buttonlist>
+      <coral-wait size="S" v-else></coral-wait>
     </div>
     <div></div>
     <h3>Pipelines:</h3>
