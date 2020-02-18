@@ -1,8 +1,9 @@
 <template>
   <div>
-    <div v-if="environments.length">
+    <div>
       <h3>Environments:</h3>
-      <coral-buttonlist>
+      <coral-wait size="S" v-if="loadingEnvironments"></coral-wait>
+      <coral-buttonlist v-else-if="!loadingEnvironments && environments.length">
         <router-link
           :to="'/program/' + program.id + '/environment/' + environment.id"
           v-for="environment in environments"
@@ -13,6 +14,13 @@
           </button>
         </router-link>
       </coral-buttonlist>
+      <h4 v-else>
+        <coral-alert>
+          <coral-alert-header
+            >No environments configured for this program.</coral-alert-header
+          >
+        </coral-alert>
+      </h4>
     </div>
     <div></div>
     <h3>Pipelines:</h3>
@@ -89,6 +97,7 @@
   import { async } from "q";
   import { Pipeline, Program, Environment } from "../client";
   import Vue from "vue";
+  import CloudManagerApi from "../client/wrapper/CloudManagerApi";
   export default Vue.extend({
     name: "Program",
 
@@ -96,7 +105,8 @@
       return {
         program: {} as Program,
         pipelines: [] as Pipeline[],
-        environments: [] as Environment[]
+        environments: [] as Environment[],
+        loadingEnvironments: true
       };
     },
     // beforeRouteUpdate(to, from, next) {
@@ -123,13 +133,15 @@
         }
       },
       async updateEnvironments(programId: string) {
-        var client = await this.$CloudManagerApi;
+        this.loadingEnvironments = true;
+        var client = await CloudManagerApi.getInstance();
         const envList = await client.environments.getEnvironments(programId);
         this.environments = envList.data._embedded
           ?.environments as Environment[];
+        this.loadingEnvironments = false;
       },
       async updateProgram(programId: string) {
-        var client = await this.$CloudManagerApi;
+        var client = await CloudManagerApi.getInstance();
         const programResponse = await client.programs.getProgram(programId);
         this.program = programResponse.data;
 
@@ -142,7 +154,7 @@
       async startPipeline(pipeline: Pipeline) {
         this.$showLoadingScreen();
         try {
-          var client = await this.$CloudManagerApi;
+          var client = await CloudManagerApi.getInstance();
           var response = await client.pipelineExecution.startPipeline(
             String(pipeline.programId),
             String(pipeline.id),

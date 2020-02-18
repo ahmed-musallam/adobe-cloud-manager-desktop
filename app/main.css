@@ -2,3 +2,7 @@
 .no-decoration {
   text-decoration: none;
 }
+.center-items {
+  display:flex;
+  justify-content:center
+}

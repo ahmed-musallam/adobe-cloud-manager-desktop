@@ -89,7 +89,7 @@ export default class CloudManagerApi {
           );
           try {
             const access_token = await AuthUtil.getAccessToken();
-            AuthStore.setAccessToken(access_token);
+            (await AuthStore.getCurrentAccount()).setAccessToken(access_token);
             console.log(
               "Got the token!, saving it and retrying the same request."
             );
@@ -98,7 +98,7 @@ export default class CloudManagerApi {
             error.config.headers["Authorization"] = "Bearer " + access_token;
             return Axios.request(error.config);
           } catch (err) {
-            console.error(err);
+            return Promise.reject(error);
           }
         } else {
           return Promise.reject(error);

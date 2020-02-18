@@ -18,12 +18,12 @@ import { Filters } from "./util/Filters";
 // Plugins
 Vue.use(Router);
 Vue.use(Plugins);
-Vue.use(Filters)
+Vue.use(Filters);
 
 // app
 
 if (document.querySelector("#app")) {
-  new Vue({
+  let vm = new Vue({
     el: "#app",
     router,
     render: h => h(App)

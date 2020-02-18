@@ -1,5 +1,4 @@
 import AuthStore from "../../util/AuthStore";
-import AuthUtil from "../../util/AuthUtil";
 export default class AuthParams {
   public orgId: string;
   public authorization: string;
@@ -10,10 +9,11 @@ export default class AuthParams {
     this.apiKey = apiKey;
   }
   static async getDefault() {
+    const account = await AuthStore.getCurrentAccount();
     return new AuthParams(
-      await AuthStore.getOrgId(),
-      await AuthStore.getAccessToken(),
-      await AuthStore.getApiKey()
+      await account.getOrgId(),
+      await account.getAccessToken(),
+      await account.getApiKey()
     );
   }
 }

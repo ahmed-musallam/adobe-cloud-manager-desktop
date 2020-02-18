@@ -118,6 +118,7 @@
   import Select, { Option } from "./Select.vue";
   import { CoralEvent } from "vue/types/vue";
   import globalAxios from "axios";
+  import CloudManagerApi from "../client/wrapper/CloudManagerApi";
 
   interface UndocumentedLogOption {
     service: string;
@@ -166,7 +167,7 @@
       Select
     },
     async created() {
-      const client = await this.$CloudManagerApi;
+      const client = await CloudManagerApi.getInstance();
       const env = await client.environments.getEnvironment(
         this.$route.params.programId,
         this.$route.params.environmentId
@@ -203,7 +204,7 @@
     methods: {
       async showLogs() {
         this.logsStatus = "loading";
-        const client = await this.$CloudManagerApi;
+        const client = await CloudManagerApi.getInstance();
         const response = await client.links.getLink(
           this.links.logs,
           {
@@ -234,7 +235,7 @@
       },
       async downloadLog(logDownload: LogDownloadHalLink) {
         this.$showLoadingScreen();
-        const client = await this.$CloudManagerApi;
+        const client = await CloudManagerApi.getInstance();
         const result = await client.links.getLink(
           logDownload?._links?.http__ns_adobe_com_adobecloud_rel_logs_download
         );

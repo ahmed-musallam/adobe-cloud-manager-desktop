@@ -23,6 +23,7 @@
     PipelineStatusEnum,
     PipelineExecutionStepStateStatusEnum
   } from "../client";
+  import CloudManagerApi from "./client/wrapper/CloudManagerApi";
 
   export default Vue.extend({
     name: "LogTailApp",
@@ -55,12 +56,12 @@
     },
     methods: {
       async getContentLength(url: string) {
-        const client = await this.$CloudManagerApi;
+        const client = await CloudManagerApi.getInstance();
         const resp = await client.logs.head(url);
         return parseInt(resp.headers["content-length"]);
       },
       async getLog(url: string, startLimit: number) {
-        const client = await this.$CloudManagerApi;
+        const client = await CloudManagerApi.getInstance();
         //console.log("getting log at: ", { startLimit });
         const res = await client.logs.get(
           url + `&date=${new Date().getTime()}`,

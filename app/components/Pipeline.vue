@@ -45,6 +45,7 @@
     PipelineExecutionStatusEnum
   } from "../client";
   import Vue from "vue";
+  import CloudManagerApi from "../client/wrapper/CloudManagerApi";
 
   export default Vue.extend({
     name: "Program",
@@ -56,7 +57,7 @@
       };
     },
     async created() {
-      var client = await this.$CloudManagerApi;
+      var client = await CloudManagerApi.getInstance();
       try {
         this.$showLoadingScreen();
         const programId = this.$route.params.programId;

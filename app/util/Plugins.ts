@@ -14,7 +14,6 @@ export const Plugins: PluginObject<never> = {
     $hideLoadingScreen: loadingActions.hide,
     $openExternalLink: electron.shell.openExternal,
     $sleep: (msec: number) => new Promise(resolve => setTimeout(resolve, msec)),
-    $CloudManagerApi: CloudManagerApi.getInstance(),
     $downloadFile: (url: string) => {
       var link = document.createElement("a");
       link.href = url;
