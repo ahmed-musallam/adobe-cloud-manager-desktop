@@ -103,6 +103,7 @@
             );
             this.addToLog(logResponse.data);
           } catch (error) {
+            currentContentLength = 0;
             if (error?.constructor?.name === "Cancel") {
               console.log("CANCELLED!");
               return; // we cancelled the request!
