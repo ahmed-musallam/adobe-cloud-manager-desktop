@@ -243,6 +243,7 @@
         );
         const download = result.data as LogDownlodResult;
         this.$downloadFile(download.redirect);
+        this.$hideLoadingScreen();
       },
       async tailLog(logDownload: LogDownloadHalLink) {
         const logUrl =
