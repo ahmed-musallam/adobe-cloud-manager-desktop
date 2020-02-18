@@ -2,7 +2,8 @@
   <div>
     <div>
       <h3>Environments:</h3>
-      <coral-buttonlist v-if="environments.length">
+      <coral-wait size="S" v-if="loadingEnvironments"></coral-wait>
+      <coral-buttonlist v-else-if="!loadingEnvironments && environments.length">
         <router-link
           :to="'/program/' + program.id + '/environment/' + environment.id"
           v-for="environment in environments"
@@ -13,7 +14,13 @@
           </button>
         </router-link>
       </coral-buttonlist>
-      <coral-wait size="S" v-else></coral-wait>
+      <h4 v-else>
+        <coral-alert>
+          <coral-alert-header
+            >No environments configured for this program.</coral-alert-header
+          >
+        </coral-alert>
+      </h4>
     </div>
     <div></div>
     <h3>Pipelines:</h3>
@@ -98,7 +105,8 @@
       return {
         program: {} as Program,
         pipelines: [] as Pipeline[],
-        environments: [] as Environment[]
+        environments: [] as Environment[],
+        loadingEnvironments: true
       };
     },
     // beforeRouteUpdate(to, from, next) {
@@ -125,10 +133,12 @@
         }
       },
       async updateEnvironments(programId: string) {
+        this.loadingEnvironments = true;
         var client = await CloudManagerApi.getInstance();
         const envList = await client.environments.getEnvironments(programId);
         this.environments = envList.data._embedded
           ?.environments as Environment[];
+        this.loadingEnvironments = false;
       },
       async updateProgram(programId: string) {
         var client = await CloudManagerApi.getInstance();
