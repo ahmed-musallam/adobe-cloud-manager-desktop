@@ -17,59 +17,60 @@
         </coral-shell-workspaces>
       </coral-shell-header-content>
       <coral-shell-header-actions>
-        <button
-          is="coral-button"
-          icon="home"
-          title="Program Home"
-          variant="quietaction"
-          style="margin-left: 0;"
-          @click="goHome"
-        ></button>
-        <button
-          is="coral-button"
-          icon="ChevronLeft"
-          title="Back"
-          variant="quietaction"
-          style="margin-left: 0;"
-          @click="goBack"
-        ></button>
-        <button
-          is="coral-button"
-          icon="ChevronRight"
-          title="Forward"
-          variant="quietaction"
-          style="margin-left: 0;"
-          @click="goForward"
-        ></button>
-        <!--
-          <router-link to="/settings" role="link" tabindex="0">
+        <div v-if="hasAccounts">
           <button
             is="coral-button"
-            icon="gears"
+            icon="home"
+            title="Program Home"
             variant="quietaction"
-            style="margin-right: 0.5em;"
+            style="margin-left: 0;"
+            @click="goHome"
           ></button>
-        </router-link>
-        -->
+          <button
+            is="coral-button"
+            icon="ChevronLeft"
+            title="Back"
+            variant="quietaction"
+            style="margin-left: 0;"
+            @click="goBack"
+          ></button>
+          <button
+            is="coral-button"
+            icon="ChevronRight"
+            title="Forward"
+            variant="quietaction"
+            style="margin-left: 0;"
+            @click="goForward"
+          ></button>
+          <!--
+          <router-link to="/settings" role="link" tabindex="0">
+            <button
+              is="coral-button"
+              icon="gears"
+              variant="quietaction"
+              style="margin-right: 0.5em;"
+            ></button>
+          </router-link>
+          -->
+        </div>
         <coral-shell-menubar>
           <coral-shell-menubar-item
             menu="#user-menu"
             iconsize="M"
             iconvariant="circle"
-            icon="userCircleColor"
+            icon="userCircleColor_Light"
           ></coral-shell-menubar-item>
         </coral-shell-menubar>
       </coral-shell-header-actions>
     </coral-shell-header>
     <!-- USER -->
     <coral-shell-menu id="user-menu" ref="userMenu">
-      <coral-shell-user>
+      <coral-shell-user
+        avatar="userCircleColor_Light"
+        :style="{ display: hasAccounts ? 'block' : 'none' }"
+      >
         <coral-shell-user-name>
-          {{
-            currentAccount.getName
-              ? currentAccount.getName()
-              : "No accounts yet"
-          }}
+          {{ hasAccounts ? currentAccount.getName() : "No accounts yet" }}
         </coral-shell-user-name>
         <coral-shell-user-heading>Current Account</coral-shell-user-heading>
         <coral-shell-user-content>
@@ -111,11 +112,25 @@
           </coral-buttonlist>
         </coral-shell-user-content>
       </coral-shell-user>
+      <button
+        v-if="!hasAccounts"
+        is="coral-button"
+        variant="quietaction"
+        icon="userAdd"
+        @click="addAccount"
+      >
+        Add Account
+      </button>
     </coral-shell-menu>
     <coral-shell-content>
       <!-- Main application goes here -->
       <section class="u-coral-padding-horizontal">
-        <router-view></router-view>
+        <router-view v-if="!!hasAccounts"></router-view>
+        <coral-alert v-else style="width:100%; margin-top: 2em;">
+          <coral-alert-header>
+            No Accounts Have been added, please add an account.
+          </coral-alert-header>
+        </coral-alert>
       </section>
       <AuthFormDialog
         :show="authDialogShow"
@@ -123,6 +138,7 @@
         :account="account"
         @close="authDialogShow = false"
         @save="handleAuthDialogSave"
+        @add="handleAddNewAccount"
       ></AuthFormDialog>
       <Loading></Loading>
     </coral-shell-content>
@@ -163,10 +179,18 @@
         currentProgramHref: "",
         authDialogShow: false,
         authDialogMode: AuthFormDialogMode.EDIT,
-        account: "",
+        account: "" as string | undefined,
         accounts: [] as Account[],
-        currentAccount: {} as Account
+        currentAccount: {} as Account | null
       };
+    },
+    computed: {
+      hasAccounts(): boolean {
+        // atleast the current account exists
+        return (
+          !!this.currentAccount?.getName && !!this.currentAccount.getName()
+        );
+      }
     },
     async created() {
       await this.init();
@@ -175,7 +199,8 @@
       async init(account?: string) {
         if (account) {
           // this is a user switch
-          this.$refs.userMenu.hide(); // hide user menu
+          const userMenu = this.$refs.userMenu as CoralElement;
+          userMenu.hide(); // hide user menu
           currentAccountStore.accountName = String(account);
           CloudManagerApi.refresh();
         }
@@ -230,6 +255,9 @@
       handleAuthDialogSave() {
         this.init(this.account);
       },
+      handleAddNewAccount(newAccountName: string) {
+        this.init(newAccountName);
+      },
       goBack() {
         this.$router.go(-1);
       },
@@ -249,7 +277,7 @@
         }
       },
       editAccount() {
-        this.account = this.currentAccount.getName();
+        this.account = this.currentAccount?.getName();
         this.authDialogMode = AuthFormDialogMode.EDIT;
         this.authDialogShow = true;
       },

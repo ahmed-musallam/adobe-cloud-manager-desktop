@@ -5,7 +5,6 @@ import Vue from 'vue';
 
 // declare global variables
 declare const electronStore: any;
-declare const adobeAuth: any;
 declare const electron: any;
 declare const Clusterize: any;
 
@@ -42,6 +41,7 @@ declare module 'vue/types/vue' {
     on(name: string, handler:(e: CoralEvent) => void): void,
     selectedItem: CoralElement
     value: string
+    hide: () => void
 
   }
 }

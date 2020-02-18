@@ -1,19 +1,23 @@
 import AuthStore from "../../util/AuthStore";
 export default class AuthParams {
-  public orgId: string;
-  public authorization: string;
-  public apiKey: string;
-  constructor(orgId: string, accessToken: string, apiKey: string) {
+  public orgId: string | undefined;
+  public authorization: string | undefined;
+  public apiKey: string | undefined;
+  constructor(orgId?: string, accessToken?: string, apiKey?: string) {
     this.orgId = orgId;
     this.authorization = `Bearer ${accessToken}`;
     this.apiKey = apiKey;
   }
-  static async getDefault() {
+  static async getDefault(): Promise<AuthParams> {
     const account = await AuthStore.getCurrentAccount();
-    return new AuthParams(
-      await account.getOrgId(),
-      await account.getAccessToken(),
-      await account.getApiKey()
-    );
+    if (account) {
+      return new AuthParams(
+        String(await account.getOrgId()),
+        String(await account.getAccessToken()),
+        String(await account.getApiKey())
+      );
+    } else {
+      return new AuthParams();
+    }
   }
 }

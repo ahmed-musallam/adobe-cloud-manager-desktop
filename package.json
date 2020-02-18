@@ -1,7 +1,7 @@
 {
-  "name": "adobe-cloud-manager-menubar",
+  "name": "adobe-cloud-manager-desktop",
   "version": "0.1.0",
-  "description": "Adobe Cloud Manager Menubar",
+  "description": "Adobe Cloud Manager Desktop",
   "main": "main.js",
   "browserslist": [
     "last 1 Chrome versions"

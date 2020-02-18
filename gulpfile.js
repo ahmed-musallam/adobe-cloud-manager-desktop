@@ -11,7 +11,7 @@ const path = require("path");
 const debug = !!process.env.DEBUG_E;
 
 const PACKAGER_OPTIONS = {
-  name: "Cloud Manager Menubar",
+  name: "Cloud Manager Desktop",
   dir: "./",
   platform: "darwin",
   arch: "x64",

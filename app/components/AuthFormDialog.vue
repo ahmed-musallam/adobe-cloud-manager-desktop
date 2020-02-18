@@ -91,6 +91,7 @@
         const account = AuthStore.newAccount(String(data.name));
         await this.asyncSaveAuthDataToAccount(account);
         this.$emit("close");
+        this.$emit("add", this.formAuthData.name);
       }
     },
     watch: {

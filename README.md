@@ -1,4 +1,4 @@
-# Adobe Cloud Manager Menubar
+# Adobe Cloud Manager Desktop
 A simple menubar app to show cloud manger status.
 
 

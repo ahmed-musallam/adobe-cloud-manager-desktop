@@ -6,7 +6,7 @@ const CLIENT_SECRET = "clientSecret",
   ORG_ID = "orgId",
   PRIVATE_KEY = "privateKey",
   ACCESS_TOKEN = "accessToken",
-  KEYTAR_SERVICE = "adobe-cloud-manager-menubar";
+  KEYTAR_SERVICE = "adobe-cloud-manager-desktop";
 
 interface KeytarCredintial {
   account: string;
@@ -140,16 +140,20 @@ export default class AuthStore {
     return uniqueAccountNames.map(acc => new Account(String(acc)));
   }
 
-  static async getCurrentAccount(): Promise<Account> {
-    let account: Account;
+  static async getCurrentAccount(): Promise<Account | null> {
+    let account: Account | null;
     try {
       account = await AuthStore.getAccount(currentAccountStore.accountName);
     } catch (e) {
       console.log("No current account set, setting first one we find");
       // no current account set, get the first one in the list
       const accounts = await AuthStore.getAccounts();
-      account = accounts[0];
-      currentAccountStore.accountName = account.getName();
+      if (accounts && accounts.length) {
+        account = accounts[0];
+        currentAccountStore.accountName = account.getName();
+      } else {
+        account = null;
+      }
     }
     return account;
   }
