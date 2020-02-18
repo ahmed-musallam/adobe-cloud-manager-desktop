@@ -2,7 +2,10 @@
   <coral-shell>
     <coral-shell-header>
       <coral-shell-header-content>
-        <coral-shell-workspaces ref="workspaces">
+        <coral-shell-workspaces
+          v-if="programs && programs.length"
+          ref="workspaces"
+        >
           <span
             v-for="program in programs"
             :key="program.id"
@@ -49,7 +52,7 @@
         -->
         <coral-shell-menubar>
           <coral-shell-menubar-item
-            menu="#menu_user"
+            menu="#user-menu"
             iconsize="M"
             iconvariant="circle"
             icon="userCircleColor"
@@ -58,7 +61,7 @@
       </coral-shell-header-actions>
     </coral-shell-header>
     <!-- USER -->
-    <coral-shell-menu id="menu_user">
+    <coral-shell-menu id="user-menu" ref="userMenu">
       <coral-shell-user>
         <coral-shell-user-name>
           {{
@@ -118,6 +121,7 @@
         :mode="authDialogMode"
         :account="account"
         @close="authDialogShow = false"
+        @save="handleAuthDialogSave"
       ></AuthFormDialog>
       <Loading></Loading>
     </coral-shell-content>
@@ -163,23 +167,14 @@
         currentAccount: {} as Account
       };
     },
-    mounted() {
-      const workspaces = this.$refs.workspaces as CoralElement;
-      workspaces.on("coral-shell-workspaces:change", e => {
-        const href = e.detail.selection.getAttribute("href") || "";
-        // safeguard against same route navigation
-        if (this.$route.path !== href) {
-          this.currentProgramHref = href;
-          this.$router.push({ path: href });
-        }
-      });
-    },
     async created() {
       await this.init();
     },
     methods: {
       async init(account?: string) {
         if (account) {
+          // this is a user switch
+          this.$refs.userMenu.hide(); // hide user menu
           currentAccountStore.accountName = String(account);
           CloudManagerApi.refresh();
         }
@@ -189,17 +184,57 @@
         const client = await CloudManagerApi.getInstance();
         try {
           this.$showLoadingScreen();
+          this.programs = []; // clear previous programs, needed for profile switch
           const result = await client.programs.getPrograms();
-          this.programs = result.data._embedded?.programs;
+          this.programs = result?.data?._embedded?.programs;
           this.$hideLoadingScreen();
-        } catch (err) {
-          console.error(err);
+          this.$nextTick(() => {
+            const workspaces = this.$refs.workspaces as CoralElement;
+            workspaces.on("coral-shell-workspaces:change", e => {
+              const href = e.detail.selection.getAttribute("href") || "";
+              // safeguard against same route navigation
+              if (href && this.$route.path !== href) {
+                this.currentProgramHref = href;
+                console.log("pushing: ", { href });
+                this.$router.push({ path: href });
+              }
+            });
+            this.navigateToDefaultProgram();
+          });
+        } catch (error) {
+          const status = error?.response?.status;
+          if (401 === status || 403 == status) {
+            console.log({ error });
+            this.$router.push({
+              path: "/auth-error",
+              query: {
+                error: `${status} Authentication Error`,
+                detail: "Please check Authentication info for this user account"
+              }
+            });
+          }
           this.$hideLoadingScreen();
+        }
+      },
+      navigateToDefaultProgram() {
+        if (this.programs && this.programs.length) {
+          const route = this.$route;
+          console.log("current route, ", { route });
+
+          const firstProgramId = this.programs[0].id || "";
+          console.log("going to", firstProgramId);
+          if (firstProgramId) {
+            this.$router.push(`/program/${firstProgramId}`).catch(err => {});
+          }
         }
       },
       switchAccount(name: string) {
         console.log("Switch to: ", name);
         this.init(name);
+      },
+      handleAuthDialogSave() {
+        console.log("saved!");
+        this.init(this.account);
       },
       goBack() {
         this.$router.go(-1);

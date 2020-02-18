@@ -13,9 +13,6 @@
       ></AuthForm>
     </coral-dialog-content>
     <coral-dialog-footer>
-      <button @click="$emit('close')" is="coral-button" type="button">
-        Close
-      </button>
       <button
         v-if="mode === 'add'"
         @click="addNewAccount"
@@ -24,6 +21,17 @@
       >
         Add
       </button>
+      <button
+        v-if="mode === 'edit'"
+        @click="saveAccount"
+        is="coral-button"
+        type="button"
+      >
+        Save
+      </button>
+      <button @click="$emit('close')" is="coral-button" type="button">
+        Close
+      </button>
     </coral-dialog-footer>
   </coral-dialog>
 </template>
@@ -31,7 +39,7 @@
 <script lang="ts">
   import Vue from "vue";
   import AuthForm, { AuthFormData } from "./AuthForm.vue";
-  import AuthStore from "../util/AuthStore";
+  import AuthStore, { Account } from "../util/AuthStore";
   export enum AuthFormDialogMode {
     EDIT = "edit",
     ADD = "add"
@@ -63,17 +71,25 @@
       AuthForm
     },
     methods: {
+      async asyncSaveAuthDataToAccount(account: Account) {
+        await account.setOrgId(String(this.formAuthData.orgId));
+        await account.setPrivateKey(String(this.formAuthData.privateKey));
+        await account.setClientSecret(String(this.formAuthData.clientSecret));
+        await account.setApiKey(String(this.formAuthData.apiKey));
+        await account.setTechAcct(String(this.formAuthData.techAcct));
+      },
+      async saveAccount() {
+        const account = await AuthStore.getAccount(this.account);
+        await this.asyncSaveAuthDataToAccount(account);
+        this.$emit("close");
+        this.$emit("save");
+      },
       async addNewAccount() {
         console.log("addNewAccount");
         const data = this.formAuthData as AuthFormData;
         console.log(data);
         const account = AuthStore.newAccount(String(data.name));
-        console.log("new account: ", data.name);
-        await account.setOrgId(String(data.orgId));
-        await account.setPrivateKey(String(data.privateKey));
-        await account.setClientSecret(String(data.clientSecret));
-        await account.setApiKey(String(data.apiKey));
-        await account.setTechAcct(String(data.techAcct));
+        await this.asyncSaveAuthDataToAccount(account);
         this.$emit("close");
       }
     },

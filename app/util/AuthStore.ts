@@ -124,7 +124,6 @@ export default class AuthStore {
     const creds: KeytarCredintial[] = await window.keytar.findCredentials(
       KEYTAR_SERVICE
     );
-    console.log("got accounts:", creds);
 
     let accountNames = creds
       ?.map((o: KeytarCredintial) => AuthStore.getAccountFromKey(o.account))
@@ -152,7 +151,6 @@ export default class AuthStore {
       account = accounts[0];
       currentAccountStore.accountName = account.getName();
     }
-    console.log("getCurrentAccount", account);
     return account;
   }
   static newAccount(name: string) {

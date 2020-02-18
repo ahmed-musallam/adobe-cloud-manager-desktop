@@ -4,6 +4,7 @@ import Pipeline from "./components/Pipeline";
 import Execution from "./components/Execution";
 import Environment from "./components/Environment";
 import Settings from "./components/Settings";
+import AuthError from "./components/AuthError";
 
 export default new Router({
   routes: [
@@ -27,6 +28,10 @@ export default new Router({
     {
       path: "/settings",
       component: Settings
+    },
+    {
+      path: "/auth-error",
+      component: AuthError
     }
   ]
 });

@@ -98,7 +98,7 @@ export default class CloudManagerApi {
             error.config.headers["Authorization"] = "Bearer " + access_token;
             return Axios.request(error.config);
           } catch (err) {
-            console.error(err);
+            return Promise.reject(error);
           }
         } else {
           return Promise.reject(error);
