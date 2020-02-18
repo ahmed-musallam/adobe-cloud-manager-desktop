@@ -3,6 +3,7 @@
     <coral-shell-header>
       <coral-shell-header-content>
         <coral-shell-workspaces
+          class="workspaces"
           v-if="programs && programs.length"
           ref="workspaces"
         >
@@ -286,5 +287,8 @@
     right: 0;
     display: none;
     padding: 7px;
+  }
+  .workspaces {
+    width: 300px;
   }
 </style>
