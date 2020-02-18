@@ -196,7 +196,6 @@
               // safeguard against same route navigation
               if (href && this.$route.path !== href) {
                 this.currentProgramHref = href;
-                console.log("pushing: ", { href });
                 this.$router.push({ path: href });
               }
             });
@@ -205,7 +204,6 @@
         } catch (error) {
           const status = error?.response?.status;
           if (401 === status || 403 == status) {
-            console.log({ error });
             this.$router.push({
               path: "/auth-error",
               query: {
@@ -220,21 +218,16 @@
       navigateToDefaultProgram() {
         if (this.programs && this.programs.length) {
           const route = this.$route;
-          console.log("current route, ", { route });
-
           const firstProgramId = this.programs[0].id || "";
-          console.log("going to", firstProgramId);
           if (firstProgramId) {
             this.$router.push(`/program/${firstProgramId}`).catch(err => {});
           }
         }
       },
       switchAccount(name: string) {
-        console.log("Switch to: ", name);
         this.init(name);
       },
       handleAuthDialogSave() {
-        console.log("saved!");
         this.init(this.account);
       },
       goBack() {
@@ -250,7 +243,6 @@
             params: { programId: this.$route.params.programId }
           });
         } else {
-          console.log("nav to: ", this.currentProgramHref);
           this.$router.push({
             path: this.currentProgramHref
           });

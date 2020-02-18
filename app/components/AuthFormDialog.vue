@@ -72,11 +72,13 @@
     },
     methods: {
       async asyncSaveAuthDataToAccount(account: Account) {
+        const formAuthData = this.formAuthData;
         await account.setOrgId(String(this.formAuthData.orgId));
         await account.setPrivateKey(String(this.formAuthData.privateKey));
         await account.setClientSecret(String(this.formAuthData.clientSecret));
         await account.setApiKey(String(this.formAuthData.apiKey));
         await account.setTechAcct(String(this.formAuthData.techAcct));
+        await account.setAccessToken("empty"); // clear access token to force app to retrieve a new one.
       },
       async saveAccount() {
         const account = await AuthStore.getAccount(this.account);
@@ -85,9 +87,7 @@
         this.$emit("save");
       },
       async addNewAccount() {
-        console.log("addNewAccount");
         const data = this.formAuthData as AuthFormData;
-        console.log(data);
         const account = AuthStore.newAccount(String(data.name));
         await this.asyncSaveAuthDataToAccount(account);
         this.$emit("close");

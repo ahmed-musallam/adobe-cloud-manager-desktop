@@ -64,6 +64,7 @@
       </button>
       -->
     </form>
+    <!--
     <form class="coral-Form coral-Form--vertical">
       <label id="accessToken" class="coral-FieldLabel"
         >Current Access Token</label
@@ -77,6 +78,7 @@
         >{{ auth.accessToken }}</textarea
       >
     </form>
+    -->
   </div>
 </template>
 
@@ -140,8 +142,7 @@
           if (this.mode === AuthFormDialogMode.ADD) {
             authData.name = this.newAccountName;
           }
-          this.$emit("input", authData);
-          console.log("emit", authData);
+          this.$emit("input", authData); // to make this component work with v-model
         },
         deep: true
       }
@@ -182,7 +183,6 @@
         account.setOrgId(String(this.auth.orgId));
         account.setTechAcct(String(this.auth.techAcct));
         account.setPrivateKey(String(this.auth.privateKey));
-        // console.log("testing with", account);
         try {
           this.loading = true;
           await AuthUtil.getAccessToken(account);
