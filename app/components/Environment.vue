@@ -167,6 +167,7 @@
       Select
     },
     async created() {
+      this.$showLoadingScreen();
       const client = await CloudManagerApi.getInstance();
       const env = await client.environments.getEnvironment(
         this.$route.params.programId,
@@ -193,6 +194,7 @@
         title: "All"
       });
       this.showLogs();
+      this.$hideLoadingScreen();
       //const logsLink =  as HalLink;
       //await client.links.getLink(logsLink,)
     },
@@ -239,7 +241,6 @@
         const result = await client.links.getLink(
           logDownload?._links?.http__ns_adobe_com_adobecloud_rel_logs_download
         );
-        this.$hideLoadingScreen();
         const download = result.data as LogDownlodResult;
         this.$downloadFile(download.redirect);
       },

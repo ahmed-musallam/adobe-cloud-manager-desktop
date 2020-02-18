@@ -26,7 +26,7 @@
     top: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgb(245, 245, 245);
     z-index: 99999999; /* oldest trick in the book */
   }
 </style>
