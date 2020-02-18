@@ -37,7 +37,8 @@
           style="margin-left: 0;"
           @click="goForward"
         ></button>
-        <router-link to="/settings" role="link" tabindex="0">
+        <!--
+          <router-link to="/settings" role="link" tabindex="0">
           <button
             is="coral-button"
             icon="gears"
@@ -45,6 +46,7 @@
             style="margin-right: 0.5em;"
           ></button>
         </router-link>
+        -->
         <coral-shell-menubar>
           <coral-shell-menubar-item
             menu="#menu_user"
