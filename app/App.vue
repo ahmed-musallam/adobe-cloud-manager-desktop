@@ -8,7 +8,6 @@
             :key="program.id"
             :href="'/program/' + program.id"
             is="coral-shell-workspace"
-            @click="log"
             >{{ program.name }}</span
           >
         </coral-shell-workspaces>
@@ -59,10 +58,14 @@
     <!-- USER -->
     <coral-shell-menu id="menu_user">
       <coral-shell-user>
-        <coral-shell-user-name>Shantanu Narayen</coral-shell-user-name>
-        <coral-shell-user-heading
-          >this is a test one two three</coral-shell-user-heading
-        >
+        <coral-shell-user-name>
+          {{
+            currentAccount.getName
+              ? currentAccount.getName()
+              : "No accounts yet"
+          }}
+        </coral-shell-user-name>
+        <coral-shell-user-heading>Current Account</coral-shell-user-heading>
         <coral-shell-user-content>
           <div>
             <a
@@ -80,10 +83,26 @@
               @click="addAccount"
               >Add Another Account</a
             >
-            <div v-for="(acc, i) in accounts" :key="i">
-              account {{ i }}: {{ acc.getName() }}
-            </div>
           </div>
+          <h4>Other Accounts:</h4>
+          <coral-buttonlist>
+            <div v-for="(acc, i) in accounts" :key="i" class="user-item">
+              <button
+                is="coral-buttonlist-item"
+                icon="user"
+                @click="switchAccount(acc.getName())"
+                @mouseenter="
+                  $event.target.nextElementSibling.style.display = 'block'
+                "
+                @mouseleave="
+                  $event.target.nextElementSibling.style.display = 'none'
+                "
+              >
+                {{ acc.getName() }}
+              </button>
+              <div class="user-item_overlay">switch</div>
+            </div>
+          </coral-buttonlist>
         </coral-shell-user-content>
       </coral-shell-user>
     </coral-shell-menu>
@@ -121,7 +140,7 @@
   import CloudManagerApi, {
     CloudManagerApiInstance
   } from "./client/wrapper/CloudManagerApi";
-  import AuthStore, { Account } from "./util/AuthStore";
+  import AuthStore, { Account, currentAccountStore } from "./util/AuthStore";
 
   export default Vue.extend({
     name: "App",
@@ -137,8 +156,9 @@
         currentProgramHref: "",
         authDialogShow: false,
         authDialogMode: AuthFormDialogMode.EDIT,
-        account: ""
-        accounts: [] as Account[]
+        account: "",
+        accounts: [] as Account[],
+        currentAccount: {} as Account
       };
     },
     mounted() {
@@ -153,19 +173,32 @@
       });
     },
     async created() {
-      this.accounts = await AuthStore.getAccounts();
-      const client = await this.$CloudManagerApi;
-      try {
-        this.$showLoadingScreen();
-        const result = await client.programs.getPrograms();
-        this.programs = result.data._embedded?.programs;
-        this.$hideLoadingScreen();
-      } catch (err) {
-        console.error(err);
-        this.$hideLoadingScreen();
-      }
+      await this.init();
     },
     methods: {
+      async init(account?: string) {
+        if (account) {
+          currentAccountStore.accountName = String(account);
+          CloudManagerApi.refresh();
+        }
+
+        this.accounts = await AuthStore.getAccounts(true);
+        this.currentAccount = await AuthStore.getCurrentAccount();
+        const client = await CloudManagerApi.getInstance();
+        try {
+          this.$showLoadingScreen();
+          const result = await client.programs.getPrograms();
+          this.programs = result.data._embedded?.programs;
+          this.$hideLoadingScreen();
+        } catch (err) {
+          console.error(err);
+          this.$hideLoadingScreen();
+        }
+      },
+      switchAccount(name: string) {
+        console.log("Switch to: ", name);
+        this.init(name);
+      },
       goBack() {
         this.$router.go(-1);
       },
@@ -186,7 +219,7 @@
         }
       },
       editAccount() {
-        this.account = "prft account"; // TODO: make dynamic
+        this.account = this.currentAccount.getName();
         this.authDialogMode = AuthFormDialogMode.EDIT;
         this.authDialogShow = true;
       },
@@ -206,5 +239,15 @@
     width: 20%;
     margin: 0;
     float: left;
+  }
+  .user-item {
+    position: relative;
+  }
+  .user-item_overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: none;
+    padding: 7px;
   }
 </style>

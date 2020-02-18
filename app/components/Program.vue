@@ -89,6 +89,7 @@
   import { async } from "q";
   import { Pipeline, Program, Environment } from "../client";
   import Vue from "vue";
+  import CloudManagerApi from "../client/wrapper/CloudManagerApi";
   export default Vue.extend({
     name: "Program",
 
@@ -123,13 +124,13 @@
         }
       },
       async updateEnvironments(programId: string) {
-        var client = await this.$CloudManagerApi;
+        var client = await CloudManagerApi.getInstance();
         const envList = await client.environments.getEnvironments(programId);
         this.environments = envList.data._embedded
           ?.environments as Environment[];
       },
       async updateProgram(programId: string) {
-        var client = await this.$CloudManagerApi;
+        var client = await CloudManagerApi.getInstance();
         const programResponse = await client.programs.getProgram(programId);
         this.program = programResponse.data;
 
@@ -142,7 +143,7 @@
       async startPipeline(pipeline: Pipeline) {
         this.$showLoadingScreen();
         try {
-          var client = await this.$CloudManagerApi;
+          var client = await CloudManagerApi.getInstance();
           var response = await client.pipelineExecution.startPipeline(
             String(pipeline.programId),
             String(pipeline.id),

@@ -85,6 +85,7 @@
   import VerticalStep from "./VerticalStep.vue";
   import Status from "./Status.vue";
   import Vue from "vue";
+  import CloudManagerApi from "../client/wrapper/CloudManagerApi";
 
   export default Vue.extend({
     name: "Execution",
@@ -116,7 +117,7 @@
 
     methods: {
       async getExecution(): Promise<PipelineExecution> {
-        var client = await this.$CloudManagerApi;
+        var client = await CloudManagerApi.getInstance();
         try {
           const programId = this.$route.params.programId;
           const pipelineId = this.$route.params.pipelineId;
@@ -143,7 +144,7 @@
           ?.href;
       },
       async getMetrics(step: PipelineExecutionStepState) {
-        const client = await this.$CloudManagerApi;
+        const client = await CloudManagerApi.getInstance();
         const result = await client.pipelineExecution.stepMetric(
           this.$route.params.programId,
           this.$route.params.pipelineId,
@@ -154,7 +155,7 @@
         console.log(result.data);
       },
       async getLog(step: PipelineExecutionStepState) {
-        const client = await this.$CloudManagerApi;
+        const client = await CloudManagerApi.getInstance();
         const result = await client.pipelineExecution.getStepLogs(
           this.$route.params.programId,
           this.$route.params.pipelineId,

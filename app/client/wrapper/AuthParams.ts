@@ -10,6 +10,7 @@ export default class AuthParams {
   }
   static async getDefault() {
     const account = await AuthStore.getCurrentAccount();
+    console.log("getDefault got", account);
     console.log("getDefault params", account);
     return new AuthParams(
       await account.getOrgId(),

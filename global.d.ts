@@ -25,7 +25,6 @@ declare module 'vue/types/vue' {
     on: FunctionStringCallback
     $showLoadingScreen: Function
     $hideLoadingScreen: Function
-    $CloudManagerApi: Promise<CloudManagerApiInstance>
     $downloadFile: (url: string) => void
     $sleep: (msec: number) => Promise<any>,
     $openExternalLink: (link: string) => void
