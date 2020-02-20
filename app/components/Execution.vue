@@ -1,7 +1,9 @@
 <template>
   <div v-if="execution && execution.id">
-    <h3 style="margin-bottom:0">{{ pipelineName }}</h3>
-    <Status :variant="execution.status" :showText="true"></Status>
+    <h3 style="margin-bottom:0">
+      {{ pipelineName }}
+      <Status :variant="execution.status" :showText="true"></Status>
+    </h3>
     <coral-list>
       <coral-list-divider></coral-list-divider>
       <coral-list-item icon="event"
@@ -32,20 +34,26 @@
         v-for="step in execution._embedded.stepStates"
         :key="step.stepId"
         :variant="step.status"
-        :title="step.action"
+        :title="getPrettyStepTitle(step.action)"
       >
-        <span v-if="step.startedAt"
-          >started: <em>{{ step.startedAt | date }}</em
+        <span v-if="step.startedAt && !step.finishedAt"
+          >Started: <em>{{ step.startedAt | date }}</em
           ><br
         /></span>
-        <span v-if="step.finishedAt"
-          >finished: <em>{{ step.finishedAt | date }}</em
-          ><br
-        /></span>
+        <span v-else style="color: rgb(45, 157, 120)">
+          Finished:
+          <em>
+            <b>{{ step.finishedAt | date }}. </b>
+          </em>
+          <em style="color: rgb(45, 157, 120)">
+            (Took: {{ getDurationInMili(step) | humanReadableDuration }})
+          </em>
+          <br />
+        </span>
         <span v-if="step.startedAt && !step.finishedAt && step.updatedAt"
-          >last updated: <em>{{ step.updatedAt | date }}</em
-          ><br
-        /></span>
+          >last updated: <em>{{ step.updatedAt | date }}</em></span
+        >
+        <br />
         <button
           is="coral-button"
           v-if="hasLog(step) && step.status !== 'RUNNING'"
@@ -86,6 +94,14 @@
   import Status from "./Status.vue";
   import Vue from "vue";
   import CloudManagerApi from "../client/wrapper/CloudManagerApi";
+  import { Dictionary } from "vue-router/types/router";
+
+  const stepActionTitles: Dictionary<string> = {
+    validate: "Validation",
+    build: "Build & Unit Testing",
+    codeQuality: "Code Scanning",
+    buildImage: "Build Images"
+  };
 
   export default Vue.extend({
     name: "Execution",
@@ -110,7 +126,14 @@
         this.$poll(this.getExecution, (data: PipelineExecution) => {
           //console.log("polled and got: ", data);
           this.execution = data;
-          return this.execution.status === PipelineExecutionStatusEnum.FINISHED;
+          const stopPolling = [
+            PipelineExecutionStatusEnum.FINISHED,
+            PipelineExecutionStatusEnum.CANCELLED,
+            PipelineExecutionStatusEnum.ERROR,
+            PipelineExecutionStatusEnum.FAILED
+          ].some(status => status === this.execution.status);
+
+          return stopPolling;
         });
       }
     },
@@ -143,6 +166,9 @@
         return step?._links?.http__ns_adobe_com_adobecloud_rel_pipeline_metrics
           ?.href;
       },
+      getPrettyStepTitle(action: string) {
+        return stepActionTitles[action] || action;
+      },
       async getMetrics(step: PipelineExecutionStepState) {
         const client = await CloudManagerApi.getInstance();
         const result = await client.pipelineExecution.stepMetric(
@@ -168,6 +194,21 @@
         if (downloadLink) {
           this.$downloadFile(downloadLink);
         }
+      },
+      getDurationInMili(step: PipelineExecutionStepState) {
+        let finishedInMili = 0;
+        let startedInMili = 0;
+        if (!step.finishedAt) {
+          return 0;
+        } else {
+          finishedInMili = new Date(step.finishedAt).getTime();
+        }
+        if (!step.startedAt) {
+          return 0;
+        } else {
+          startedInMili = new Date(step.startedAt).getTime();
+        }
+        return finishedInMili - startedInMili;
       },
       getVariant(status: PipelineExecutionStatusEnum): string {
         switch (status) {

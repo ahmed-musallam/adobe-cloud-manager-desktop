@@ -31,6 +31,7 @@
   $vertical-line-left: 15px;
   $vertical-step-content-left: 45px;
   $vertical-step-line-left: $vertical-line-left - $vertical-step-content-left;
+  $vertica-step-margin-top: 15px;
   $status-light-width: 7px;
   $status-light-border: 3px;
   $status-light-left: $vertical-line-left - $vertical-step-content-left -
@@ -42,12 +43,12 @@
   }
 
   // step status indicator
-  [vertical-step-status] {
+  [vertical-step-status] coral-status {
     // for some reason, adding custom classes to coral elements breaks them...
     display: inline-block;
     position: absolute;
     width: 10px;
-    top: 0;
+    top: -#{$vertica-step-margin-top - 1};
     left: $status-light-left;
     padding: 0;
     margin: 0;
@@ -75,6 +76,7 @@
     .vertical-step {
       position: relative;
       padding-bottom: 20px;
+      margin-top: $vertica-step-margin-top;
       // default step left vertical line
       &::before {
         display: inline-block;
@@ -100,8 +102,13 @@
         border-left: 0;
       }
     }
-    strong {
+    .vertical-step__title {
       display: block;
+      position: absolute;
+      top: -#{$vertica-step-margin-top};
+    }
+    .vertical-step__content {
+      padding-top: 5px;
     }
   }
 </style>

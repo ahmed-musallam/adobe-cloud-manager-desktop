@@ -1,7 +1,9 @@
 <template>
-  <coral-status :variant="getVariant(variant)">
-    <em v-if="showText">{{ variant ? variant.toLowerCase() : "" }}</em>
-  </coral-status>
+  <div :class="{ blinking: isRunning(variant) }">
+    <coral-status :variant="getVariant(variant)">
+      <em v-if="showText">{{ variant ? variant.toLowerCase() : "" }}</em>
+    </coral-status>
+  </div>
 </template>
 
 <script lang="ts">
@@ -19,6 +21,15 @@
       showText: Boolean
     },
     methods: {
+      isRunning(variant: string) {
+        return [
+          PipelineExecutionStatusEnum.RUNNING,
+          PipelineStatusEnum.BUSY,
+          PipelineExecutionStepStateStatusEnum.RUNNING,
+          "running"
+        ].some(item => item === variant);
+        return this.getVariant(variant) === "info";
+      },
       getVariant(variant: string): string | undefined {
         switch (variant) {
           case PipelineExecutionStatusEnum.NOTSTARTED:
@@ -58,4 +69,14 @@
   });
 </script>
 
-<style lang="scss"></style>
+<style scoped>
+  .blinking {
+    animation: blinker 1s linear infinite;
+  }
+
+  @keyframes blinker {
+    50% {
+      opacity: 0;
+    }
+  }
+</style>

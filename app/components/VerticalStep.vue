@@ -1,8 +1,10 @@
 <template>
   <li class="vertical-step" :class="getVariantClass(variant)">
     <Status vertical-step-status :variant="status || variant"></Status>
-    <strong>{{ title }}</strong>
-    <slot></slot>
+    <strong class="vertical-step__title">{{ title }}</strong>
+    <div class="vertical-step__content">
+      <slot></slot>
+    </div>
     <br />
     <div v-if="getVariantClass(variant).current" class="vertical-step__loading">
       <coral-wait size="S"></coral-wait>
