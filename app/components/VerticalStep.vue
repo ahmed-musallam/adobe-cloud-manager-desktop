@@ -5,8 +5,8 @@
     <div class="vertical-step__content">
       <slot></slot>
     </div>
-    <br />
     <div v-if="getVariantClass(variant).current" class="vertical-step__loading">
+      <br />
       <coral-wait size="S"></coral-wait>
       <em>Running</em>
     </div>

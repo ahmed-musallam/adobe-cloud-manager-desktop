@@ -36,10 +36,9 @@
         :variant="step.status"
         :title="getPrettyStepTitle(step.action)"
       >
-        <span v-if="step.startedAt && !step.finishedAt"
-          >Started: <em>{{ step.startedAt | date }}</em
-          ><br
-        /></span>
+        <span v-if="step.startedAt && !step.finishedAt">
+          Started: <em>{{ step.startedAt | date }}</em>
+        </span>
         <span v-else style="color: rgb(45, 157, 120)">
           Finished:
           <em>
@@ -48,12 +47,9 @@
           <em style="color: rgb(45, 157, 120)">
             (Took: {{ getDurationInMili(step) | humanReadableDuration }})
           </em>
-          <br />
         </span>
-        <span v-if="step.startedAt && !step.finishedAt && step.updatedAt"
-          >last updated: <em>{{ step.updatedAt | date }}</em></span
-        >
-        <br />
+        <br v-if="hasLog(step) && step.status !== 'RUNNING'" />
+        <br v-if="hasLog(step) && step.status !== 'RUNNING'" />
         <button
           is="coral-button"
           v-if="hasLog(step) && step.status !== 'RUNNING'"
@@ -72,7 +68,6 @@
           Metrics
         </button>
         -->
-        <span></span>
       </VerticalStep>
     </VerticalSteps>
     <br />
