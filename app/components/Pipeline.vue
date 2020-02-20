@@ -27,6 +27,9 @@
         </tr>
       </tbody>
     </table>
+    <div v-if="loadingRemainingExecutions" style="padding:5px">
+      <coral-wait size="S"></coral-wait><em> Loading remaining executions</em>
+    </div>
     <coral-drawer style="white-space: pre;">
       <textarea style="width:100%;height:500px">
         {{ JSON.stringify(executions, null, 4) }}
@@ -53,7 +56,8 @@
     data() {
       return {
         pipeline: {} as Pipeline,
-        executions: [] as Array<PipelineExecution>
+        executions: [] as Array<PipelineExecution>,
+        loadingRemainingExecutions: false
       };
     },
     async created() {
@@ -63,22 +67,10 @@
         const programId = this.$route.params.programId;
         const pipelineId = this.$route.params.pipelineId;
         if (programId && pipelineId) {
-          const response = await client.pipelines.getPipeline(
-            this.$route.params.programId,
-            this.$route.params.pipelineId
-          );
-          this.pipeline = response.data;
-          mutations.setPipeline(this.pipeline.name);
-
-          const executionsResult = await client.pipelineExecution.getExecutions(
-            this.$route.params.programId,
-            this.$route.params.pipelineId
-          );
-          this.executions = executionsResult.data._embedded
-            ?.executions as Array<PipelineExecution>;
-          this.executions[0].status;
+          await this.getAndSetExecutions(1, 3); // load first 3 executions
         }
         this.$hideLoadingScreen();
+        this.getRemainingExecutions(); // load ALL executions. TODO: pagination
       } catch (err) {
         console.error(err);
       }
@@ -88,6 +80,23 @@
       goToExecution(executionId: string) {
         const path = `/program/${this.$route.params.programId}/pipeline/${this.$route.params.pipelineId}/execution/${executionId}`;
         this.$router.push({ path });
+      },
+      async getAndSetExecutions(start?: number, limit?: number) {
+        var client = await CloudManagerApi.getInstance();
+        const executionsResult = await client.pipelineExecution.getExecutions(
+          this.$route.params.programId,
+          this.$route.params.pipelineId,
+          String(start),
+          limit
+        );
+        this.executions = executionsResult.data._embedded?.executions as Array<
+          PipelineExecution
+        >;
+      },
+      async getRemainingExecutions() {
+        this.loadingRemainingExecutions = true;
+        await this.getAndSetExecutions();
+        this.loadingRemainingExecutions = false;
       },
       getVariant(status: PipelineExecutionStatusEnum): string {
         switch (status) {
