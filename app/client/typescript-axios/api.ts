@@ -1,7 +1,7 @@
 // tslint:disable
 /**
  * Cloud Manager API
- * This API allows access to Cloud Manager programs, pipelines, and environments by an authorized technical account created through the Adobe I/O Console. The base url for this API is https://cloudmanager.adobe.io, e.g. to get the list of programs for an organization, you would make a GET request to https://cloudmanager.adobe.io/api/programs (with the correct set of headers as described below).
+ * This API allows access to Cloud Manager programs, pipelines, and environments by an authorized technical account created through the Adobe I/O Console. The base url for this API is https://cloudmanager.adobe.io, e.g. to get the list of programs for an organization, you would make a GET request to https://cloudmanager.adobe.io/api/programs (with the correct set of headers as described below). This swagger file can be downloaded from https://raw.githubusercontent.com/AdobeDocs/cloudmanager-api-docs/master/swagger-specs/api.yaml.
  *
  * The version of the OpenAPI document: 1.0.0
  * 
@@ -20,27 +20,64 @@ import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
 
 /**
+ * A Bad Request response error.
+ * @export
+ * @interface BadRequestError
+ */
+export interface BadRequestError {
+    /**
+     * HTTP status code of the response.
+     * @type {number}
+     * @memberof BadRequestError
+     */
+    status?: number;
+    /**
+     * Error type identifier.
+     * @type {string}
+     * @memberof BadRequestError
+     */
+    type?: string;
+    /**
+     * A short summary of the error.
+     * @type {string}
+     * @memberof BadRequestError
+     */
+    title?: string;
+    /**
+     * Request\'s missing parameters.
+     * @type {Array<MissingParameter>}
+     * @memberof BadRequestError
+     */
+    missingParams?: Array<MissingParameter>;
+    /**
+     * Request\'s invalid parameters.
+     * @type {Array<InvalidParameter>}
+     * @memberof BadRequestError
+     */
+    invalidParams?: Array<InvalidParameter>;
+}
+/**
  * 
  * @export
- * @interface BranchList
+ * @interface  BranchList
  */
 export interface BranchList {
     /**
      * 
      * @type {number}
-     * @memberof BranchList
+     * @memberof  BranchList
      */
     _totalNumberOfItems?: number;
     /**
      * 
      * @type {BranchListEmbedded}
-     * @memberof BranchList
+     * @memberof  BranchList
      */
     _embedded?: BranchListEmbedded;
     /**
      * 
      * @type {ProgramListLinks}
-     * @memberof BranchList
+     * @memberof  BranchList
      */
     _links?: ProgramListLinks;
 }
@@ -60,37 +97,37 @@ export interface BranchListEmbedded {
 /**
  * Describes an __Embedded Program__
  * @export
- * @interface EmbeddedProgram
+ * @interface Embedded Program
  */
 export interface EmbeddedProgram {
     /**
      * Identifier of the program. Unique within the space.
      * @type {string}
-     * @memberof EmbeddedProgram
+     * @memberof Embedded Program
      */
     id?: string;
     /**
      * Name of the program
      * @type {string}
-     * @memberof EmbeddedProgram
+     * @memberof Embedded Program
      */
     name: string;
     /**
      * Whether this Program has been enabled for Cloud Manager usage
      * @type {boolean}
-     * @memberof EmbeddedProgram
+     * @memberof Embedded Program
      */
     enabled?: boolean;
     /**
      * Tenant Id
      * @type {string}
-     * @memberof EmbeddedProgram
+     * @memberof Embedded Program
      */
     tenantId?: string;
     /**
      * 
      * @type {EmbeddedProgramLinks}
-     * @memberof EmbeddedProgram
+     * @memberof Embedded Program
      */
     _links?: EmbeddedProgramLinks;
 }
@@ -164,6 +201,31 @@ export enum EnvironmentTypeEnum {
 /**
  * 
  * @export
+ * @interface EnvironmentList
+ */
+export interface EnvironmentList {
+    /**
+     * 
+     * @type {number}
+     * @memberof EnvironmentList
+     */
+    _totalNumberOfItems?: number;
+    /**
+     * 
+     * @type {EnvironmentListEmbedded}
+     * @memberof EnvironmentList
+     */
+    _embedded?: EnvironmentListEmbedded;
+    /**
+     * 
+     * @type {ProgramListLinks}
+     * @memberof EnvironmentList
+     */
+    _links?: ProgramListLinks;
+}
+/**
+ * 
+ * @export
  * @interface EnvironmentLinks
  */
 export interface EnvironmentLinks {
@@ -196,32 +258,25 @@ export interface EnvironmentLinks {
      * @type {HalLink}
      * @memberof EnvironmentLinks
      */
+    http__ns_adobe_com_adobecloud_rel_developerConsole?: HalLink;
+    /**
+     * 
+     * @type {HalLink}
+     * @memberof EnvironmentLinks
+     */
+    http__ns_adobe_com_adobecloud_rel_logs?: HalLink;
+    /**
+     * 
+     * @type {HalLink}
+     * @memberof EnvironmentLinks
+     */
+    http__ns_adobe_com_adobecloud_rel_variables?: HalLink;
+    /**
+     * 
+     * @type {HalLink}
+     * @memberof EnvironmentLinks
+     */
     self?: HalLink;
-}
-/**
- * 
- * @export
- * @interface EnvironmentList
- */
-export interface EnvironmentList {
-    /**
-     * 
-     * @type {number}
-     * @memberof EnvironmentList
-     */
-    _totalNumberOfItems?: number;
-    /**
-     * 
-     * @type {EnvironmentListEmbedded}
-     * @memberof EnvironmentList
-     */
-    _embedded?: EnvironmentListEmbedded;
-    /**
-     * 
-     * @type {ProgramListLinks}
-     * @memberof EnvironmentList
-     */
-    _links?: ProgramListLinks;
 }
 /**
  * 
@@ -235,6 +290,137 @@ export interface EnvironmentListEmbedded {
      * @memberof EnvironmentListEmbedded
      */
     environments?: Array<Environment>;
+}
+/**
+ * Log from Environment
+ * @export
+ * @interface EnvironmentLog
+ */
+export interface EnvironmentLog {
+    /**
+     * Name of the service
+     * @type {string}
+     * @memberof EnvironmentLog
+     */
+    service?: string;
+    /**
+     * Name of the Log
+     * @type {string}
+     * @memberof EnvironmentLog
+     */
+    name?: string;
+    /**
+     * date of the Log
+     * @type {string}
+     * @memberof EnvironmentLog
+     */
+    date?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof EnvironmentLog
+     */
+    programId?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof EnvironmentLog
+     */
+    environmentId?: number;
+    /**
+     * 
+     * @type {EnvironmentLogLinks}
+     * @memberof EnvironmentLog
+     */
+    _links?: EnvironmentLogLinks;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentLogLinks
+ */
+export interface EnvironmentLogLinks {
+    /**
+     * 
+     * @type {HalLink}
+     * @memberof EnvironmentLogLinks
+     */
+    http__ns_adobe_com_adobecloud_rel_logs_download?: HalLink;
+    /**
+     * 
+     * @type {HalLink}
+     * @memberof EnvironmentLogLinks
+     */
+    http__ns_adobe_com_adobecloud_rel_logs_tail?: HalLink;
+}
+/**
+ * Logs of an Environment
+ * @export
+ * @interface EnvironmentLogs
+ */
+export interface EnvironmentLogs {
+    /**
+     * Name of the service
+     * @type {Array<string>}
+     * @memberof EnvironmentLogs
+     */
+    service?: Array<string>;
+    /**
+     * Name of the Log
+     * @type {Array<string>}
+     * @memberof EnvironmentLogs
+     */
+    name?: Array<string>;
+    /**
+     * Number of days
+     * @type {number}
+     * @memberof EnvironmentLogs
+     */
+    days?: number;
+    /**
+     * 
+     * @type {EnvironmentLogsLinks}
+     * @memberof EnvironmentLogs
+     */
+    _links?: EnvironmentLogsLinks;
+    /**
+     * 
+     * @type {EnvironmentLogsEmbedded}
+     * @memberof EnvironmentLogs
+     */
+    _embedded?: EnvironmentLogsEmbedded;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentLogsEmbedded
+ */
+export interface EnvironmentLogsEmbedded {
+    /**
+     * Links to logs
+     * @type {Array<EnvironmentLog>}
+     * @memberof EnvironmentLogsEmbedded
+     */
+    downloads?: Array<EnvironmentLog>;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentLogsLinks
+ */
+export interface EnvironmentLogsLinks {
+    /**
+     * 
+     * @type {HalLink}
+     * @memberof EnvironmentLogsLinks
+     */
+    http__ns_adobe_com_adobecloud_rel_program?: HalLink;
+    /**
+     * 
+     * @type {HalLink}
+     * @memberof EnvironmentLogsLinks
+     */
+    self?: HalLink;
 }
 /**
  * 
@@ -290,6 +476,25 @@ export interface HalLink {
      * @memberof HalLink
      */
     name?: string;
+}
+/**
+ * 
+ * @export
+ * @interface InvalidParameter
+ */
+export interface InvalidParameter {
+    /**
+     * Name of the invalid parameter.
+     * @type {string}
+     * @memberof InvalidParameter
+     */
+    name?: string;
+    /**
+     * Reason of why the parameter\'s value is not accepted.
+     * @type {string}
+     * @memberof InvalidParameter
+     */
+    reason?: string;
 }
 /**
  * Describes a __Metric__
@@ -370,6 +575,25 @@ export enum MetricComparatorEnum {
 }
 
 /**
+ * 
+ * @export
+ * @interface MissingParameter
+ */
+export interface MissingParameter {
+    /**
+     * Name of the missing parameter.
+     * @type {string}
+     * @memberof MissingParameter
+     */
+    name?: string;
+    /**
+     * Type of the missing parameter.
+     * @type {string}
+     * @memberof MissingParameter
+     */
+    type?: string;
+}
+/**
  * Describes a __CI/CD Pipeline__
  * @export
  * @interface Pipeline
@@ -431,7 +655,7 @@ export interface Pipeline {
     lastFinishedAt?: Date;
     /**
      * Pipeline phases in execution order
-     * @type {Array<PipelinePhase>}
+     * @type {Array<Pipeline Phase>}
      * @memberof Pipeline
      */
     phases: Array<PipelinePhase>;
@@ -462,6 +686,194 @@ export enum PipelineStatusEnum {
     WAITING = 'WAITING'
 }
 
+/**
+ * Describes the status of a particular pipeline execution step for display purposes
+ * @export
+ * @interface PipelineExecutionStepState
+ */
+export interface PipelineExecutionStepState {
+    /**
+     * 
+     * @type {string}
+     * @memberof PipelineExecutionStepState
+     */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PipelineExecutionStepState
+     */
+    stepId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PipelineExecutionStepState
+     */
+    phaseId?: string;
+    /**
+     * Name of the action
+     * @type {string}
+     * @memberof PipelineExecutionStepState
+     */
+    action?: string;
+    /**
+     * Target repository
+     * @type {string}
+     * @memberof PipelineExecutionStepState
+     */
+    repository?: string;
+    /**
+     * Target branch
+     * @type {string}
+     * @memberof PipelineExecutionStepState
+     */
+    branch?: string;
+    /**
+     * Target environment
+     * @type {string}
+     * @memberof PipelineExecutionStepState
+     */
+    environment?: string;
+    /**
+     * Target environment type
+     * @type {string}
+     * @memberof PipelineExecutionStepState
+     */
+    environmentType?: string;
+    /**
+     * Start time
+     * @type {Date}
+     * @memberof PipelineExecutionStepState
+     */
+    startedAt?: Date;
+    /**
+     * Date the execution reached a final state
+     * @type {Date}
+     * @memberof PipelineExecutionStepState
+     */
+    finishedAt?: Date;
+    /**
+     * Information about step result
+     * @type {{ [key: string]: object; }}
+     * @memberof PipelineExecutionStepState
+     */
+    details?: { [key: string]: object; };
+    /**
+     * Action status
+     * @type {string}
+     * @memberof PipelineExecutionStepState
+     */
+    status?: PipelineExecutionStepStateStatusEnum;
+    /**
+     * 
+     * @type {PipelineExecutionStepStateLinks}
+     * @memberof PipelineExecutionStepState
+     */
+    _links?: PipelineExecutionStepStateLinks;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum PipelineExecutionStepStateStatusEnum {
+    NOT_STARTED = 'NOT_STARTED',
+    RUNNING = 'RUNNING',
+    FINISHED = 'FINISHED',
+    ERROR = 'ERROR',
+    ROLLING_BACK = 'ROLLING_BACK',
+    ROLLED_BACK = 'ROLLED_BACK',
+    WAITING = 'WAITING',
+    CANCELLED = 'CANCELLED',
+    FAILED = 'FAILED'
+}
+
+/**
+ * 
+ * @export
+ * @interface PipelineList
+ */
+export interface PipelineList {
+    /**
+     * 
+     * @type {number}
+     * @memberof PipelineList
+     */
+    _totalNumberOfItems?: number;
+    /**
+     * 
+     * @type {PipelineListEmbedded}
+     * @memberof PipelineList
+     */
+    _embedded?: PipelineListEmbedded;
+    /**
+     * 
+     * @type {ProgramListLinks}
+     * @memberof PipelineList
+     */
+    _links?: ProgramListLinks;
+}
+/**
+ * Describes a phase of a pipeline
+ * @export
+ * @interface Pipeline Phase
+ */
+export interface PipelinePhase {
+    /**
+     * Name of the phase
+     * @type {string}
+     * @memberof Pipeline Phase
+     */
+    name?: string;
+    /**
+     * Type of the phase
+     * @type {string}
+     * @memberof Pipeline Phase
+     */
+    type: PipelinePhaseTypeEnum;
+    /**
+     * Identifier of the source repository. The code from this repository will be build at the start of this phase.  Mandatory if type=BUILD
+     * @type {string}
+     * @memberof Pipeline Phase
+     */
+    repositoryId?: string;
+    /**
+     * Name of the tracked branch or a fully qualified git tag (e.g. refs/tags/v1).   Assumed to be `master` if missing.
+     * @type {string}
+     * @memberof Pipeline Phase
+     */
+    branch?: string;
+    /**
+     * Identifier of the target environment. Mandatory if type=DEPLOY
+     * @type {string}
+     * @memberof Pipeline Phase
+     */
+    environmentId?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum PipelinePhaseTypeEnum {
+    VALIDATE = 'VALIDATE',
+    BUILD = 'BUILD',
+    DEPLOY = 'DEPLOY'
+}
+
+/**
+ * 
+ * @export
+ * @interface PipelineStepMetrics
+ */
+export interface PipelineStepMetrics {
+    /**
+     * metrics
+     * @type {Array<Metric>}
+     * @memberof PipelineStepMetrics
+     */
+    metrics?: Array<Metric>;
+}
 /**
  * Wraps a pipeline execution
  * @export
@@ -679,108 +1091,6 @@ export interface PipelineExecutionListRepresentationLinks {
     self?: HalLink;
 }
 /**
- * Describes the status of a particular pipeline execution step for display purposes
- * @export
- * @interface PipelineExecutionStepState
- */
-export interface PipelineExecutionStepState {
-    /**
-     * 
-     * @type {string}
-     * @memberof PipelineExecutionStepState
-     */
-    id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PipelineExecutionStepState
-     */
-    stepId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PipelineExecutionStepState
-     */
-    phaseId?: string;
-    /**
-     * Name of the action
-     * @type {string}
-     * @memberof PipelineExecutionStepState
-     */
-    action?: string;
-    /**
-     * Target repository
-     * @type {string}
-     * @memberof PipelineExecutionStepState
-     */
-    repository?: string;
-    /**
-     * Target branch
-     * @type {string}
-     * @memberof PipelineExecutionStepState
-     */
-    branch?: string;
-    /**
-     * Target environment
-     * @type {string}
-     * @memberof PipelineExecutionStepState
-     */
-    environment?: string;
-    /**
-     * Target environment type
-     * @type {string}
-     * @memberof PipelineExecutionStepState
-     */
-    environmentType?: string;
-    /**
-     * Start time
-     * @type {Date}
-     * @memberof PipelineExecutionStepState
-     */
-    startedAt?: Date;
-    /**
-     * Date the execution reached a final state
-     * @type {Date}
-     * @memberof PipelineExecutionStepState
-     */
-    finishedAt?: Date;
-    /**
-     * Information about step result
-     * @type {{ [key: string]: object; }}
-     * @memberof PipelineExecutionStepState
-     */
-    details?: { [key: string]: object; };
-    /**
-     * Action status
-     * @type {string}
-     * @memberof PipelineExecutionStepState
-     */
-    status?: PipelineExecutionStepStateStatusEnum;
-    /**
-     * 
-     * @type {PipelineExecutionStepStateLinks}
-     * @memberof PipelineExecutionStepState
-     */
-    _links?: PipelineExecutionStepStateLinks;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum PipelineExecutionStepStateStatusEnum {
-    NOT_STARTED = 'NOT_STARTED',
-    RUNNING = 'RUNNING',
-    FINISHED = 'FINISHED',
-    ERROR = 'ERROR',
-    ROLLING_BACK = 'ROLLING_BACK',
-    ROLLED_BACK = 'ROLLED_BACK',
-    WAITING = 'WAITING',
-    CANCELLED = 'CANCELLED',
-    FAILED = 'FAILED'
-}
-
-/**
  * 
  * @export
  * @interface PipelineExecutionStepStateLinks
@@ -869,31 +1179,6 @@ export interface PipelineLinks {
 /**
  * 
  * @export
- * @interface PipelineList
- */
-export interface PipelineList {
-    /**
-     * 
-     * @type {number}
-     * @memberof PipelineList
-     */
-    _totalNumberOfItems?: number;
-    /**
-     * 
-     * @type {PipelineListEmbedded}
-     * @memberof PipelineList
-     */
-    _embedded?: PipelineListEmbedded;
-    /**
-     * 
-     * @type {ProgramListLinks}
-     * @memberof PipelineList
-     */
-    _links?: ProgramListLinks;
-}
-/**
- * 
- * @export
  * @interface PipelineListEmbedded
  */
 export interface PipelineListEmbedded {
@@ -903,67 +1188,6 @@ export interface PipelineListEmbedded {
      * @memberof PipelineListEmbedded
      */
     pipelines?: Array<Pipeline>;
-}
-/**
- * Describes a phase of a pipeline
- * @export
- * @interface PipelinePhase
- */
-export interface PipelinePhase {
-    /**
-     * Name of the phase
-     * @type {string}
-     * @memberof PipelinePhase
-     */
-    name?: string;
-    /**
-     * Type of the phase
-     * @type {string}
-     * @memberof PipelinePhase
-     */
-    type: PipelinePhaseTypeEnum;
-    /**
-     * Identifier of the source repository. The code from this repository will be build at the start of this phase.  Mandatory if type=BUILD
-     * @type {string}
-     * @memberof PipelinePhase
-     */
-    repositoryId?: string;
-    /**
-     * Name of the tracked branch or a fully qualified git tag (e.g. refs/tags/v1).   Assumed to be `master` if missing.
-     * @type {string}
-     * @memberof PipelinePhase
-     */
-    branch?: string;
-    /**
-     * Identifier of the target environment. Mandatory if type=DEPLOY
-     * @type {string}
-     * @memberof PipelinePhase
-     */
-    environmentId?: string;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum PipelinePhaseTypeEnum {
-    VALIDATE = 'VALIDATE',
-    BUILD = 'BUILD',
-    DEPLOY = 'DEPLOY'
-}
-
-/**
- * 
- * @export
- * @interface PipelineStepMetrics
- */
-export interface PipelineStepMetrics {
-    /**
-     * metrics
-     * @type {Array<Metric>}
-     * @memberof PipelineStepMetrics
-     */
-    metrics?: Array<Metric>;
 }
 /**
  * Describes a __Program__
@@ -1011,6 +1235,31 @@ export interface Program {
 /**
  * 
  * @export
+ * @interface ProgramList
+ */
+export interface ProgramList {
+    /**
+     * 
+     * @type {number}
+     * @memberof ProgramList
+     */
+    _totalNumberOfItems?: number;
+    /**
+     * 
+     * @type {ProgramListEmbedded}
+     * @memberof ProgramList
+     */
+    _embedded?: ProgramListEmbedded;
+    /**
+     * 
+     * @type {ProgramListLinks}
+     * @memberof ProgramList
+     */
+    _links?: ProgramListLinks;
+}
+/**
+ * 
+ * @export
  * @interface ProgramLinks
  */
 export interface ProgramLinks {
@@ -1042,37 +1291,12 @@ export interface ProgramLinks {
 /**
  * 
  * @export
- * @interface ProgramList
- */
-export interface ProgramList {
-    /**
-     * 
-     * @type {number}
-     * @memberof ProgramList
-     */
-    _totalNumberOfItems?: number;
-    /**
-     * 
-     * @type {ProgramListEmbedded}
-     * @memberof ProgramList
-     */
-    _embedded?: ProgramListEmbedded;
-    /**
-     * 
-     * @type {ProgramListLinks}
-     * @memberof ProgramList
-     */
-    _links?: ProgramListLinks;
-}
-/**
- * 
- * @export
  * @interface ProgramListEmbedded
  */
 export interface ProgramListEmbedded {
     /**
      * 
-     * @type {Array<EmbeddedProgram>}
+     * @type {Array<Embedded Program>}
      * @memberof ProgramListEmbedded
      */
     programs?: Array<EmbeddedProgram>;
@@ -1126,6 +1350,31 @@ export interface Repository {
      * @memberof Repository
      */
     _links?: RepositoryLinks;
+}
+/**
+ * 
+ * @export
+ * @interface RepositoryList
+ */
+export interface RepositoryList {
+    /**
+     * 
+     * @type {number}
+     * @memberof RepositoryList
+     */
+    _totalNumberOfItems?: number;
+    /**
+     * 
+     * @type {RepositoryListEmbedded}
+     * @memberof RepositoryList
+     */
+    _embedded?: RepositoryListEmbedded;
+    /**
+     * 
+     * @type {ProgramListLinks}
+     * @memberof RepositoryList
+     */
+    _links?: ProgramListLinks;
 }
 /**
  * Represents a Git Branch
@@ -1205,31 +1454,6 @@ export interface RepositoryLinks {
 /**
  * 
  * @export
- * @interface RepositoryList
- */
-export interface RepositoryList {
-    /**
-     * 
-     * @type {number}
-     * @memberof RepositoryList
-     */
-    _totalNumberOfItems?: number;
-    /**
-     * 
-     * @type {RepositoryListEmbedded}
-     * @memberof RepositoryList
-     */
-    _embedded?: RepositoryListEmbedded;
-    /**
-     * 
-     * @type {ProgramListLinks}
-     * @memberof RepositoryList
-     */
-    _links?: ProgramListLinks;
-}
-/**
- * 
- * @export
  * @interface RepositoryListEmbedded
  */
 export interface RepositoryListEmbedded {
@@ -1282,6 +1506,104 @@ export interface RequestedPageDetails {
      * @memberof RequestedPageDetails
      */
     prev?: number;
+}
+/**
+ * A named value than can be set on an Environment
+ * @export
+ * @interface Variable
+ */
+export interface Variable {
+    /**
+     * Name of the variable. Of a-z, A-Z, _ and 0-9 Cannot begin with a number.
+     * @type {string}
+     * @memberof Variable
+     */
+    name?: string;
+    /**
+     * Value of the variable. Read-Write for non-secrets, write-only for secrets.
+     * @type {string}
+     * @memberof Variable
+     */
+    value?: string;
+    /**
+     * Type of the variable. Default `string` if missing. Cannot be changed after creation.
+     * @type {string}
+     * @memberof Variable
+     */
+    type?: VariableTypeEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum VariableTypeEnum {
+    string = 'string',
+    secretString = 'secretString'
+}
+
+/**
+ * 
+ * @export
+ * @interface VariableList
+ */
+export interface VariableList {
+    /**
+     * 
+     * @type {number}
+     * @memberof VariableList
+     */
+    _totalNumberOfItems?: number;
+    /**
+     * 
+     * @type {VariableListEmbedded}
+     * @memberof VariableList
+     */
+    _embedded?: VariableListEmbedded;
+    /**
+     * 
+     * @type {VariableListLinks}
+     * @memberof VariableList
+     */
+    _links?: VariableListLinks;
+}
+/**
+ * 
+ * @export
+ * @interface VariableListEmbedded
+ */
+export interface VariableListEmbedded {
+    /**
+     * Variables set on environment
+     * @type {Array<Variable>}
+     * @memberof VariableListEmbedded
+     */
+    variables?: Array<Variable>;
+}
+/**
+ * 
+ * @export
+ * @interface VariableListLinks
+ */
+export interface VariableListLinks {
+    /**
+     * 
+     * @type {HalLink}
+     * @memberof VariableListLinks
+     */
+    http__ns_adobe_com_adobecloud_rel_environment?: HalLink;
+    /**
+     * 
+     * @type {HalLink}
+     * @memberof VariableListLinks
+     */
+    http__ns_adobe_com_adobecloud_rel_program?: HalLink;
+    /**
+     * 
+     * @type {HalLink}
+     * @memberof VariableListLinks
+     */
+    self?: HalLink;
 }
 
 /**
@@ -1405,7 +1727,7 @@ export const BranchesApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBranches(programId: string, repositoryId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): AxiosPromise<BranchList> {
+        getBranches(programId: string, repositoryId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): AxiosPromise< BranchList> {
             return BranchesApiFp(configuration).getBranches(programId, repositoryId, x_gw_ims_org_id, Authorization, x_api_key, options)(axios, basePath);
         },
     };
@@ -1438,11 +1760,472 @@ export class BranchesApi extends BaseAPI {
 
 
 /**
+ * EnvironmentVariablesApi - axios parameter creator
+ * @export
+ */
+export const EnvironmentVariablesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * List the user defined variables for an environment
+         * @summary List User Environment Variables
+         * @param {string} programId Identifier of the program
+         * @param {string} environmentId Identifier of the environment
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironmentVariables(programId: string, environmentId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options: any = {}): RequestArgs {
+            // verify required parameter 'programId' is not null or undefined
+            if (programId === null || programId === undefined) {
+                throw new RequiredError('programId','Required parameter programId was null or undefined when calling getEnvironmentVariables.');
+            }
+            // verify required parameter 'environmentId' is not null or undefined
+            if (environmentId === null || environmentId === undefined) {
+                throw new RequiredError('environmentId','Required parameter environmentId was null or undefined when calling getEnvironmentVariables.');
+            }
+            // verify required parameter 'x_gw_ims_org_id' is not null or undefined
+            if (x_gw_ims_org_id === null || x_gw_ims_org_id === undefined) {
+                throw new RequiredError('x_gw_ims_org_id','Required parameter x_gw_ims_org_id was null or undefined when calling getEnvironmentVariables.');
+            }
+            // verify required parameter 'Authorization' is not null or undefined
+            if (Authorization === null || Authorization === undefined) {
+                throw new RequiredError('Authorization','Required parameter Authorization was null or undefined when calling getEnvironmentVariables.');
+            }
+            // verify required parameter 'x_api_key' is not null or undefined
+            if (x_api_key === null || x_api_key === undefined) {
+                throw new RequiredError('x_api_key','Required parameter x_api_key was null or undefined when calling getEnvironmentVariables.');
+            }
+            const localVarPath = `/api/program/{programId}/environment/{environmentId}/variables`
+                .replace(`{${"programId"}}`, encodeURIComponent(String(programId)))
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (x_gw_ims_org_id !== undefined && x_gw_ims_org_id !== null) {
+                localVarHeaderParameter['x-gw-ims-org-id'] = String(x_gw_ims_org_id);
+            }
+
+            if (Authorization !== undefined && Authorization !== null) {
+                localVarHeaderParameter['Authorization'] = String(Authorization);
+            }
+
+            if (x_api_key !== undefined && x_api_key !== null) {
+                localVarHeaderParameter['x-api-key'] = String(x_api_key);
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Modify multiple environment variables. To delete a variable, include it with an empty value.
+         * @summary Patch User Environment Variables
+         * @param {string} programId Identifier of the program
+         * @param {string} environmentId Identifier of the environment
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} Content_Type Must always be application/json
+         * @param {Array<Variable>} body List of variables
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchEnvironmentVariables(programId: string, environmentId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Content_Type: string, body: Array<Variable>, options: any = {}): RequestArgs {
+            // verify required parameter 'programId' is not null or undefined
+            if (programId === null || programId === undefined) {
+                throw new RequiredError('programId','Required parameter programId was null or undefined when calling patchEnvironmentVariables.');
+            }
+            // verify required parameter 'environmentId' is not null or undefined
+            if (environmentId === null || environmentId === undefined) {
+                throw new RequiredError('environmentId','Required parameter environmentId was null or undefined when calling patchEnvironmentVariables.');
+            }
+            // verify required parameter 'x_gw_ims_org_id' is not null or undefined
+            if (x_gw_ims_org_id === null || x_gw_ims_org_id === undefined) {
+                throw new RequiredError('x_gw_ims_org_id','Required parameter x_gw_ims_org_id was null or undefined when calling patchEnvironmentVariables.');
+            }
+            // verify required parameter 'Authorization' is not null or undefined
+            if (Authorization === null || Authorization === undefined) {
+                throw new RequiredError('Authorization','Required parameter Authorization was null or undefined when calling patchEnvironmentVariables.');
+            }
+            // verify required parameter 'x_api_key' is not null or undefined
+            if (x_api_key === null || x_api_key === undefined) {
+                throw new RequiredError('x_api_key','Required parameter x_api_key was null or undefined when calling patchEnvironmentVariables.');
+            }
+            // verify required parameter 'Content_Type' is not null or undefined
+            if (Content_Type === null || Content_Type === undefined) {
+                throw new RequiredError('Content_Type','Required parameter Content_Type was null or undefined when calling patchEnvironmentVariables.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling patchEnvironmentVariables.');
+            }
+            const localVarPath = `/api/program/{programId}/environment/{environmentId}/variables`
+                .replace(`{${"programId"}}`, encodeURIComponent(String(programId)))
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (x_gw_ims_org_id !== undefined && x_gw_ims_org_id !== null) {
+                localVarHeaderParameter['x-gw-ims-org-id'] = String(x_gw_ims_org_id);
+            }
+
+            if (Authorization !== undefined && Authorization !== null) {
+                localVarHeaderParameter['Authorization'] = String(Authorization);
+            }
+
+            if (x_api_key !== undefined && x_api_key !== null) {
+                localVarHeaderParameter['x-api-key'] = String(x_api_key);
+            }
+
+            if (Content_Type !== undefined && Content_Type !== null) {
+                localVarHeaderParameter['Content-Type'] = String(Content_Type);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
+            const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * EnvironmentVariablesApi - functional programming interface
+ * @export
+ */
+export const EnvironmentVariablesApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * List the user defined variables for an environment
+         * @summary List User Environment Variables
+         * @param {string} programId Identifier of the program
+         * @param {string} environmentId Identifier of the environment
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironmentVariables(programId: string, environmentId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<VariableList> {
+            const localVarAxiosArgs = EnvironmentVariablesApiAxiosParamCreator(configuration).getEnvironmentVariables(programId, environmentId, x_gw_ims_org_id, Authorization, x_api_key, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Modify multiple environment variables. To delete a variable, include it with an empty value.
+         * @summary Patch User Environment Variables
+         * @param {string} programId Identifier of the program
+         * @param {string} environmentId Identifier of the environment
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} Content_Type Must always be application/json
+         * @param {Array<Variable>} body List of variables
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchEnvironmentVariables(programId: string, environmentId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Content_Type: string, body: Array<Variable>, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<VariableList> {
+            const localVarAxiosArgs = EnvironmentVariablesApiAxiosParamCreator(configuration).patchEnvironmentVariables(programId, environmentId, x_gw_ims_org_id, Authorization, x_api_key, Content_Type, body, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    }
+};
+
+/**
+ * EnvironmentVariablesApi - factory interface
+ * @export
+ */
+export const EnvironmentVariablesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    return {
+        /**
+         * List the user defined variables for an environment
+         * @summary List User Environment Variables
+         * @param {string} programId Identifier of the program
+         * @param {string} environmentId Identifier of the environment
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironmentVariables(programId: string, environmentId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): AxiosPromise<VariableList> {
+            return EnvironmentVariablesApiFp(configuration).getEnvironmentVariables(programId, environmentId, x_gw_ims_org_id, Authorization, x_api_key, options)(axios, basePath);
+        },
+        /**
+         * Modify multiple environment variables. To delete a variable, include it with an empty value.
+         * @summary Patch User Environment Variables
+         * @param {string} programId Identifier of the program
+         * @param {string} environmentId Identifier of the environment
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} Content_Type Must always be application/json
+         * @param {Array<Variable>} body List of variables
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchEnvironmentVariables(programId: string, environmentId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Content_Type: string, body: Array<Variable>, options?: any): AxiosPromise<VariableList> {
+            return EnvironmentVariablesApiFp(configuration).patchEnvironmentVariables(programId, environmentId, x_gw_ims_org_id, Authorization, x_api_key, Content_Type, body, options)(axios, basePath);
+        },
+    };
+};
+
+/**
+ * EnvironmentVariablesApi - object-oriented interface
+ * @export
+ * @class EnvironmentVariablesApi
+ * @extends {BaseAPI}
+ */
+export class EnvironmentVariablesApi extends BaseAPI {
+    /**
+     * List the user defined variables for an environment
+     * @summary List User Environment Variables
+     * @param {string} programId Identifier of the program
+     * @param {string} environmentId Identifier of the environment
+     * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+     * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+     * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentVariablesApi
+     */
+    public getEnvironmentVariables(programId: string, environmentId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any) {
+        return EnvironmentVariablesApiFp(this.configuration).getEnvironmentVariables(programId, environmentId, x_gw_ims_org_id, Authorization, x_api_key, options)(this.axios, this.basePath);
+    }
+
+    /**
+     * Modify multiple environment variables. To delete a variable, include it with an empty value.
+     * @summary Patch User Environment Variables
+     * @param {string} programId Identifier of the program
+     * @param {string} environmentId Identifier of the environment
+     * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+     * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+     * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+     * @param {string} Content_Type Must always be application/json
+     * @param {Array<Variable>} body List of variables
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentVariablesApi
+     */
+    public patchEnvironmentVariables(programId: string, environmentId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Content_Type: string, body: Array<Variable>, options?: any) {
+        return EnvironmentVariablesApiFp(this.configuration).patchEnvironmentVariables(programId, environmentId, x_gw_ims_org_id, Authorization, x_api_key, Content_Type, body, options)(this.axios, this.basePath);
+    }
+
+}
+
+
+/**
  * EnvironmentsApi - axios parameter creator
  * @export
  */
 export const EnvironmentsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * Delete environment
+         * @summary DeleteEnvironment
+         * @param {string} programId Identifier of the application
+         * @param {string} environmentId Identifier of the environment
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteEnvironment(programId: string, environmentId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options: any = {}): RequestArgs {
+            // verify required parameter 'programId' is not null or undefined
+            if (programId === null || programId === undefined) {
+                throw new RequiredError('programId','Required parameter programId was null or undefined when calling deleteEnvironment.');
+            }
+            // verify required parameter 'environmentId' is not null or undefined
+            if (environmentId === null || environmentId === undefined) {
+                throw new RequiredError('environmentId','Required parameter environmentId was null or undefined when calling deleteEnvironment.');
+            }
+            // verify required parameter 'x_gw_ims_org_id' is not null or undefined
+            if (x_gw_ims_org_id === null || x_gw_ims_org_id === undefined) {
+                throw new RequiredError('x_gw_ims_org_id','Required parameter x_gw_ims_org_id was null or undefined when calling deleteEnvironment.');
+            }
+            // verify required parameter 'Authorization' is not null or undefined
+            if (Authorization === null || Authorization === undefined) {
+                throw new RequiredError('Authorization','Required parameter Authorization was null or undefined when calling deleteEnvironment.');
+            }
+            // verify required parameter 'x_api_key' is not null or undefined
+            if (x_api_key === null || x_api_key === undefined) {
+                throw new RequiredError('x_api_key','Required parameter x_api_key was null or undefined when calling deleteEnvironment.');
+            }
+            const localVarPath = `/api/program/{programId}/environment/{environmentId}`
+                .replace(`{${"programId"}}`, encodeURIComponent(String(programId)))
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (x_gw_ims_org_id !== undefined && x_gw_ims_org_id !== null) {
+                localVarHeaderParameter['x-gw-ims-org-id'] = String(x_gw_ims_org_id);
+            }
+
+            if (Authorization !== undefined && Authorization !== null) {
+                localVarHeaderParameter['Authorization'] = String(Authorization);
+            }
+
+            if (x_api_key !== undefined && x_api_key !== null) {
+                localVarHeaderParameter['x-api-key'] = String(x_api_key);
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Download environment logs
+         * @summary Download Logs
+         * @param {string} programId Identifier of the program
+         * @param {string} environmentId Identifier of the environment
+         * @param {string} service Name of service
+         * @param {string} name Name of log
+         * @param {string} date date for which log is required
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} [Accept] Specify application/json in this header to receive a JSON response. Otherwise, a 307 response code will be returned with a Location header.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        downloadLogs(programId: string, environmentId: string, service: string, name: string, date: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Accept?: string, options: any = {}): RequestArgs {
+            // verify required parameter 'programId' is not null or undefined
+            if (programId === null || programId === undefined) {
+                throw new RequiredError('programId','Required parameter programId was null or undefined when calling downloadLogs.');
+            }
+            // verify required parameter 'environmentId' is not null or undefined
+            if (environmentId === null || environmentId === undefined) {
+                throw new RequiredError('environmentId','Required parameter environmentId was null or undefined when calling downloadLogs.');
+            }
+            // verify required parameter 'service' is not null or undefined
+            if (service === null || service === undefined) {
+                throw new RequiredError('service','Required parameter service was null or undefined when calling downloadLogs.');
+            }
+            // verify required parameter 'name' is not null or undefined
+            if (name === null || name === undefined) {
+                throw new RequiredError('name','Required parameter name was null or undefined when calling downloadLogs.');
+            }
+            // verify required parameter 'date' is not null or undefined
+            if (date === null || date === undefined) {
+                throw new RequiredError('date','Required parameter date was null or undefined when calling downloadLogs.');
+            }
+            // verify required parameter 'x_gw_ims_org_id' is not null or undefined
+            if (x_gw_ims_org_id === null || x_gw_ims_org_id === undefined) {
+                throw new RequiredError('x_gw_ims_org_id','Required parameter x_gw_ims_org_id was null or undefined when calling downloadLogs.');
+            }
+            // verify required parameter 'Authorization' is not null or undefined
+            if (Authorization === null || Authorization === undefined) {
+                throw new RequiredError('Authorization','Required parameter Authorization was null or undefined when calling downloadLogs.');
+            }
+            // verify required parameter 'x_api_key' is not null or undefined
+            if (x_api_key === null || x_api_key === undefined) {
+                throw new RequiredError('x_api_key','Required parameter x_api_key was null or undefined when calling downloadLogs.');
+            }
+            const localVarPath = `/api/program/{programId}/environment/{environmentId}/logs/download`
+                .replace(`{${"programId"}}`, encodeURIComponent(String(programId)))
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (service !== undefined) {
+                localVarQueryParameter['service'] = service;
+            }
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+            if (date !== undefined) {
+                localVarQueryParameter['date'] = date;
+            }
+
+            if (x_gw_ims_org_id !== undefined && x_gw_ims_org_id !== null) {
+                localVarHeaderParameter['x-gw-ims-org-id'] = String(x_gw_ims_org_id);
+            }
+
+            if (Authorization !== undefined && Authorization !== null) {
+                localVarHeaderParameter['Authorization'] = String(Authorization);
+            }
+
+            if (x_api_key !== undefined && x_api_key !== null) {
+                localVarHeaderParameter['x-api-key'] = String(x_api_key);
+            }
+
+            if (Accept !== undefined && Accept !== null) {
+                localVarHeaderParameter['Accept'] = String(Accept);
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * Returns an environment by its id
          * @summary Get Environment
@@ -1486,6 +2269,93 @@ export const EnvironmentsApiAxiosParamCreator = function (configuration?: Config
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (x_gw_ims_org_id !== undefined && x_gw_ims_org_id !== null) {
+                localVarHeaderParameter['x-gw-ims-org-id'] = String(x_gw_ims_org_id);
+            }
+
+            if (Authorization !== undefined && Authorization !== null) {
+                localVarHeaderParameter['Authorization'] = String(Authorization);
+            }
+
+            if (x_api_key !== undefined && x_api_key !== null) {
+                localVarHeaderParameter['x-api-key'] = String(x_api_key);
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * List all logs available in environment
+         * @summary Get Environment Logs
+         * @param {string} programId Identifier of the program
+         * @param {string} environmentId Identifier of the environment
+         * @param {number} days number of days for which logs are required
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {Array<string>} [service] Names of services
+         * @param {Array<string>} [name] Names of log
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironmentLogs(programId: string, environmentId: string, days: number, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, service?: Array<string>, name?: Array<string>, options: any = {}): RequestArgs {
+            // verify required parameter 'programId' is not null or undefined
+            if (programId === null || programId === undefined) {
+                throw new RequiredError('programId','Required parameter programId was null or undefined when calling getEnvironmentLogs.');
+            }
+            // verify required parameter 'environmentId' is not null or undefined
+            if (environmentId === null || environmentId === undefined) {
+                throw new RequiredError('environmentId','Required parameter environmentId was null or undefined when calling getEnvironmentLogs.');
+            }
+            // verify required parameter 'days' is not null or undefined
+            if (days === null || days === undefined) {
+                throw new RequiredError('days','Required parameter days was null or undefined when calling getEnvironmentLogs.');
+            }
+            // verify required parameter 'x_gw_ims_org_id' is not null or undefined
+            if (x_gw_ims_org_id === null || x_gw_ims_org_id === undefined) {
+                throw new RequiredError('x_gw_ims_org_id','Required parameter x_gw_ims_org_id was null or undefined when calling getEnvironmentLogs.');
+            }
+            // verify required parameter 'Authorization' is not null or undefined
+            if (Authorization === null || Authorization === undefined) {
+                throw new RequiredError('Authorization','Required parameter Authorization was null or undefined when calling getEnvironmentLogs.');
+            }
+            // verify required parameter 'x_api_key' is not null or undefined
+            if (x_api_key === null || x_api_key === undefined) {
+                throw new RequiredError('x_api_key','Required parameter x_api_key was null or undefined when calling getEnvironmentLogs.');
+            }
+            const localVarPath = `/api/program/{programId}/environment/{environmentId}/logs`
+                .replace(`{${"programId"}}`, encodeURIComponent(String(programId)))
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (service) {
+                localVarQueryParameter['service'] = service;
+            }
+
+            if (name) {
+                localVarQueryParameter['name'] = name;
+            }
+
+            if (days !== undefined) {
+                localVarQueryParameter['days'] = days;
+            }
 
             if (x_gw_ims_org_id !== undefined && x_gw_ims_org_id !== null) {
                 localVarHeaderParameter['x-gw-ims-org-id'] = String(x_gw_ims_org_id);
@@ -1588,6 +2458,46 @@ export const EnvironmentsApiAxiosParamCreator = function (configuration?: Config
 export const EnvironmentsApiFp = function(configuration?: Configuration) {
     return {
         /**
+         * Delete environment
+         * @summary DeleteEnvironment
+         * @param {string} programId Identifier of the application
+         * @param {string} environmentId Identifier of the environment
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteEnvironment(programId: string, environmentId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Environment> {
+            const localVarAxiosArgs = EnvironmentsApiAxiosParamCreator(configuration).deleteEnvironment(programId, environmentId, x_gw_ims_org_id, Authorization, x_api_key, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Download environment logs
+         * @summary Download Logs
+         * @param {string} programId Identifier of the program
+         * @param {string} environmentId Identifier of the environment
+         * @param {string} service Name of service
+         * @param {string} name Name of log
+         * @param {string} date date for which log is required
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} [Accept] Specify application/json in this header to receive a JSON response. Otherwise, a 307 response code will be returned with a Location header.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        downloadLogs(programId: string, environmentId: string, service: string, name: string, date: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Accept?: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
+            const localVarAxiosArgs = EnvironmentsApiAxiosParamCreator(configuration).downloadLogs(programId, environmentId, service, name, date, x_gw_ims_org_id, Authorization, x_api_key, Accept, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
          * Returns an environment by its id
          * @summary Get Environment
          * @param {string} programId Identifier of the program
@@ -1600,6 +2510,27 @@ export const EnvironmentsApiFp = function(configuration?: Configuration) {
          */
         getEnvironment(programId: string, environmentId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Environment> {
             const localVarAxiosArgs = EnvironmentsApiAxiosParamCreator(configuration).getEnvironment(programId, environmentId, x_gw_ims_org_id, Authorization, x_api_key, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * List all logs available in environment
+         * @summary Get Environment Logs
+         * @param {string} programId Identifier of the program
+         * @param {string} environmentId Identifier of the environment
+         * @param {number} days number of days for which logs are required
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {Array<string>} [service] Names of services
+         * @param {Array<string>} [name] Names of log
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironmentLogs(programId: string, environmentId: string, days: number, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, service?: Array<string>, name?: Array<string>, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentLogs> {
+            const localVarAxiosArgs = EnvironmentsApiAxiosParamCreator(configuration).getEnvironmentLogs(programId, environmentId, days, x_gw_ims_org_id, Authorization, x_api_key, service, name, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -1633,6 +2564,38 @@ export const EnvironmentsApiFp = function(configuration?: Configuration) {
 export const EnvironmentsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     return {
         /**
+         * Delete environment
+         * @summary DeleteEnvironment
+         * @param {string} programId Identifier of the application
+         * @param {string} environmentId Identifier of the environment
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteEnvironment(programId: string, environmentId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): AxiosPromise<Environment> {
+            return EnvironmentsApiFp(configuration).deleteEnvironment(programId, environmentId, x_gw_ims_org_id, Authorization, x_api_key, options)(axios, basePath);
+        },
+        /**
+         * Download environment logs
+         * @summary Download Logs
+         * @param {string} programId Identifier of the program
+         * @param {string} environmentId Identifier of the environment
+         * @param {string} service Name of service
+         * @param {string} name Name of log
+         * @param {string} date date for which log is required
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} [Accept] Specify application/json in this header to receive a JSON response. Otherwise, a 307 response code will be returned with a Location header.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        downloadLogs(programId: string, environmentId: string, service: string, name: string, date: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Accept?: string, options?: any): AxiosPromise<void> {
+            return EnvironmentsApiFp(configuration).downloadLogs(programId, environmentId, service, name, date, x_gw_ims_org_id, Authorization, x_api_key, Accept, options)(axios, basePath);
+        },
+        /**
          * Returns an environment by its id
          * @summary Get Environment
          * @param {string} programId Identifier of the program
@@ -1645,6 +2608,23 @@ export const EnvironmentsApiFactory = function (configuration?: Configuration, b
          */
         getEnvironment(programId: string, environmentId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any): AxiosPromise<Environment> {
             return EnvironmentsApiFp(configuration).getEnvironment(programId, environmentId, x_gw_ims_org_id, Authorization, x_api_key, options)(axios, basePath);
+        },
+        /**
+         * List all logs available in environment
+         * @summary Get Environment Logs
+         * @param {string} programId Identifier of the program
+         * @param {string} environmentId Identifier of the environment
+         * @param {number} days number of days for which logs are required
+         * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+         * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+         * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {Array<string>} [service] Names of services
+         * @param {Array<string>} [name] Names of log
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironmentLogs(programId: string, environmentId: string, days: number, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, service?: Array<string>, name?: Array<string>, options?: any): AxiosPromise<EnvironmentLogs> {
+            return EnvironmentsApiFp(configuration).getEnvironmentLogs(programId, environmentId, days, x_gw_ims_org_id, Authorization, x_api_key, service, name, options)(axios, basePath);
         },
         /**
          * Lists all environments in an program
@@ -1671,6 +2651,42 @@ export const EnvironmentsApiFactory = function (configuration?: Configuration, b
  */
 export class EnvironmentsApi extends BaseAPI {
     /**
+     * Delete environment
+     * @summary DeleteEnvironment
+     * @param {string} programId Identifier of the application
+     * @param {string} environmentId Identifier of the environment
+     * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+     * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+     * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentsApi
+     */
+    public deleteEnvironment(programId: string, environmentId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any) {
+        return EnvironmentsApiFp(this.configuration).deleteEnvironment(programId, environmentId, x_gw_ims_org_id, Authorization, x_api_key, options)(this.axios, this.basePath);
+    }
+
+    /**
+     * Download environment logs
+     * @summary Download Logs
+     * @param {string} programId Identifier of the program
+     * @param {string} environmentId Identifier of the environment
+     * @param {string} service Name of service
+     * @param {string} name Name of log
+     * @param {string} date date for which log is required
+     * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+     * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+     * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+     * @param {string} [Accept] Specify application/json in this header to receive a JSON response. Otherwise, a 307 response code will be returned with a Location header.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentsApi
+     */
+    public downloadLogs(programId: string, environmentId: string, service: string, name: string, date: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Accept?: string, options?: any) {
+        return EnvironmentsApiFp(this.configuration).downloadLogs(programId, environmentId, service, name, date, x_gw_ims_org_id, Authorization, x_api_key, Accept, options)(this.axios, this.basePath);
+    }
+
+    /**
      * Returns an environment by its id
      * @summary Get Environment
      * @param {string} programId Identifier of the program
@@ -1684,6 +2700,25 @@ export class EnvironmentsApi extends BaseAPI {
      */
     public getEnvironment(programId: string, environmentId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, options?: any) {
         return EnvironmentsApiFp(this.configuration).getEnvironment(programId, environmentId, x_gw_ims_org_id, Authorization, x_api_key, options)(this.axios, this.basePath);
+    }
+
+    /**
+     * List all logs available in environment
+     * @summary Get Environment Logs
+     * @param {string} programId Identifier of the program
+     * @param {string} environmentId Identifier of the environment
+     * @param {number} days number of days for which logs are required
+     * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
+     * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
+     * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+     * @param {Array<string>} [service] Names of services
+     * @param {Array<string>} [name] Names of log
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentsApi
+     */
+    public getEnvironmentLogs(programId: string, environmentId: string, days: number, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, service?: Array<string>, name?: Array<string>, options?: any) {
+        return EnvironmentsApiFp(this.configuration).getEnvironmentLogs(programId, environmentId, days, x_gw_ims_org_id, Authorization, x_api_key, service, name, options)(this.axios, this.basePath);
     }
 
     /**
@@ -2150,11 +3185,12 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
          * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
          * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
          * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} [file] Identifier of the log file
          * @param {string} [Accept] Specify application/json in this header to receive a JSON response. Otherwise, a 307 response code will be returned with a Location header.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getStepLogs(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Accept?: string, options: any = {}): RequestArgs {
+        getStepLogs(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, file?: string, Accept?: string, options: any = {}): RequestArgs {
             // verify required parameter 'programId' is not null or undefined
             if (programId === null || programId === undefined) {
                 throw new RequiredError('programId','Required parameter programId was null or undefined when calling getStepLogs.');
@@ -2201,6 +3237,10 @@ export const PipelineExecutionApiAxiosParamCreator = function (configuration?: C
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (file !== undefined) {
+                localVarQueryParameter['file'] = file;
+            }
 
             if (Accept !== undefined && Accept !== null) {
                 localVarHeaderParameter['Accept'] = String(Accept);
@@ -2602,12 +3642,13 @@ export const PipelineExecutionApiFp = function(configuration?: Configuration) {
          * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
          * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
          * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} [file] Identifier of the log file
          * @param {string} [Accept] Specify application/json in this header to receive a JSON response. Otherwise, a 307 response code will be returned with a Location header.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getStepLogs(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Accept?: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
-            const localVarAxiosArgs = PipelineExecutionApiAxiosParamCreator(configuration).getStepLogs(programId, pipelineId, executionId, phaseId, stepId, x_gw_ims_org_id, Authorization, x_api_key, Accept, options);
+        getStepLogs(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, file?: string, Accept?: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
+            const localVarAxiosArgs = PipelineExecutionApiAxiosParamCreator(configuration).getStepLogs(programId, pipelineId, executionId, phaseId, stepId, x_gw_ims_org_id, Authorization, x_api_key, file, Accept, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2777,12 +3818,13 @@ export const PipelineExecutionApiFactory = function (configuration?: Configurati
          * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
          * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
          * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+         * @param {string} [file] Identifier of the log file
          * @param {string} [Accept] Specify application/json in this header to receive a JSON response. Otherwise, a 307 response code will be returned with a Location header.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getStepLogs(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Accept?: string, options?: any): AxiosPromise<void> {
-            return PipelineExecutionApiFp(configuration).getStepLogs(programId, pipelineId, executionId, phaseId, stepId, x_gw_ims_org_id, Authorization, x_api_key, Accept, options)(axios, basePath);
+        getStepLogs(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, file?: string, Accept?: string, options?: any): AxiosPromise<void> {
+            return PipelineExecutionApiFp(configuration).getStepLogs(programId, pipelineId, executionId, phaseId, stepId, x_gw_ims_org_id, Authorization, x_api_key, file, Accept, options)(axios, basePath);
         },
         /**
          * Starts the Pipeline. This works only if the pipeline is not already started.
@@ -2947,13 +3989,14 @@ export class PipelineExecutionApi extends BaseAPI {
      * @param {string} x_gw_ims_org_id IMS organization ID that the request is being made under.
      * @param {string} Authorization Bearer [token] - An access token for the technical account created through integration with Adobe IO
      * @param {string} x_api_key IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+     * @param {string} [file] Identifier of the log file
      * @param {string} [Accept] Specify application/json in this header to receive a JSON response. Otherwise, a 307 response code will be returned with a Location header.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PipelineExecutionApi
      */
-    public getStepLogs(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, Accept?: string, options?: any) {
-        return PipelineExecutionApiFp(this.configuration).getStepLogs(programId, pipelineId, executionId, phaseId, stepId, x_gw_ims_org_id, Authorization, x_api_key, Accept, options)(this.axios, this.basePath);
+    public getStepLogs(programId: string, pipelineId: string, executionId: string, phaseId: string, stepId: string, x_gw_ims_org_id: string, Authorization: string, x_api_key: string, file?: string, Accept?: string, options?: any) {
+        return PipelineExecutionApiFp(this.configuration).getStepLogs(programId, pipelineId, executionId, phaseId, stepId, x_gw_ims_org_id, Authorization, x_api_key, file, Accept, options)(this.axios, this.basePath);
     }
 
     /**

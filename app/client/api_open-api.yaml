@@ -5,7 +5,8 @@ info:
     by an authorized technical account created through the Adobe I/O Console. The
     base url for this API is https://cloudmanager.adobe.io, e.g. to get the list of
     programs for an organization, you would make a GET request to https://cloudmanager.adobe.io/api/programs
-    (with the correct set of headers as described below).
+    (with the correct set of headers as described below). This swagger file can be
+    downloaded from https://raw.githubusercontent.com/AdobeDocs/cloudmanager-api-docs/master/swagger-specs/api.yaml.
   version: 1.0.0
 servers:
 - url: https://cloudmanager.adobe.io/
@@ -16,6 +17,7 @@ tags:
 - name: Pipelines
 - name: Pipeline Execution
 - name: Environments
+- name: Environment Variables
 paths:
   /api/programs:
     get:
@@ -51,7 +53,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProgramList'
+                $ref: '#/components/schemas/Program List'
         400:
           description: The request is malformed.
           content: {}
@@ -200,7 +202,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RepositoryList'
+                $ref: '#/components/schemas/Repository List'
   /api/program/{programId}/repository/{repositoryId}:
     get:
       tags:
@@ -294,7 +296,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BranchList'
+                $ref: '#/components/schemas/Branch List'
   /api/program/{programId}/pipelines:
     get:
       tags:
@@ -336,7 +338,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PipelineList'
+                $ref: '#/components/schemas/Pipeline List'
         400:
           description: The request is malformed.
           content: {}
@@ -948,7 +950,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PipelineExecutionStepState'
+                $ref: '#/components/schemas/Pipeline Execution Step State'
         400:
           description: The request is malformed.
           content: {}
@@ -1261,6 +1263,11 @@ paths:
         required: true
         schema:
           type: string
+      - name: file
+        in: query
+        description: Identifier of the log file
+        schema:
+          type: string
       - name: Accept
         in: header
         description: Specify application/json in this header to receive a JSON response.
@@ -1393,7 +1400,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PipelineStepMetrics'
+                $ref: '#/components/schemas/Pipeline Step Metrics'
         400:
           description: The request is malformed.
           content: {}
@@ -1580,7 +1587,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvironmentList'
+                $ref: '#/components/schemas/Environment List'
         400:
           description: The request is malformed.
           content: {}
@@ -1695,9 +1702,491 @@ paths:
           description: This is an indicator that the back-end service did not complete
             a response within an allowed time period.
           content: {}
+    delete:
+      tags:
+      - Environments
+      summary: DeleteEnvironment
+      description: Delete environment
+      operationId: deleteEnvironment
+      parameters:
+      - name: programId
+        in: path
+        description: Identifier of the application
+        required: true
+        schema:
+          type: string
+      - name: environmentId
+        in: path
+        description: Identifier of the environment
+        required: true
+        schema:
+          type: string
+      - name: x-gw-ims-org-id
+        in: header
+        description: IMS organization ID that the request is being made under.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer [token] - An access token for the technical account created
+          through integration with Adobe IO
+        required: true
+        schema:
+          type: string
+      - name: x-api-key
+        in: header
+        description: IMS Client ID (API Key) which is subscribed to consume services
+          on console.adobe.io
+        required: true
+        schema:
+          type: string
+      responses:
+        201:
+          description: Environment deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Environment'
+        400:
+          description: Environment deletion in progress
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        401:
+          description: The request has not been applied because it lacks valid authentication
+            credentials for the target resource.
+          content: {}
+        403:
+          description: The requester is not authorized to access the resource.
+          content: {}
+        404:
+          description: Environment not found
+          content: {}
+        405:
+          description: Client sent a request using a HTTP method that the server doesn't
+            support.
+          content: {}
+        406:
+          description: Unacceptable content type. Client sent an Accept header for
+            a content type which does not exist on the server.
+          content: {}
+        500:
+          description: This is an indicator of a server-side error.
+          content: {}
+        502:
+          description: This is an indicator that the back-end service did not send
+            a valid response.
+          content: {}
+        503:
+          description: This is an indicator of a potential server overload.
+          content: {}
+        504:
+          description: This is an indicator that the back-end service did not complete
+            a response within an allowed time period.
+          content: {}
+  /api/program/{programId}/environment/{environmentId}/logs:
+    get:
+      tags:
+      - Environments
+      summary: Get Environment Logs
+      description: List all logs available in environment
+      operationId: getEnvironmentLogs
+      parameters:
+      - name: programId
+        in: path
+        description: Identifier of the program
+        required: true
+        schema:
+          type: string
+      - name: environmentId
+        in: path
+        description: Identifier of the environment
+        required: true
+        schema:
+          type: string
+      - name: service
+        in: query
+        description: Names of services
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: name
+        in: query
+        description: Names of log
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: days
+        in: query
+        description: number of days for which logs are required
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: x-gw-ims-org-id
+        in: header
+        description: IMS organization ID that the request is being made under.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer [token] - An access token for the technical account created
+          through integration with Adobe IO
+        required: true
+        schema:
+          type: string
+      - name: x-api-key
+        in: header
+        description: IMS Client ID (API Key) which is subscribed to consume services
+          on console.adobe.io
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful retrieval of logs for an environment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentLogs'
+        400:
+          description: invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        401:
+          description: The request has not been applied because it lacks valid authentication
+            credentials for the target resource.
+          content: {}
+        403:
+          description: The requester is not authorized to access the resource.
+          content: {}
+        404:
+          description: Environment not found
+          content: {}
+        405:
+          description: Client sent a request using a HTTP method that the server doesn't
+            support.
+          content: {}
+        406:
+          description: Unacceptable content type. Client sent an Accept header for
+            a content type which does not exist on the server.
+          content: {}
+        500:
+          description: This is an indicator of a server-side error.
+          content: {}
+        502:
+          description: This is an indicator that the back-end service did not send
+            a valid response.
+          content: {}
+        503:
+          description: This is an indicator of a potential server overload.
+          content: {}
+        504:
+          description: This is an indicator that the back-end service did not complete
+            a response within an allowed time period.
+          content: {}
+  /api/program/{programId}/environment/{environmentId}/logs/download:
+    get:
+      tags:
+      - Environments
+      summary: Download Logs
+      description: Download environment logs
+      operationId: downloadLogs
+      parameters:
+      - name: programId
+        in: path
+        description: Identifier of the program
+        required: true
+        schema:
+          type: string
+      - name: environmentId
+        in: path
+        description: Identifier of the environment
+        required: true
+        schema:
+          type: string
+      - name: service
+        in: query
+        description: Name of service
+        required: true
+        schema:
+          type: string
+      - name: name
+        in: query
+        description: Name of log
+        required: true
+        schema:
+          type: string
+      - name: date
+        in: query
+        description: date for which log is required
+        required: true
+        schema:
+          type: string
+      - name: x-gw-ims-org-id
+        in: header
+        description: IMS organization ID that the request is being made under.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer [token] - An access token for the technical account created
+          through integration with Adobe IO
+        required: true
+        schema:
+          type: string
+      - name: x-api-key
+        in: header
+        description: IMS Client ID (API Key) which is subscribed to consume services
+          on console.adobe.io
+        required: true
+        schema:
+          type: string
+      - name: Accept
+        in: header
+        description: Specify application/json in this header to receive a JSON response.
+          Otherwise, a 307 response code will be returned with a Location header.
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful retrieval of logs
+          content: {}
+        400:
+          description: invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        401:
+          description: The request has not been applied because it lacks valid authentication
+            credentials for the target resource.
+          content: {}
+        403:
+          description: The requester is not authorized to access the resource.
+          content: {}
+        404:
+          description: Environment not found
+          content: {}
+        405:
+          description: Client sent a request using a HTTP method that the server doesn't
+            support.
+          content: {}
+        406:
+          description: Unacceptable content type. Client sent an Accept header for
+            a content type which does not exist on the server.
+          content: {}
+        500:
+          description: This is an indicator of a server-side error.
+          content: {}
+        502:
+          description: This is an indicator that the back-end service did not send
+            a valid response.
+          content: {}
+        503:
+          description: This is an indicator of a potential server overload.
+          content: {}
+        504:
+          description: This is an indicator that the back-end service did not complete
+            a response within an allowed time period.
+          content: {}
+  /api/program/{programId}/environment/{environmentId}/variables:
+    get:
+      tags:
+      - Environment Variables
+      summary: List User Environment Variables
+      description: List the user defined variables for an environment
+      operationId: getEnvironmentVariables
+      parameters:
+      - name: programId
+        in: path
+        description: Identifier of the program
+        required: true
+        schema:
+          type: string
+        example: "2351"
+      - name: environmentId
+        in: path
+        description: Identifier of the environment
+        required: true
+        schema:
+          type: string
+        example: "128"
+      - name: x-gw-ims-org-id
+        in: header
+        description: IMS organization ID that the request is being made under.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer [token] - An access token for the technical account created
+          through integration with Adobe IO
+        required: true
+        schema:
+          type: string
+      - name: x-api-key
+        in: header
+        description: IMS Client ID (API Key) which is subscribed to consume services
+          on console.adobe.io
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful retrieval of environment variables
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Variable List'
+        400:
+          description: The request is malformed.
+          content: {}
+        401:
+          description: The request has not been applied because it lacks valid authentication
+            credentials for the target resource.
+          content: {}
+        403:
+          description: The requester is not authorized to access the resource.
+          content: {}
+        404:
+          description: Environment not found
+          content: {}
+        405:
+          description: Client sent a request using a HTTP method that the server doesn't
+            support.
+          content: {}
+        406:
+          description: Unacceptable content type. Client sent an Accept header for
+            a content type which does not exist on the server.
+          content: {}
+        500:
+          description: This is an indicator of a server-side error.
+          content: {}
+        502:
+          description: This is an indicator that the back-end service did not send
+            a valid response.
+          content: {}
+        503:
+          description: This is an indicator of a potential server overload.
+          content: {}
+        504:
+          description: This is an indicator that the back-end service did not complete
+            a response within an allowed time period.
+          content: {}
+    patch:
+      tags:
+      - Environment Variables
+      summary: Patch User Environment Variables
+      description: Modify multiple environment variables. To delete a variable, include
+        it with an empty value.
+      operationId: patchEnvironmentVariables
+      parameters:
+      - name: programId
+        in: path
+        description: Identifier of the program
+        required: true
+        schema:
+          type: string
+      - name: environmentId
+        in: path
+        description: Identifier of the environment
+        required: true
+        schema:
+          type: string
+      - name: x-gw-ims-org-id
+        in: header
+        description: IMS organization ID that the request is being made under.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer [token] - An access token for the technical account created
+          through integration with Adobe IO
+        required: true
+        schema:
+          type: string
+      - name: x-api-key
+        in: header
+        description: IMS Client ID (API Key) which is subscribed to consume services
+          on console.adobe.io
+        required: true
+        schema:
+          type: string
+      - name: Content-Type
+        in: header
+        description: Must always be application/json
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: List of variables
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Variable'
+        required: true
+      responses:
+        200:
+          description: Successful update of environment variables
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Variable List'
+        400:
+          description: The request is malformed.
+          content: {}
+        401:
+          description: The request has not been applied because it lacks valid authentication
+            credentials for the target resource.
+          content: {}
+        403:
+          description: The requester is not authorized to access the resource.
+          content: {}
+        404:
+          description: Environment not found
+          content: {}
+        405:
+          description: Client sent a request using a HTTP method that the server doesn't
+            support.
+          content: {}
+        406:
+          description: Unacceptable content type. Client sent an Accept header for
+            a content type which does not exist on the server.
+          content: {}
+        500:
+          description: This is an indicator of a server-side error.
+          content: {}
+        502:
+          description: This is an indicator that the back-end service did not send
+            a valid response.
+          content: {}
+        503:
+          description: This is an indicator of a potential server overload.
+          content: {}
+        504:
+          description: This is an indicator that the back-end service did not complete
+            a response within an allowed time period.
+          content: {}
+      x-codegen-request-body-name: body
 components:
   schemas:
-    ProgramList:
+    Program List:
       type: object
       properties:
         _totalNumberOfItems:
@@ -1709,7 +2198,7 @@ components:
             programs:
               type: array
               items:
-                $ref: '#/components/schemas/EmbeddedProgram'
+                $ref: '#/components/schemas/Embedded Program'
           readOnly: true
         _links:
           type: object
@@ -1721,7 +2210,7 @@ components:
             self:
               $ref: '#/components/schemas/HalLink'
           readOnly: true
-    EmbeddedProgram:
+    Embedded Program:
       required:
       - name
       type: object
@@ -1873,7 +2362,7 @@ components:
           type: array
           description: Pipeline phases in execution order
           items:
-            $ref: '#/components/schemas/PipelinePhase'
+            $ref: '#/components/schemas/Pipeline Phase'
         _links:
           type: object
           properties:
@@ -1887,7 +2376,7 @@ components:
               $ref: '#/components/schemas/HalLink'
           readOnly: true
       description: Describes a __CI/CD Pipeline__
-    PipelinePhase:
+    Pipeline Phase:
       required:
       - type
       type: object
@@ -1916,7 +2405,7 @@ components:
           type: string
           description: Identifier of the target environment. Mandatory if type=DEPLOY
       description: Describes a phase of a pipeline
-    PipelineList:
+    Pipeline List:
       type: object
       properties:
         _totalNumberOfItems:
@@ -2000,7 +2489,7 @@ components:
             stepStates:
               type: array
               items:
-                $ref: '#/components/schemas/PipelineExecutionStepState'
+                $ref: '#/components/schemas/Pipeline Execution Step State'
           readOnly: true
         _links:
           type: object
@@ -2013,7 +2502,7 @@ components:
               $ref: '#/components/schemas/HalLink'
           readOnly: true
       description: Wraps a pipeline execution
-    PipelineExecutionStepState:
+    Pipeline Execution Step State:
       type: object
       properties:
         id:
@@ -2118,7 +2607,7 @@ components:
               $ref: '#/components/schemas/HalLink'
           readOnly: true
       description: List of pipeline executions
-    PipelineStepMetrics:
+    Pipeline Step Metrics:
       type: object
       properties:
         metrics:
@@ -2166,7 +2655,7 @@ components:
           type: string
           description: KPI identifier
       description: Describes a __Metric__
-    EnvironmentList:
+    Environment List:
       type: object
       properties:
         _totalNumberOfItems:
@@ -2229,6 +2718,12 @@ components:
               $ref: '#/components/schemas/HalLink'
             http://ns.adobe.com/adobecloud/rel/publish:
               $ref: '#/components/schemas/HalLink'
+            http://ns.adobe.com/adobecloud/rel/developerConsole:
+              $ref: '#/components/schemas/HalLink'
+            http://ns.adobe.com/adobecloud/rel/logs:
+              $ref: '#/components/schemas/HalLink'
+            http://ns.adobe.com/adobecloud/rel/variables:
+              $ref: '#/components/schemas/HalLink'
             self:
               $ref: '#/components/schemas/HalLink'
           readOnly: true
@@ -2237,7 +2732,6 @@ components:
       type: object
       properties:
         repo:
-          pattern: ^[A-Za-z0-9-]*$
           type: string
           description: Repository name
           example: Adobe-Marketing-Cloud
@@ -2256,7 +2750,7 @@ components:
               $ref: '#/components/schemas/HalLink'
           readOnly: true
       description: A sourcecode repository
-    RepositoryList:
+    Repository List:
       type: object
       properties:
         _totalNumberOfItems:
@@ -2305,7 +2799,7 @@ components:
               $ref: '#/components/schemas/HalLink'
           readOnly: true
       description: Represents a Git Branch
-    BranchList:
+    Branch List:
       type: object
       properties:
         _totalNumberOfItems:
@@ -2350,3 +2844,174 @@ components:
           type: integer
           format: int32
       description: Filtering and sorting page details
+    MissingParameter:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the missing parameter.
+          example: paramName
+        type:
+          type: string
+          description: Type of the missing parameter.
+          example: string
+    InvalidParameter:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the invalid parameter.
+          example: paramName
+        reason:
+          type: string
+          description: Reason of why the parameter's value is not accepted.
+          example: value must be a positive number
+    BadRequestError:
+      type: object
+      properties:
+        status:
+          type: integer
+          description: HTTP status code of the response.
+          format: int32
+        type:
+          type: string
+          description: Error type identifier.
+          example: http://ns.adobe.com/adobecloud/error
+        title:
+          type: string
+          description: A short summary of the error.
+          example: Validation failed
+        missingParams:
+          type: array
+          description: Request's missing parameters.
+          items:
+            $ref: '#/components/schemas/MissingParameter'
+        invalidParams:
+          type: array
+          description: Request's invalid parameters.
+          items:
+            $ref: '#/components/schemas/InvalidParameter'
+      description: A Bad Request response error.
+    EnvironmentLog:
+      type: object
+      properties:
+        service:
+          type: string
+          description: Name of the service
+          example: author
+        name:
+          type: string
+          description: Name of the Log
+          example: aemerror
+        date:
+          type: string
+          description: date of the Log
+          example: 2019-04-05
+        programId:
+          type: integer
+          format: int64
+        environmentId:
+          type: integer
+          format: int64
+        _links:
+          type: object
+          properties:
+            http://ns.adobe.com/adobecloud/rel/logs/download:
+              $ref: '#/components/schemas/HalLink'
+            http://ns.adobe.com/adobecloud/rel/logs/tail:
+              $ref: '#/components/schemas/HalLink'
+          readOnly: true
+      description: Log from Environment
+    EnvironmentLogs:
+      type: object
+      properties:
+        service:
+          type: array
+          description: Name of the service
+          example: author
+          items:
+            type: string
+        name:
+          type: array
+          description: Name of the Log
+          example: aemerror
+          items:
+            type: string
+        days:
+          type: integer
+          description: Number of days
+          format: int32
+          example: 2
+        _links:
+          type: object
+          properties:
+            http://ns.adobe.com/adobecloud/rel/program:
+              $ref: '#/components/schemas/HalLink'
+            self:
+              $ref: '#/components/schemas/HalLink'
+          readOnly: true
+        _embedded:
+          type: object
+          properties:
+            downloads:
+              type: array
+              description: Links to logs
+              items:
+                $ref: '#/components/schemas/EnvironmentLog'
+          readOnly: true
+      description: Logs of an Environment
+    Variable:
+      type: object
+      properties:
+        name:
+          maxLength: 100
+          minLength: 2
+          pattern: '[a-zA-Z_][a-zA-Z_0-9]*'
+          type: string
+          description: Name of the variable. Of a-z, A-Z, _ and 0-9 Cannot begin with
+            a number.
+          example: MY_VAR1
+        value:
+          maxLength: 2048
+          minLength: 0
+          type: string
+          description: Value of the variable. Read-Write for non-secrets, write-only
+            for secrets.
+          example: myValue
+        type:
+          type: string
+          description: Type of the variable. Default `string` if missing. Cannot be
+            changed after creation.
+          example: string
+          enum:
+          - string
+          - secretString
+      description: A named value than can be set on an Environment
+    Variable List:
+      type: object
+      properties:
+        _totalNumberOfItems:
+          type: integer
+          format: int32
+          example: 1
+        _embedded:
+          type: object
+          properties:
+            variables:
+              type: array
+              description: Variables set on environment
+              example: '[{ ''name'':''variable1Name'', ''value'':''variable1Value''},
+                { ''name'':''variable2Name'', ''type'':''secretString'', ''value'':''variable2SecretValue''}]'
+              items:
+                $ref: '#/components/schemas/Variable'
+          readOnly: true
+        _links:
+          type: object
+          properties:
+            http://ns.adobe.com/adobecloud/rel/environment:
+              $ref: '#/components/schemas/HalLink'
+            http://ns.adobe.com/adobecloud/rel/program:
+              $ref: '#/components/schemas/HalLink'
+            self:
+              $ref: '#/components/schemas/HalLink'
+          readOnly: true
