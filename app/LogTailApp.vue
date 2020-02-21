@@ -63,15 +63,12 @@
       async getLog(url: string, startLimit: number) {
         const client = await CloudManagerApi.getInstance();
         //console.log("getting log at: ", { startLimit });
-        const res = await client.logs.get(
-          url + `&date=${new Date().getTime()}`,
-          {
-            headers: {
-              Range: "bytes=" + startLimit + "-"
-            },
-            cancelToken: this.signal.token
-          }
-        );
+        const res = await client.logs.get(url + `&date=${new Date().getTime()}`, {
+          headers: {
+            Range: "bytes=" + startLimit + "-"
+          },
+          cancelToken: this.signal.token
+        });
         return res;
       },
       addToLog(data: string) {
@@ -98,9 +95,7 @@
           let logResponse: any;
           try {
             logResponse = await this.getLog(url, currentStart);
-            currentContentLength = parseInt(
-              logResponse.headers["content-length"]
-            );
+            currentContentLength = parseInt(logResponse.headers["content-length"]);
             this.addToLog(logResponse.data);
           } catch (error) {
             currentContentLength = 0;

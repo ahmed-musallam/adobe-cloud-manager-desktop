@@ -72,7 +72,7 @@ async function execAndLog(command) {
 function prettierTask(watchFiles) {
   const prettify = filePath => {
     if (!filePath) return;
-    execAndLog(`prettier --vue-indent-script-and-style --write ${filePath}`);
+    execAndLog(`prettier --write ${filePath}`);
   };
   return (prettier = cb => {
     if (watchFiles) {
@@ -86,10 +86,7 @@ function prettierTask(watchFiles) {
 }
 
 function copyAssetsTask(cb) {
-  return fs.copy(
-    "node_modules/@adobe/coral-spectrum/dist/resources",
-    "dist/resources"
-  );
+  return fs.copy("node_modules/@adobe/coral-spectrum/dist/resources", "dist/resources");
 }
 
 function bundleTask(watch) {
@@ -138,16 +135,8 @@ function dmgTask(options) {
 exports["prettier"] = prettierTask(false);
 exports["prettier:watch"] = prettierTask(true);
 exports["ui:build"] = series(this["prettier"], copyAssetsTask, bundleTask());
-exports["ui:watch"] = series(
-  this["prettier:watch"],
-  copyAssetsTask,
-  bundleTask(true)
-);
-exports["electron:watch"] = parallel(
-  this["prettier:watch"],
-  this["ui:watch"],
-  electronTask(false)
-);
+exports["ui:watch"] = series(this["prettier:watch"], copyAssetsTask, bundleTask(true));
+exports["electron:watch"] = parallel(this["prettier:watch"], this["ui:watch"], electronTask(false));
 
 exports["electron:watch:debug"] = parallel(
   this["prettier:watch"],

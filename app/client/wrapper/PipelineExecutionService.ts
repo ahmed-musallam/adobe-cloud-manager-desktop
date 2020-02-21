@@ -1,9 +1,7 @@
 import { PipelineExecutionApi } from "../typescript-axios";
 import { BaseService } from "./BaseService";
 
-export default class PipelineExecutionService extends BaseService<
-  PipelineExecutionApi
-> {
+export default class PipelineExecutionService extends BaseService<PipelineExecutionApi> {
   advancePipelineExecution(
     programId: string,
     pipelineId: string,
@@ -62,12 +60,7 @@ export default class PipelineExecutionService extends BaseService<
       options
     );
   }
-  getExecution(
-    programId: string,
-    pipelineId: string,
-    executionId: string,
-    options?: any
-  ) {
+  getExecution(programId: string, pipelineId: string, executionId: string, options?: any) {
     return this.wrappedApi.getExecution(
       programId,
       pipelineId,
@@ -118,12 +111,7 @@ export default class PipelineExecutionService extends BaseService<
       options
     );
   }
-  startPipeline(
-    programId: string,
-    pipelineId: string,
-    contentType: string,
-    options?: any
-  ) {
+  startPipeline(programId: string, pipelineId: string, contentType: string, options?: any) {
     return this.wrappedApi.startPipeline(
       programId,
       pipelineId,

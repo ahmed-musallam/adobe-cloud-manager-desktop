@@ -3,17 +3,9 @@
     <h3>Environments:</h3>
     <div class="bordered-box">
       <coral-wait size="S" v-if="loading"></coral-wait>
-      <table
-        is="coral-table"
-        selectable=""
-        v-else-if="!loading && environments.length"
-      >
+      <table is="coral-table" selectable="" v-else-if="!loading && environments.length">
         <colgroup>
-          <col
-            is="coral-table-column"
-            sortable=""
-            sortabledirection="ascending"
-          />
+          <col is="coral-table-column" sortable="" sortabledirection="ascending" />
           <col is="coral-table-column" sortable="" />
         </colgroup>
         <thead is="coral-table-head">
@@ -84,8 +76,7 @@
         this.loading = true;
         var client = await CloudManagerApi.getInstance();
         const envList = await client.environments.getEnvironments(programId);
-        this.environments = envList.data._embedded
-          ?.environments as Environment[];
+        this.environments = envList.data._embedded?.environments as Environment[];
         this.loading = false;
       }
     }

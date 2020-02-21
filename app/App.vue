@@ -75,19 +75,11 @@
         <coral-shell-user-heading>Current Account</coral-shell-user-heading>
         <coral-shell-user-content>
           <div>
-            <a
-              is="coral-anchorbutton"
-              variant="quiet"
-              icon="userEdit"
-              @click="editAccount"
+            <a is="coral-anchorbutton" variant="quiet" icon="userEdit" @click="editAccount"
               >Manage Account</a
             >
             <br />
-            <a
-              is="coral-anchorbutton"
-              variant="quiet"
-              icon="userAdd"
-              @click="addAccount"
+            <a is="coral-anchorbutton" variant="quiet" icon="userAdd" @click="addAccount"
               >Add Another Account</a
             >
           </div>
@@ -98,12 +90,8 @@
                 is="coral-buttonlist-item"
                 icon="user"
                 @click="switchAccount(acc.getName())"
-                @mouseenter="
-                  $event.target.nextElementSibling.style.display = 'block'
-                "
-                @mouseleave="
-                  $event.target.nextElementSibling.style.display = 'none'
-                "
+                @mouseenter="$event.target.nextElementSibling.style.display = 'block'"
+                @mouseleave="$event.target.nextElementSibling.style.display = 'none'"
               >
                 {{ acc.getName() }}
               </button>
@@ -147,22 +135,13 @@
 
 <script lang="ts">
   import Loading from "./components/Loading.vue";
-  import AuthFormDialog, {
-    AuthFormDialogMode
-  } from "./components/AuthFormDialog.vue";
+  import AuthFormDialog, { AuthFormDialogMode } from "./components/AuthFormDialog.vue";
   import { AxiosRequestConfig } from "axios";
   import { store } from "./components/BreadcrumbStore";
   import Vue from "vue";
   import { CoralElement } from "vue/types/vue";
-  import {
-    ProgramList,
-    ProgramListEmbedded,
-    EmbeddedProgram,
-    Program
-  } from "./client";
-  import CloudManagerApi, {
-    CloudManagerApiInstance
-  } from "./client/wrapper/CloudManagerApi";
+  import { ProgramList, ProgramListEmbedded, EmbeddedProgram, Program } from "./client";
+  import CloudManagerApi, { CloudManagerApiInstance } from "./client/wrapper/CloudManagerApi";
   import AuthStore, { Account, currentAccountStore } from "./util/AuthStore";
 
   export default Vue.extend({
@@ -188,9 +167,7 @@
     computed: {
       hasAccounts(): boolean {
         // atleast the current account exists
-        return (
-          !!this.currentAccount?.getName && !!this.currentAccount.getName()
-        );
+        return !!this.currentAccount?.getName && !!this.currentAccount.getName();
       }
     },
     async created() {

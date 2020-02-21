@@ -19,11 +19,7 @@ export class Account {
     return window.keytar.getPassword(KEYTAR_SERVICE, `${this.name}-${key}`);
   }
   private setPassword(key: string, val: string) {
-    return window.keytar.setPassword(
-      KEYTAR_SERVICE,
-      `${this.name}-${key}`,
-      val
-    );
+    return window.keytar.setPassword(KEYTAR_SERVICE, `${this.name}-${key}`, val);
   }
 
   getName = () => this.name;
@@ -83,14 +79,9 @@ class DeletableAccount extends Account {
     return window.keytar.deletePassword(KEYTAR_SERVICE, `${this.name}-${key}`);
   }
   delete() {
-    [
-      CLIENT_SECRET,
-      API_KEY,
-      TECH_ACCT,
-      ORG_ID,
-      PRIVATE_KEY,
-      ACCESS_TOKEN
-    ].forEach(this.deletePassword);
+    [CLIENT_SECRET, API_KEY, TECH_ACCT, ORG_ID, PRIVATE_KEY, ACCESS_TOKEN].forEach(
+      this.deletePassword
+    );
   }
 }
 
@@ -121,9 +112,7 @@ export default class AuthStore {
   }
 
   static async getAccounts(excludeCurrent = false): Promise<Account[]> {
-    const creds: KeytarCredintial[] = await window.keytar.findCredentials(
-      KEYTAR_SERVICE
-    );
+    const creds: KeytarCredintial[] = await window.keytar.findCredentials(KEYTAR_SERVICE);
 
     let accountNames = creds
       ?.map((o: KeytarCredintial) => AuthStore.getAccountFromKey(o.account))
@@ -131,9 +120,7 @@ export default class AuthStore {
 
     if (excludeCurrent) {
       const currentAccount = await this.getCurrentAccount();
-      accountNames = accountNames.filter(
-        acc => acc !== currentAccount?.getName()
-      );
+      accountNames = accountNames.filter(acc => acc !== currentAccount?.getName());
     }
 
     const uniqueAccountNames = [...new Set(accountNames)];

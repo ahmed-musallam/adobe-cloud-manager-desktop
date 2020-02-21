@@ -41,14 +41,8 @@ export default class CloudManagerApi {
         logs: new LogsService(authParams, undefined),
         links: new LinksService(authParams, undefined),
         branches: new BrachesService(authParams, new BranchesApi()),
-        environments: new EnvironmentsService(
-          authParams,
-          new EnvironmentsApi()
-        ),
-        pipelineExecution: new PipelineExecutionService(
-          authParams,
-          new PipelineExecutionApi()
-        ),
+        environments: new EnvironmentsService(authParams, new EnvironmentsApi()),
+        pipelineExecution: new PipelineExecutionService(authParams, new PipelineExecutionApi()),
         pipelines: new PipelinesService(authParams, new PipelinesApi()),
         programs: new ProgramsService(authParams, new ProgramsApi()),
         repositories: new RepositoriesService(authParams, new RepositoriesApi())
@@ -84,15 +78,11 @@ export default class CloudManagerApi {
         }),
       async error => {
         if (401 === error?.response?.status) {
-          console.log(
-            "Got 401 with existing access token, attempting to get a new one"
-          );
+          console.log("Got 401 with existing access token, attempting to get a new one");
           try {
             const access_token = await AuthUtil.getAccessToken();
             (await AuthStore.getCurrentAccount())?.setAccessToken(access_token);
-            console.log(
-              "Got the token!, saving it and retrying the same request."
-            );
+            console.log("Got the token!, saving it and retrying the same request.");
             CloudManagerApi.refresh();
             // just for this request, change auth
             error.config.headers["Authorization"] = "Bearer " + access_token;

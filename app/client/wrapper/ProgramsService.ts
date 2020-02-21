@@ -13,11 +13,6 @@ export default class ProgramsService extends BaseService<ProgramsApi> {
   }
 
   public getPrograms(options?: any) {
-    return this.wrappedApi.getPrograms(
-      this.orgId,
-      this.authorization,
-      this.apiKey,
-      options
-    );
+    return this.wrappedApi.getPrograms(this.orgId, this.authorization, this.apiKey, options);
   }
 }

@@ -7,8 +7,7 @@
     <coral-list class="bordered-box">
       <coral-list-divider></coral-list-divider>
       <coral-list-item icon="event"
-        ><b>Trigger: </b
-        ><em>{{ execution.trigger | lowercase }}</em></coral-list-item
+        ><b>Trigger: </b><em>{{ execution.trigger | lowercase }}</em></coral-list-item
       >
       <coral-list-item icon="gear"
         ><b>ID </b><em>{{ execution.id }}</em></coral-list-item
@@ -16,10 +15,7 @@
       <coral-list-item icon="user"
         ><b>Started By: </b><em>{{ execution.user }}</em></coral-list-item
       >
-      <coral-list-item
-        icon="date"
-        v-if="execution.createdAt && !execution.finishedAt"
-      >
+      <coral-list-item icon="date" v-if="execution.createdAt && !execution.finishedAt">
         <b>Started: </b>
         <em>{{ execution.createdAt | date }}</em></coral-list-item
       >
@@ -29,20 +25,16 @@
         ><em>{{ execution.updatedAt | date }}</em></coral-list-item
       >
       -->
-      <coral-list-item
-        v-if="execution.createdAt && execution.finishedAt"
-        icon="date"
+      <coral-list-item v-if="execution.createdAt && execution.finishedAt" icon="date"
         ><b>Started - Finished: </b
         ><em
-          >{{ execution.createdAt | date }} -
-          {{ execution.finishedAt | date }}</em
+          >{{ execution.createdAt | date }} - {{ execution.finishedAt | date }}</em
         ></coral-list-item
       >
       <coral-list-item v-if="execution.finishedAt" icon="clock"
         ><b>Build Time: </b
         ><em>{{
-          getDurationInMili(execution.createdAt, execution.finishedAt)
-            | humanReadableDuration
+          getDurationInMili(execution.createdAt, execution.finishedAt) | humanReadableDuration
         }}</em></coral-list-item
       >
     </coral-list>
@@ -57,20 +49,14 @@
         <span v-if="step.startedAt && !step.finishedAt">
           Started: <em>{{ step.startedAt | date }}</em>
         </span>
-        <span
-          v-if="step.startedAt && step.finishedAt"
-          style="color: rgb(45, 157, 120)"
-        >
+        <span v-if="step.startedAt && step.finishedAt" style="color: rgb(45, 157, 120)">
           Finished:
           <em>
             <b>{{ step.finishedAt | date }}. </b>
           </em>
           <em style="color: rgb(45, 157, 120)">
             (Took:
-            {{
-              getDurationInMili(step.startedAt, step.finishedAt)
-                | humanReadableDuration
-            }})
+            {{ getDurationInMili(step.startedAt, step.finishedAt) | humanReadableDuration }})
           </em>
         </span>
         <br v-if="hasLog(step) && step.status !== 'RUNNING'" />
@@ -80,9 +66,7 @@
           v-if="hasLog(step) && step.status !== 'RUNNING'"
           @click="getLog(step)"
         >
-          {{
-            step.action === "codeQuality" ? "Download Details" : "Download Log"
-          }}
+          {{ step.action === "codeQuality" ? "Download Details" : "Download Log" }}
         </button>
         <!--
           metrics refer to sonar metrics, need something to interpret them
@@ -180,12 +164,10 @@
         }
       },
       hasLog(step: PipelineExecutionStepState) {
-        return step?._links?.http__ns_adobe_com_adobecloud_rel_pipeline_logs
-          ?.href;
+        return step?._links?.http__ns_adobe_com_adobecloud_rel_pipeline_logs?.href;
       },
       hasMetrics(step: PipelineExecutionStepState) {
-        return step?._links?.http__ns_adobe_com_adobecloud_rel_pipeline_metrics
-          ?.href;
+        return step?._links?.http__ns_adobe_com_adobecloud_rel_pipeline_metrics?.href;
       },
       getPrettyStepTitle(action: string) {
         return stepActionTitles[action] || action;

@@ -5,9 +5,7 @@ import { PluginObject } from "vue";
 
 export const Filters: PluginObject<never> = {
   install(vue) {
-    Object.keys(this.filters).forEach(key =>
-      vue.filter(key, this.filters[key])
-    );
+    Object.keys(this.filters).forEach(key => vue.filter(key, this.filters[key]));
   },
   filters: {
     // filter to display date in anice format

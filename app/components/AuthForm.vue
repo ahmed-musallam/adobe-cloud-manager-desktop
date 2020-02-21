@@ -23,20 +23,10 @@
         type="text"
       />
       <SecretInput label="API Key" v-model="auth.apiKey"></SecretInput>
-      <SecretInput
-        label="Client Secret"
-        v-model="auth.clientSecret"
-      ></SecretInput>
+      <SecretInput label="Client Secret" v-model="auth.clientSecret"></SecretInput>
       <SecretInput label="Organization ID" v-model="auth.orgId"></SecretInput>
-      <SecretInput
-        label="Technical Account"
-        v-model="auth.techAcct"
-      ></SecretInput>
-      <SecretInput
-        label="Private Key"
-        textarea="true"
-        v-model="auth.privateKey"
-      ></SecretInput>
+      <SecretInput label="Technical Account" v-model="auth.techAcct"></SecretInput>
+      <SecretInput label="Private Key" textarea="true" v-model="auth.privateKey"></SecretInput>
       <button @click="testAuthentication" is="coral-button" type="button">
         Test Authentication
       </button>

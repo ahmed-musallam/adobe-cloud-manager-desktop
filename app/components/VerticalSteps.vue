@@ -34,8 +34,8 @@
   $vertica-step-margin-top: 15px;
   $status-light-width: 7px;
   $status-light-border: 3px;
-  $status-light-left: $vertical-line-left - $vertical-step-content-left -
-    ($status-light-width/ 2) - ($status-light-border);
+  $status-light-left: $vertical-line-left - $vertical-step-content-left - ($status-light-width/ 2) -
+    ($status-light-border);
 
   .wrapper {
     width: 100%;

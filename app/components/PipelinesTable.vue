@@ -3,18 +3,10 @@
     <h3>Pipelines:</h3>
     <div class="bordered-box">
       <coral-wait size="S" v-if="loading"></coral-wait>
-      <table
-        is="coral-table"
-        selectable=""
-        v-else-if="!loading && pipelines.length"
-      >
+      <table is="coral-table" selectable="" v-else-if="!loading && pipelines.length">
         <colgroup>
           <col is="coral-table-column" />
-          <col
-            is="coral-table-column"
-            sortable=""
-            sortabledirection="ascending"
-          />
+          <col is="coral-table-column" sortable="" sortabledirection="ascending" />
           <col is="coral-table-column" sortable="" />
         </colgroup>
         <thead is="coral-table-head">
@@ -35,16 +27,10 @@
               <coral-status v-if="pipeline.status == 'IDLE'" variant="success">
                 {{ pipeline.status }}
               </coral-status>
-              <coral-status
-                v-else-if="pipeline.status == 'BUSY'"
-                variant="info"
-              >
+              <coral-status v-else-if="pipeline.status == 'BUSY'" variant="info">
                 {{ pipeline.status }}
               </coral-status>
-              <coral-status
-                v-else-if="pipeline.status == 'WAITING'"
-                variant="warning"
-              >
+              <coral-status v-else-if="pipeline.status == 'WAITING'" variant="warning">
                 {{ pipeline.status }}
               </coral-status>
             </td>
@@ -103,9 +89,7 @@
         var client = await CloudManagerApi.getInstance();
         const programResponse = await client.programs.getProgram(programId);
 
-        const pipelinesResponse = await client.pipelines.getPipelines(
-          programId || ""
-        );
+        const pipelinesResponse = await client.pipelines.getPipelines(programId || "");
         this.pipelines = pipelinesResponse.data?._embedded?.pipelines || [];
         this.loading = false;
       },

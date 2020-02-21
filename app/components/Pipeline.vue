@@ -89,9 +89,7 @@
           String(start),
           limit
         );
-        this.executions = executionsResult.data._embedded?.executions as Array<
-          PipelineExecution
-        >;
+        this.executions = executionsResult.data._embedded?.executions as Array<PipelineExecution>;
       },
       async getRemainingExecutions() {
         this.loadingRemainingExecutions = true;

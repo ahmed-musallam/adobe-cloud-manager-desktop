@@ -6,16 +6,10 @@
     </p>
     <h4>Environment Links:</h4>
     <coral-anchorlist class="bordered-box">
-      <a
-        is="coral-anchorlist-item"
-        icon="link"
-        @click="$openExternalLink(links.author)"
+      <a is="coral-anchorlist-item" icon="link" @click="$openExternalLink(links.author)"
         ><b>Author</b> <em>{{ links.author }}</em></a
       >
-      <a
-        is="coral-anchorlist-item"
-        icon="link"
-        @click="$openExternalLink(links.publish)"
+      <a is="coral-anchorlist-item" icon="link" @click="$openExternalLink(links.publish)"
         ><b>Publish</b> <em>{{ links.publish }}</em></a
       >
     </coral-anchorlist>
@@ -38,20 +32,13 @@
           />
         </div>
       </form>
-      <div
-        v-if="logsStatus === 'loading'"
-        style="position:relative;width:100%;height:100px"
-      >
+      <div v-if="logsStatus === 'loading'" style="position:relative;width:100%;height:100px">
         <coral-wait centered=""></coral-wait>
       </div>
       <div v-else-if="logsStatus === 'loaded'">
         <table is="coral-table">
           <colgroup>
-            <col
-              is="coral-table-column"
-              sortable=""
-              sortabledirection="ascending"
-            />
+            <col is="coral-table-column" sortable="" sortabledirection="ascending" />
             <col is="coral-table-column" sortable="" />
           </colgroup>
           <thead is="coral-table-head">
@@ -63,11 +50,7 @@
             </tr>
           </thead>
           <tbody is="coral-table-body">
-            <tr
-              is="coral-table-row"
-              v-for="(logDownload, i) in filteredLogDownloads"
-              :key="i"
-            >
+            <tr is="coral-table-row" v-for="(logDownload, i) in filteredLogDownloads" :key="i">
               <td is="coral-table-cell">{{ logDownload.service }}</td>
               <td is="coral-table-cell">{{ logDownload.name }}</td>
               <td is="coral-table-cell">{{ logDownload.date | dateNoTime }}</td>
@@ -77,10 +60,7 @@
                   icon="download"
                   variant="action"
                   title="download"
-                  v-if="
-                    logDownload._links
-                      .http__ns_adobe_com_adobecloud_rel_logs_download
-                  "
+                  v-if="logDownload._links.http__ns_adobe_com_adobecloud_rel_logs_download"
                   @click="downloadLog(logDownload)"
                 ></button>
                 <button
@@ -88,10 +68,7 @@
                   icon="ViewDetail"
                   variant="action"
                   title="tail"
-                  v-if="
-                    logDownload._links
-                      .http__ns_adobe_com_adobecloud_rel_logs_tail
-                  "
+                  v-if="logDownload._links.http__ns_adobe_com_adobecloud_rel_logs_tail"
                   @click="tailLog(logDownload)"
                 ></button>
               </td>
@@ -108,13 +85,7 @@
 </template>
 
 <script lang="ts">
-  import {
-    Pipeline,
-    Program,
-    EnvironmentList,
-    Environment,
-    HalLink
-  } from "../client";
+  import { Pipeline, Program, EnvironmentList, Environment, HalLink } from "../client";
   import Vue from "vue";
   import Select, { Option } from "./Select.vue";
   import { CoralEvent } from "vue/types/vue";
@@ -216,10 +187,7 @@
           href =>
             // another unfortunate thing. the URI template returned for env logs makes these params required
             // when they are optional.. so fixing that here... probably a bad idea but works ¯\_(ツ)_/¯
-            href.replace(
-              "?service={service}&name={name}&days={days}",
-              "{?service,name,days}"
-            )
+            href.replace("?service={service}&name={name}&days={days}", "{?service,name,days}")
         );
         this.logDownloads = response.data?._embedded?.downloads || [];
         this.filteredLogDownloads = this.logDownloads;
@@ -245,9 +213,7 @@
         this.$hideLoadingScreen();
       },
       async tailLog(logDownload: LogDownloadHalLink) {
-        const logUrl =
-          logDownload?._links?.http__ns_adobe_com_adobecloud_rel_logs_tail
-            ?.href || "";
+        const logUrl = logDownload?._links?.http__ns_adobe_com_adobecloud_rel_logs_tail?.href || "";
         console.log("tailing: ", logUrl);
         let logWindow = new electron.remote.BrowserWindow({
           show: false,
@@ -255,14 +221,9 @@
             preload: location.pathname.replace("index.html", "preload.js")
           }
         });
-        const logTailPath = location.pathname.replace(
-          "index.html",
-          "logTail.html"
-        );
+        const logTailPath = location.pathname.replace("index.html", "logTail.html");
         //logWindow.openDevTools();
-        logWindow.loadURL(
-          `file://${logTailPath}?url=${encodeURIComponent(logUrl)}`
-        );
+        logWindow.loadURL(`file://${logTailPath}?url=${encodeURIComponent(logUrl)}`);
         logWindow.once("ready-to-show", () => {
           //logWindow.reload();
           logWindow.show();

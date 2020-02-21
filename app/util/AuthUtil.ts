@@ -19,8 +19,6 @@ export default class AuthUtil {
       technicalAccountId: await currentAccount?.getTechAcct(),
       orgId: await currentAccount?.getOrgId(),
       metaScopes: ["https://ims-na1.adobelogin.com/s/ent_cloudmgr_sdk"]
-    }).then(
-      (tokenResponse: { access_token: any }) => tokenResponse.access_token
-    );
+    }).then((tokenResponse: { access_token: any }) => tokenResponse.access_token);
   }
 }

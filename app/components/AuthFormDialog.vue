@@ -5,28 +5,13 @@
     </coral-dialog-header>
     <coral-dialog-content>
       <!-- Use of v-if here is neccessary as it destroys this form component based on the condition -->
-      <AuthForm
-        v-if="show"
-        :mode="mode"
-        :account="account"
-        v-model="formAuthData"
-      ></AuthForm>
+      <AuthForm v-if="show" :mode="mode" :account="account" v-model="formAuthData"></AuthForm>
     </coral-dialog-content>
     <coral-dialog-footer>
-      <button
-        v-if="mode === 'add'"
-        @click="addNewAccount"
-        is="coral-button"
-        type="button"
-      >
+      <button v-if="mode === 'add'" @click="addNewAccount" is="coral-button" type="button">
         Add
       </button>
-      <button
-        v-if="mode === 'edit'"
-        @click="saveAccount"
-        is="coral-button"
-        type="button"
-      >
+      <button v-if="mode === 'edit'" @click="saveAccount" is="coral-button" type="button">
         Save
       </button>
       <button @click="$emit('close')" is="coral-button" type="button">
