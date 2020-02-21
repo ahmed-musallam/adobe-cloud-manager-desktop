@@ -4,7 +4,7 @@
     <p>
       {{ environment.description }}
     </p>
-    <h4>Environment Links</h4>
+    <h4>Environment Links:</h4>
     <coral-anchorlist class="bordered-box">
       <a
         is="coral-anchorlist-item"
@@ -212,8 +212,6 @@
           this.links.logs,
           {
             days: this.logDays
-            //service: "publish",
-            //name: "aemerror"
           },
           href =>
             // another unfortunate thing. the URI template returned for env logs makes these params required
