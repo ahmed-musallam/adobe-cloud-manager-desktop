@@ -4,100 +4,101 @@
     <p>
       {{ environment.description }}
     </p>
-    <coral-anchorlist>
-      <a is="coral-anchorlist-item" icon="info" href="#" disabled=""
-        ><b>Type:</b> {{ environment.type }}</a
-      >
+    <h4>Environment Links</h4>
+    <coral-anchorlist class="bordered-box">
       <a
         is="coral-anchorlist-item"
         icon="link"
         @click="$openExternalLink(links.author)"
-        >Author</a
+        ><b>Author</b> <em>{{ links.author }}</em></a
       >
       <a
         is="coral-anchorlist-item"
         icon="link"
         @click="$openExternalLink(links.publish)"
-        >Publish</a
+        ><b>Publish</b> <em>{{ links.publish }}</em></a
       >
     </coral-anchorlist>
-    <h3>Logs:</h3>
-    <form class="coral-Form coral-Form--vertical">
-      <Select
-        :options="days"
-        label="Days"
-        placeholder="Selec Days"
-        v-model="logDays"
-        @input="showLogs"
-      ></Select>
-      <div v-if="logDays">
-        <label id="filter" class="coral-FieldLabel">Filter</label>
-        <coral-search
-          labelledby="filter"
-          class="coral-Form-field"
-          @input="e => (this.filter = e.target.value)"
-        />
-      </div>
-    </form>
-    <div
-      v-if="logsStatus === 'loading'"
-      style="position:relative;width:100%;height:100px"
-    >
-      <coral-wait centered=""></coral-wait>
-    </div>
-    <div v-else-if="logsStatus === 'loaded'">
-      <table is="coral-table">
-        <colgroup>
-          <col
-            is="coral-table-column"
-            sortable=""
-            sortabledirection="ascending"
+    <h4>Logs:</h4>
+    <div class="bordered-box">
+      <form class="coral-Form coral-Form--vertical bordered-box">
+        <Select
+          :options="days"
+          label="Days"
+          placeholder="Selec Days"
+          v-model="logDays"
+          @input="showLogs"
+        ></Select>
+        <div v-if="logDays">
+          <label id="filter" class="coral-FieldLabel">Filter</label>
+          <coral-search
+            labelledby="filter"
+            class="coral-Form-field"
+            @input="e => (this.filter = e.target.value)"
           />
-          <col is="coral-table-column" sortable="" />
-        </colgroup>
-        <thead is="coral-table-head">
-          <tr is="coral-table-row">
-            <th is="coral-table-headercell">Service</th>
-            <th is="coral-table-headercell">Log File</th>
-            <th is="coral-table-headercell">Date</th>
-            <th is="coral-table-headercell">Download / Tail</th>
-          </tr>
-        </thead>
-        <tbody is="coral-table-body">
-          <tr
-            is="coral-table-row"
-            v-for="(logDownload, i) in filteredLogDownloads"
-            :key="i"
-          >
-            <td is="coral-table-cell">{{ logDownload.service }}</td>
-            <td is="coral-table-cell">{{ logDownload.name }}</td>
-            <td is="coral-table-cell">{{ logDownload.date | dateNoTime }}</td>
-            <td is="coral-table-cell">
-              <button
-                is="coral-button"
-                icon="download"
-                variant="action"
-                title="download"
-                v-if="
-                  logDownload._links
-                    .http__ns_adobe_com_adobecloud_rel_logs_download
-                "
-                @click="downloadLog(logDownload)"
-              ></button>
-              <button
-                is="coral-button"
-                icon="ViewDetail"
-                variant="action"
-                title="tail"
-                v-if="
-                  logDownload._links.http__ns_adobe_com_adobecloud_rel_logs_tail
-                "
-                @click="tailLog(logDownload)"
-              ></button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        </div>
+      </form>
+      <div
+        v-if="logsStatus === 'loading'"
+        style="position:relative;width:100%;height:100px"
+      >
+        <coral-wait centered=""></coral-wait>
+      </div>
+      <div v-else-if="logsStatus === 'loaded'">
+        <table is="coral-table">
+          <colgroup>
+            <col
+              is="coral-table-column"
+              sortable=""
+              sortabledirection="ascending"
+            />
+            <col is="coral-table-column" sortable="" />
+          </colgroup>
+          <thead is="coral-table-head">
+            <tr is="coral-table-row">
+              <th is="coral-table-headercell">Service</th>
+              <th is="coral-table-headercell">Log File</th>
+              <th is="coral-table-headercell">Date</th>
+              <th is="coral-table-headercell">Download / Tail</th>
+            </tr>
+          </thead>
+          <tbody is="coral-table-body">
+            <tr
+              is="coral-table-row"
+              v-for="(logDownload, i) in filteredLogDownloads"
+              :key="i"
+            >
+              <td is="coral-table-cell">{{ logDownload.service }}</td>
+              <td is="coral-table-cell">{{ logDownload.name }}</td>
+              <td is="coral-table-cell">{{ logDownload.date | dateNoTime }}</td>
+              <td is="coral-table-cell">
+                <button
+                  is="coral-button"
+                  icon="download"
+                  variant="action"
+                  title="download"
+                  v-if="
+                    logDownload._links
+                      .http__ns_adobe_com_adobecloud_rel_logs_download
+                  "
+                  @click="downloadLog(logDownload)"
+                ></button>
+                <button
+                  is="coral-button"
+                  icon="ViewDetail"
+                  variant="action"
+                  title="tail"
+                  v-if="
+                    logDownload._links
+                      .http__ns_adobe_com_adobecloud_rel_logs_tail
+                  "
+                  @click="tailLog(logDownload)"
+                ></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <coral-drawer style="white-space: pre;">
