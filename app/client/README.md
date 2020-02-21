@@ -1,4 +1,5 @@
-`typescript-axios` client generated with `openapi-generator`
+`typescript-axios` folder contains a client generated with `openapi-generator`
+`wrapper` folder contains a wrapper around that client to prevent supplying common arameters with every API call
 
 install `openapi-generator`
 
