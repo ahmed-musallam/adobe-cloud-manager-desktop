@@ -67,7 +67,7 @@
         const programId = this.$route.params.programId;
         const pipelineId = this.$route.params.pipelineId;
         if (programId && pipelineId) {
-          await this.getAndSetExecutions(1, 3); // load first 3 executions
+          await this.getAndSetExecutions(0, 3); // load first 3 executions
         }
         this.$hideLoadingScreen();
         this.getRemainingExecutions(); // load ALL executions. TODO: pagination
