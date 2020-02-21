@@ -32,9 +32,8 @@ export const Plugins: PluginObject<never> = {
         _onData: (data: T) => void
       ) {
         lastPollStarted = new Date().getTime();
-        let response = await _fn();
-        if (response.status !== 200) {
-          // Get and show the message
+        try {
+          let response = await _fn();
           var stopPolling = onData(response);
           if (stopPolling) {
             return;
@@ -48,11 +47,12 @@ export const Plugins: PluginObject<never> = {
           }
           // Call subscribe() again to get the next message
           await _poll(_fn, _onData);
-        } else {
-          console.error("Got non-200 response while polling: ", response);
+        } catch (e) {
+          console.error("Error while polling", e);
+          return;
         }
       }
-      _poll(fn, onData);
+      await _poll(fn, onData);
     }
   }
 };

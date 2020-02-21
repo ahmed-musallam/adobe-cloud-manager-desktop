@@ -39,7 +39,10 @@
         <span v-if="step.startedAt && !step.finishedAt">
           Started: <em>{{ step.startedAt | date }}</em>
         </span>
-        <span v-else style="color: rgb(45, 157, 120)">
+        <span
+          v-if="step.startedAt && step.finishedAt"
+          style="color: rgb(45, 157, 120)"
+        >
           Finished:
           <em>
             <b>{{ step.finishedAt | date }}. </b>
@@ -90,6 +93,7 @@
   import Vue from "vue";
   import CloudManagerApi from "../client/wrapper/CloudManagerApi";
   import { Dictionary } from "vue-router/types/router";
+  import globalAxios, { CancelTokenSource } from "axios";
 
   const stepActionTitles: Dictionary<string> = {
     validate: "Validation",
@@ -104,7 +108,8 @@
     data() {
       return {
         execution: {} as PipelineExecution,
-        pipelineName: store.pipeline
+        pipelineName: store.pipeline,
+        stopPollingExecutions: false
       };
     },
     components: {
@@ -119,7 +124,6 @@
       this.$hideLoadingScreen();
       if (this.execution.status !== PipelineExecutionStatusEnum.FINISHED) {
         this.$poll(this.getExecution, (data: PipelineExecution) => {
-          //console.log("polled and got: ", data);
           this.execution = data;
           const stopPolling = [
             PipelineExecutionStatusEnum.FINISHED,
@@ -127,31 +131,29 @@
             PipelineExecutionStatusEnum.ERROR,
             PipelineExecutionStatusEnum.FAILED
           ].some(status => status === this.execution.status);
-
-          return stopPolling;
+          return stopPolling || this.stopPollingExecutions;
         });
       }
     },
-
+    destroyed() {
+      this.stopPollingExecutions = true;
+    },
     methods: {
       async getExecution(): Promise<PipelineExecution> {
         var client = await CloudManagerApi.getInstance();
-        try {
-          const programId = this.$route.params.programId;
-          const pipelineId = this.$route.params.pipelineId;
-          const executionId = this.$route.params.executionId;
-          if (programId && pipelineId && executionId) {
-            const response = await client.pipelineExecution.getExecution(
-              programId,
-              pipelineId,
-              executionId
-            );
-            return response.data;
-          }
-        } catch (err) {
-          console.error(err);
+        const programId = this.$route.params.programId;
+        const pipelineId = this.$route.params.pipelineId;
+        const executionId = this.$route.params.executionId;
+        if (programId && pipelineId && executionId) {
+          const response = await client.pipelineExecution.getExecution(
+            programId,
+            pipelineId,
+            executionId
+          );
+          return response.data;
+        } else {
+          return {};
         }
-        return {};
       },
       hasLog(step: PipelineExecutionStepState) {
         return step?._links?.http__ns_adobe_com_adobecloud_rel_pipeline_logs
