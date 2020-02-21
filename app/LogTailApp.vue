@@ -1,7 +1,7 @@
 <template>
   <div style="overflow-x:scroll">
     <div class="bottom-right">
-      <coral-wait size="M" v-if="loading && !error"></coral-wait>
+      <coral-wait size="S" v-if="loading && !error"></coral-wait>
     </div>
     <coral-banner variant="error" v-if="error">
       <coral-banner-header>Error</coral-banner-header>

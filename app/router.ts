@@ -20,7 +20,8 @@ export default new Router({
     },
     {
       path: "/program/:programId/pipeline/:pipelineId",
-      component: Pipeline
+      component: Pipeline,
+      name: "pipeline"
     },
     {
       path: "/program/:programId/pipeline/:pipelineId/execution/:executionId",

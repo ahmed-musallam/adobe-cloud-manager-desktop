@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>{{ environment.name }}</h3>
+    <h3>Environment - {{ environment.name }}</h3>
     <p>
       {{ environment.description }}
     </p>

@@ -1,10 +1,10 @@
 <template>
   <div v-if="execution && execution.id">
     <h3 style="margin-bottom:0">
-      {{ pipelineName }}
+      Pipeline Execution - {{ pipelineName }}
       <Status :variant="execution.status" :showText="true"></Status>
     </h3>
-    <coral-list>
+    <coral-list class="bordered-box">
       <coral-list-divider></coral-list-divider>
       <coral-list-item icon="event"
         ><b>Trigger: </b
@@ -16,19 +16,37 @@
       <coral-list-item icon="user"
         ><b>Started By: </b><em>{{ execution.user }}</em></coral-list-item
       >
-      <coral-list-item icon="date"
-        ><b>Started: </b
-        ><em>{{ execution.createdAt | date }}</em></coral-list-item
+      <coral-list-item
+        icon="date"
+        v-if="execution.createdAt && !execution.finishedAt"
       >
+        <b>Started: </b>
+        <em>{{ execution.createdAt | date }}</em></coral-list-item
+      >
+      <!--
       <coral-list-item icon="date"
         ><b>Last changed: </b
         ><em>{{ execution.updatedAt | date }}</em></coral-list-item
       >
-      <coral-list-item v-if="execution.finishedAt" icon="date"
-        ><b>Finished: </b
-        ><em>{{ execution.finishedAt | date }}</em></coral-list-item
+      -->
+      <coral-list-item
+        v-if="execution.createdAt && execution.finishedAt"
+        icon="date"
+        ><b>Started - Finished: </b
+        ><em
+          >{{ execution.createdAt | date }} -
+          {{ execution.finishedAt | date }}</em
+        ></coral-list-item
+      >
+      <coral-list-item v-if="execution.finishedAt" icon="clock"
+        ><b>Build Time: </b
+        ><em>{{
+          getDurationInMili(execution.createdAt, execution.finishedAt)
+            | humanReadableDuration
+        }}</em></coral-list-item
       >
     </coral-list>
+    <br />
     <VerticalSteps>
       <VerticalStep
         v-for="step in execution._embedded.stepStates"
@@ -48,7 +66,11 @@
             <b>{{ step.finishedAt | date }}. </b>
           </em>
           <em style="color: rgb(45, 157, 120)">
-            (Took: {{ getDurationInMili(step) | humanReadableDuration }})
+            (Took:
+            {{
+              getDurationInMili(step.startedAt, step.finishedAt)
+                | humanReadableDuration
+            }})
           </em>
         </span>
         <br v-if="hasLog(step) && step.status !== 'RUNNING'" />
@@ -58,7 +80,9 @@
           v-if="hasLog(step) && step.status !== 'RUNNING'"
           @click="getLog(step)"
         >
-          Download Log
+          {{
+            step.action === "codeQuality" ? "Download Details" : "Download Log"
+          }}
         </button>
         <!--
           metrics refer to sonar metrics, need something to interpret them
@@ -192,18 +216,18 @@
           this.$downloadFile(downloadLink);
         }
       },
-      getDurationInMili(step: PipelineExecutionStepState) {
+      getDurationInMili(startedAt: string, finishedAt: string) {
         let finishedInMili = 0;
         let startedInMili = 0;
-        if (!step.finishedAt) {
+        if (!finishedAt) {
           return 0;
         } else {
-          finishedInMili = new Date(step.finishedAt).getTime();
+          finishedInMili = new Date(finishedAt).getTime();
         }
-        if (!step.startedAt) {
+        if (!startedAt) {
           return 0;
         } else {
-          startedInMili = new Date(step.startedAt).getTime();
+          startedInMili = new Date(startedAt).getTime();
         }
         return finishedInMili - startedInMili;
       },

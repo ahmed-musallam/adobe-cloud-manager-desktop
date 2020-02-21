@@ -125,7 +125,7 @@
     <coral-shell-content>
       <!-- Main application goes here -->
       <section class="u-coral-padding-horizontal">
-        <router-view v-if="!!hasAccounts"></router-view>
+        <router-view v-if="!!hasAccounts && loadedAccounts"></router-view>
         <coral-alert v-else style="width:100%; margin-top: 2em;">
           <coral-alert-header>
             No Accounts Have been added, please add an account.
@@ -181,7 +181,8 @@
         authDialogMode: AuthFormDialogMode.EDIT,
         account: "" as string | undefined,
         accounts: [] as Account[],
-        currentAccount: {} as Account | null
+        currentAccount: {} as Account | null,
+        loadedAccounts: false
       };
     },
     computed: {
@@ -194,9 +195,11 @@
     },
     async created() {
       await this.init();
+      this.loadedAccounts = true;
     },
     methods: {
       async init(account?: string) {
+        this.$showLoadingScreen();
         if (account) {
           // this is a user switch
           const userMenu = this.$refs.userMenu as CoralElement;
@@ -209,11 +212,9 @@
         this.currentAccount = await AuthStore.getCurrentAccount();
         const client = await CloudManagerApi.getInstance();
         try {
-          this.$showLoadingScreen();
           this.programs = []; // clear previous programs, needed for profile switch
           const result = await client.programs.getPrograms();
           this.programs = result?.data?._embedded?.programs;
-          this.$hideLoadingScreen();
           this.$nextTick(() => {
             const workspaces = this.$refs.workspaces as CoralElement;
             workspaces.on("coral-shell-workspaces:change", e => {
@@ -237,6 +238,7 @@
               }
             });
           }
+        } finally {
           this.$hideLoadingScreen();
         }
       },
