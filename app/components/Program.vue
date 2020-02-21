@@ -2,83 +2,84 @@
   <div>
     <div>
       <h3>Environments:</h3>
-      <coral-wait size="S" v-if="loadingEnvironments"></coral-wait>
-      <coral-buttonlist v-else-if="!loadingEnvironments && environments.length">
-        <router-link
-          :to="'/program/' + program.id + '/environment/' + environment.id"
-          v-for="environment in environments"
-          :key="environment.id"
+      <div class="bordered-box">
+        <coral-wait size="S" v-if="loadingEnvironments"></coral-wait>
+        <table
+          is="coral-table"
+          selectable=""
+          v-else-if="!loadingEnvironments && environments.length"
         >
-          <button is="coral-buttonlist-item" icon="globe">
-            {{ environment.name }}
-          </button>
-        </router-link>
-      </coral-buttonlist>
-      <h4 v-else>
-        <coral-alert>
-          <coral-alert-header
-            >No environments configured for this program.</coral-alert-header
-          >
-        </coral-alert>
-      </h4>
+          <thead is="coral-table-head">
+            <tr is="coral-table-row">
+              <th is="coral-table-headercell">Name</th>
+            </tr>
+          </thead>
+          <tbody is="coral-table-body">
+            <tr
+              is="coral-table-row"
+              v-for="environment in environments"
+              :key="environment.id"
+            >
+              <td
+                is="coral-table-cell"
+                @click="goToEnvironment(environment.id)"
+              >
+                {{ environment.name }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <h4 v-else>
+          <coral-alert>
+            <coral-alert-header>
+              No environments configured for this program.
+            </coral-alert-header>
+          </coral-alert>
+        </h4>
+      </div>
     </div>
-    <div></div>
     <h3>Pipelines:</h3>
-    <router-link
-      :to="'/program/' + program.id + '/pipeline/' + pipeline.id"
-      v-for="pipeline in pipelines"
-      :key="pipeline.id"
-    >
-      <coral-card variant="CONDENSED">
-        <coral-card-asset style="display:none"></coral-card-asset>
-        <coral-card-content>
-          <!-- title does not render.. who know why.. -->
-          <!-- <coral-card-title>{{pipeline.name}}</coral-card-title> -->
-          <coral-card-subtitle>
-            <h3>{{ pipeline.name }}</h3>
-          </coral-card-subtitle>
-          <coral-card-propertylist>
-            <coral-card-property
-              >Started: {{ pipeline.lastStartedAt | date }}</coral-card-property
-            >
-            <br />
-            <coral-card-property
-              >Finished:
-              {{ pipeline.lastFinishedAt | date }}</coral-card-property
-            >
-          </coral-card-propertylist>
-        </coral-card-content>
-        <coral-card-info>
-          <coral-tag v-if="pipeline.status == 'IDLE'" color="green">{{
-            pipeline.status | lowercase
-          }}</coral-tag>
-          <coral-tag v-if="pipeline.status == 'BUSY'" color="cyan">{{
-            pipeline.status | lowercase
-          }}</coral-tag>
-          <coral-tag v-if="pipeline.status == 'WAITING'" color="yellow">{{
-            pipeline.status | lowercase
-          }}</coral-tag>
-        </coral-card-info>
-      </coral-card>
-      <coral-quickactions target="_prev">
-        <coral-quickactions-item
-          v-if="pipeline.status == 'IDLE'"
-          type="anchor"
-          icon="play"
-          @click.stop.prevent="startPipeline(pipeline)"
-        >
-        </coral-quickactions-item>
-        <!--
-          <coral-quickactions-item
-          v-if="pipeline.status !== 'IDLE'"
-          type="anchor"
-          icon="stop"
-          @click.stop.prevent="stopPipeline(pipeline)"
-          ></coral-quickactions-item
-        >
-        -->
-      </coral-quickactions>
-    </router-link>
+    <div class="bordered-box">
+      <router-link
+        :to="'/program/' + program.id + '/pipeline/' + pipeline.id"
+        v-for="pipeline in pipelines"
+        :key="pipeline.id"
+      >
+        <coral-card variant="CONDENSED">
+          <coral-card-asset style="display:none"></coral-card-asset>
+          <coral-card-content>
+            <!-- title does not render.. who know why.. -->
+            <!-- <coral-card-title>{{pipeline.name}}</coral-card-title> -->
+            <coral-card-subtitle>
+              <h3>{{ pipeline.name }}</h3>
+            </coral-card-subtitle>
+            <coral-card-propertylist>
+              <coral-card-property
+                >Started:
+                {{ pipeline.lastStartedAt | date }}</coral-card-property
+              >
+              <br />
+              <coral-card-property
+                >Finished:
+                {{ pipeline.lastFinishedAt | date }}</coral-card-property
+              >
+            </coral-card-propertylist>
+          </coral-card-content>
+          <coral-card-info>
+            <coral-tag v-if="pipeline.status == 'IDLE'" color="green">{{
+              pipeline.status | lowercase
+            }}</coral-tag>
+            <coral-tag v-if="pipeline.status == 'BUSY'" color="cyan">{{
+              pipeline.status | lowercase
+            }}</coral-tag>
+            <coral-tag v-if="pipeline.status == 'WAITING'" color="yellow">{{
+              pipeline.status | lowercase
+            }}</coral-tag>
+          </coral-card-info>
+        </coral-card>
+      </router-link>
+    </div>
+
     <div>
       <coral-drawer style="white-space: pre;">
         <textarea style="width:100%;height:500px">
@@ -121,6 +122,15 @@
       next();
     },
     methods: {
+      goToEnvironment(environmentId: string) {
+        this.$router.push({
+          name: "environment",
+          params: {
+            programId: this.$route.params.programId,
+            environmentId: environmentId
+          }
+        });
+      },
       async loadProgram(programId: string) {
         try {
           this.$showLoadingScreen();
@@ -185,5 +195,9 @@
   }
   coral-card-asset {
     display: none !important;
+  }
+  .bordered-box {
+    border: 1px solid rgb(225, 225, 225);
+    padding: 1em;
   }
 </style>

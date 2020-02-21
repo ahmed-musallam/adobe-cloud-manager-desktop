@@ -15,7 +15,8 @@ export default new Router({
     },
     {
       path: "/program/:programId/environment/:environmentId",
-      component: Environment
+      component: Environment,
+      name: "environment"
     },
     {
       path: "/program/:programId/pipeline/:pipelineId",

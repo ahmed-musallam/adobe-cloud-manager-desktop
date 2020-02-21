@@ -2,6 +2,12 @@
 .no-decoration {
   text-decoration: none;
 }
+
+.router-link-reset {
+  text-decoration: none;
+  color: unset;
+}
+
 .center-items {
   display:flex;
   justify-content:center
