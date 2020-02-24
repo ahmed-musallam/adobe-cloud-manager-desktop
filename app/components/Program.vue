@@ -1,7 +1,7 @@
 <template>
   <div>
-    <EnvironmentsTable v-if="render"></EnvironmentsTable>
     <PipelinesTable v-if="render"></PipelinesTable>
+    <EnvironmentsTable v-if="render"></EnvironmentsTable>
   </div>
 </template>
 

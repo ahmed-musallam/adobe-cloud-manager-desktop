@@ -2,43 +2,61 @@
   <div>
     <h3>Pipelines:</h3>
     <div class="bordered-box">
-      <coral-wait size="S" v-if="loading"></coral-wait>
-      <table is="coral-table" selectable="" v-else-if="!loading && pipelines.length">
+      <div v-if="loading">
+        <coral-wait size="S" v-if="loading"></coral-wait>
+      </div>
+      <table
+        is="coral-table"
+        variant="quiet"
+        selectable=""
+        v-else-if="!loading && pipelines.length"
+      >
         <colgroup>
-          <col is="coral-table-column" />
-          <col is="coral-table-column" sortable="" sortabledirection="ascending" />
+          <col is="coral-table-column" sortable direction="ascending" />
+          <col is="coral-table-column" sortable="" />
           <col is="coral-table-column" sortable="" />
         </colgroup>
         <thead is="coral-table-head">
           <tr is="coral-table-row">
+            <th is="coral-table-headercell">Pipeline</th>
             <th is="coral-table-headercell">Status</th>
-            <th is="coral-table-headercell">Name</th>
-            <th is="coral-table-headercell">Last Finished</th>
+            <th is="coral-table-headercell"></th>
           </tr>
         </thead>
         <tbody is="coral-table-body">
-          <tr
-            is="coral-table-row"
-            v-for="pipeline in pipelines"
-            :key="pipeline.id"
-            @click="goToPipeline(pipeline.id)"
-          >
-            <td is="coral-table-cell">
-              <coral-status v-if="pipeline.status == 'IDLE'" variant="success">
-                {{ pipeline.status }}
-              </coral-status>
-              <coral-status v-else-if="pipeline.status == 'BUSY'" variant="info">
-                {{ pipeline.status }}
-              </coral-status>
-              <coral-status v-else-if="pipeline.status == 'WAITING'" variant="warning">
-                {{ pipeline.status }}
-              </coral-status>
+          <tr is="coral-table-row" v-for="pipeline in pipelines" :key="pipeline.id">
+            <td is="coral-table-cell" @click="goToPipeline(pipeline.id)">
+              <span class="d-block"
+                ><b>{{ pipeline.name }}</b></span
+              >
+              <small class="d-block" v-if="pipeline.lastFinishedAt">
+                Finished: {{ pipeline.lastFinishedAt | date }}
+              </small>
+              <small class="d-block" v-if="!pipeline.lastFinishedAt">
+                Finished: {{ pipeline.lastStartedAt | date }}
+              </small>
             </td>
-            <td is="coral-table-cell">
-              {{ pipeline.name }}
+            <td is="coral-table-cell" @click="goToPipeline(pipeline.id)">
+              <small class="d-block pipeline-status">
+                <coral-status
+                  v-if="pipeline.status"
+                  :variant="getVariantFromStatus(pipeline.status)"
+                >
+                  {{ pipeline.status }}
+                </coral-status>
+              </small>
             </td>
-            <td is="coral-table-cell">
-              {{ pipeline.lastFinishedAt | date }}
+            <td is="coral-table-cell" pipeline-actions-cell @click.self="goToPipeline(pipeline.id)">
+              <coral-quickactions
+                pipeline-quick-actions
+                target="_parent"
+                open="true"
+                threshold="2"
+                interaction="off"
+              >
+                <coral-quickactions-item icon="play">Annotate</coral-quickactions-item>
+                <coral-quickactions-item icon="pause">Paste</coral-quickactions-item>
+              </coral-quickactions>
             </td>
           </tr>
         </tbody>
@@ -57,7 +75,7 @@
 
 <script lang="ts">
   import Vue from "vue";
-  import { Pipeline } from "../client";
+  import { Pipeline, PipelineStatusEnum } from "../client";
   import CloudManagerApi from "../client/wrapper/CloudManagerApi";
   import DebugDrawer from "./DebugDrawer.vue";
   export default Vue.extend({
@@ -108,9 +126,42 @@
           console.error(err);
         }
         this.$hideLoadingScreen();
+      },
+      getVariantFromStatus(pipelineStatus: PipelineStatusEnum) {
+        switch (pipelineStatus) {
+          case PipelineStatusEnum.IDLE:
+            return "success";
+          case PipelineStatusEnum.BUSY:
+            return "info";
+          case PipelineStatusEnum.WAITING:
+            return "warning";
+          default:
+            return;
+        }
       }
     }
   });
 </script>
 
-<style scoped></style>
+<style>
+  .pipeline-status coral-status {
+    margin: 0;
+    padding: 2px;
+    min-height: 0;
+  }
+  .pipeline-status coral-status-label {
+    font-size: 80%;
+  }
+  .pipeline-status coral-status::before {
+    margin: 3px 6px;
+    margin-left: 0;
+  }
+  [pipeline-actions-cell] {
+    width: 100px;
+    position: relative;
+  }
+  [pipeline-quick-actions] {
+    position: static !important;
+    margin: 0.5em !important;
+  }
+</style>
