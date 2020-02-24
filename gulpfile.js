@@ -7,10 +7,11 @@ const exec = util.promisify(require("child_process").exec);
 
 const packager = require("electron-packager");
 const createDMG = require("electron-installer-dmg");
+const createEXE = require("electron-installer-windows");
 const path = require("path");
 const debug = !!process.env.DEBUG_E;
 
-const PACKAGER_OPTIONS = {
+const DARWIN_PACKAGER_OPTIONS = {
   name: "Cloud Manager Desktop",
   dir: "./",
   platform: "darwin",
@@ -30,6 +31,10 @@ const PACKAGER_OPTIONS = {
     "spectrum-css"
   ].map(toWildRegex)
 };
+
+const WIN_PACKAGER_OPTIONS = Object.assign({}, DARWIN_PACKAGER_OPTIONS, {
+  platform: "win32"
+});
 
 const PRETTIER_FILES = [
   "main.js",
@@ -51,7 +56,7 @@ function toWildRegex(str) {
 // spawn proccess and pipe output to stdout and stderr
 function spawnAndLog(command, params) {
   var env = Object.create(process.env);
-  const cp = spawn(command, params, { env: env });
+  const cp = spawn(command, params, { env: env, shell: process.platform == "win32" });
   if (debug) {
     cp.stdout.pipe(process.stdout);
   }
@@ -104,8 +109,14 @@ function electronTask(debug) {
   });
 }
 
-async function packageTask(cb) {
-  const appPaths = await packager(PACKAGER_OPTIONS);
+async function packageDarwinTask(cb) {
+  const appPaths = await packager(DARWIN_PACKAGER_OPTIONS);
+  console.log(`Electron app bundles created:\n${appPaths.join("\n")}`);
+  cb();
+}
+
+async function packageWinTask(cb) {
+  const appPaths = await packager(WIN_PACKAGER_OPTIONS);
   console.log(`Electron app bundles created:\n${appPaths.join("\n")}`);
   cb();
 }
@@ -132,6 +143,32 @@ function dmgTask(options) {
   });
 }
 
+function exeTask(options) {
+  return (exe = cb => {
+    const appFolder = `${options.name}-${options.platform}-${options.arch}`;
+    const appName = `${options.name}.exe`;
+    createEXE(
+      {
+        src: appFolder,
+        dest: appFolder,
+        exe: appName,
+        title: options.name,
+        name: options.name,
+        icon: `${options.icon}.ico`,
+        overwrite: true,
+        authors: ["ahmed"]
+      },
+      err => {
+        if (err) {
+          console.error(err);
+        }
+        console.log(`Electron EXE created`);
+      }
+    );
+    cb();
+  });
+}
+
 exports["prettier"] = prettierTask(false);
 exports["prettier:watch"] = prettierTask(true);
 exports["ui:build"] = series(this["prettier"], copyAssetsTask, bundleTask());
@@ -144,5 +181,7 @@ exports["electron:watch:debug"] = parallel(
   electronTask(true)
 );
 
-exports["electron:package"] = parallel(packageTask);
-exports["electron:dmg"] = series(packageTask, dmgTask(PACKAGER_OPTIONS));
+exports["electron:package:darwin"] = series(this["ui:build"], packageDarwinTask);
+exports["electron:package:win"] = series(this["ui:build"], packageWinTask);
+exports["electron:dmg"] = series(this["electron:package:darwin"], dmgTask(DARWIN_PACKAGER_OPTIONS));
+exports["electron:exe"] = series(this["electron:package:win"], exeTask(WIN_PACKAGER_OPTIONS));
