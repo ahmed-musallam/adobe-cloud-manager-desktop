@@ -155,8 +155,7 @@ function exeTask(options) {
         title: options.name,
         name: options.name,
         icon: `${options.icon}.ico`,
-        overwrite: true,
-        authors: ["ahmed"]
+        overwrite: true
       },
       err => {
         if (err) {

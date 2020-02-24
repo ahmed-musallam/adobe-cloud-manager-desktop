@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Adobe Cloud Manager Desktop",
   "main": "main.js",
+  "author":"Ahmed Musallam <ahmed@ahmedmusallam.com> (https://ahmedmusallam.com)",
   "browserslist": [
     "last 1 Chrome versions"
   ],
