@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3>Environments:</h3>
-    <div class="bordered-box">
+    <div :class="{ 'bordered-box': loading }">
       <coral-wait size="S" v-if="loading"></coral-wait>
       <table is="coral-table" selectable="" v-else-if="!loading && environments.length">
         <colgroup>

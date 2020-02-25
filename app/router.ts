@@ -25,7 +25,8 @@ export default new Router({
     },
     {
       path: "/program/:programId/pipeline/:pipelineId/execution/:executionId",
-      component: Execution
+      component: Execution,
+      name: "execution"
     },
     {
       path: "/settings",

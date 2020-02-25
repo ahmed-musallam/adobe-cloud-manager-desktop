@@ -27,6 +27,7 @@ declare module 'vue/types/vue' {
     $downloadFile: (url: string) => void
     $sleep: (msec: number) => Promise<any>,
     $openExternalLink: (link: string) => void
+    $toast: (text: string, variant?: string, dismissAfter?: number) => HTMLElement;
     $poll: <T> (
       fn: () => Promise<any>,
       onData: (data: T) => void) => void

@@ -1,7 +1,6 @@
 import { loadingActions } from "../components/LoadingStore";
-import CloudManagerApi from "../client/wrapper/CloudManagerApi";
-import { VueConstructor } from "vue/types/umd";
 import { PluginObject } from "vue";
+import { Toast } from "@adobe/coral-spectrum/coral-component-toast";
 
 export const Plugins: PluginObject<never> = {
   install(vue) {
@@ -17,6 +16,22 @@ export const Plugins: PluginObject<never> = {
       link.href = url;
       link.download = url.substring(url.lastIndexOf("/") + 1, url.length);
       link.click();
+    },
+    $toast: function(text: string, variant = "info", dismissAfter = 5000) {
+      const toast = new Toast().set({
+        content: {
+          textContent: text
+        },
+        variant: variant || "info",
+        autoDismiss: dismissAfter
+      });
+      toast.show();
+      toast.on("coral-overlay:close", () => {
+        if (Toast._queue && Toast._queue.length === 0) {
+          // empty queue, destroy elements, no need to keep them in dom
+          document.querySelectorAll("coral-toast").forEach(toast => toast.remove());
+        }
+      });
     },
     $poll: async function poll<T>(
       fn: () => Promise<any>,

@@ -1,5 +1,5 @@
 <template>
-  <coral-drawer>
+  <coral-drawer debug-drawer>
     <p>{{ title }}</p>
     <textarea style="width:100%;height:500px">
       {{ JSON.stringify(data, null, 4) }}
@@ -15,4 +15,13 @@
   });
 </script>
 
-<style scoped></style>
+<style scoped>
+  coral-drawer {
+    padding: 0;
+  }
+</style>
+<style>
+  [debug-drawer] [handle="toggleButton"] {
+    margin-left: -23px;
+  }
+</style>
