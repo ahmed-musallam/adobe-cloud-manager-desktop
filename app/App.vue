@@ -42,7 +42,6 @@
             style="margin-left: 0;"
             @click="goForward"
           ></button>
-          <!--
           <router-link to="/settings" role="link" tabindex="0">
             <button
               is="coral-button"
@@ -51,7 +50,6 @@
               style="margin-right: 0.5em;"
             ></button>
           </router-link>
-          -->
         </div>
         <coral-shell-menubar>
           <coral-shell-menubar-item
@@ -288,6 +286,6 @@
     padding: 7px;
   }
   .workspaces {
-    width: 300px;
+    width: 270px;
   }
 </style>

@@ -86,7 +86,6 @@
   import { Pipeline, PipelineStatusEnum } from "../client";
   import CloudManagerApi from "../client/wrapper/CloudManagerApi";
   import DebugDrawer from "./DebugDrawer.vue";
-  import { Toast } from "@adobe/coral-spectrum/coral-component-toast";
   export default Vue.extend({
     name: "PipelinesTable",
     data() {

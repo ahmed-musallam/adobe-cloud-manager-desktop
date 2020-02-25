@@ -1,6 +1,6 @@
 import { loadingActions } from "../components/LoadingStore";
 import { PluginObject } from "vue";
-import { Toast } from "@adobe/coral-spectrum/coral-component-toast";
+const Toast = customElements.get("coral-toast");
 
 export const Plugins: PluginObject<never> = {
   install(vue) {

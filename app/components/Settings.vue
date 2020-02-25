@@ -1,6 +1,7 @@
 <template>
   <div>
     <h3>Settings:</h3>
+    <!--
     <coral-accordion>
       <coral-accordion-item>
         <coral-accordion-item-label>General</coral-accordion-item-label>
@@ -25,6 +26,7 @@
     >
       Quit
     </button>
+    -->
   </div>
 </template>
 

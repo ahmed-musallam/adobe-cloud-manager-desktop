@@ -30,7 +30,8 @@ export default new Router({
     },
     {
       path: "/settings",
-      component: Settings
+      component: Settings,
+      name: "settings"
     },
     {
       path: "/auth-error",
