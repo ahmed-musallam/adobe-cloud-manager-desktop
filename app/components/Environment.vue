@@ -6,11 +6,26 @@
     </p>
     <h4>Environment Links:</h4>
     <coral-anchorlist class="bordered-box">
-      <a is="coral-anchorlist-item" icon="link" @click="$openExternalLink(links.author)"
+      <a
+        is="coral-anchorlist-item"
+        icon="link"
+        v-if="links.author"
+        @click="$openExternalLink(links.author)"
         ><b>Author</b> <em>{{ links.author }}</em></a
       >
-      <a is="coral-anchorlist-item" icon="link" @click="$openExternalLink(links.publish)"
+      <a
+        is="coral-anchorlist-item"
+        icon="link"
+        v-if="links.publish"
+        @click="$openExternalLink(links.publish)"
         ><b>Publish</b> <em>{{ links.publish }}</em></a
+      >
+      <a
+        is="coral-anchorlist-item"
+        icon="link"
+        v-if="links.devConsole"
+        @click="$openExternalLink(links.devConsole)"
+        ><b>Dev Console</b> <em>{{ links.devConsole }}</em></a
       >
     </coral-anchorlist>
     <h4>Logs:</h4>
@@ -36,7 +51,10 @@
         <coral-wait centered=""></coral-wait>
       </div>
       <div v-else-if="logsStatus === 'loaded'">
-        <table is="coral-table">
+        <div class="bordered-box" v-if="!filteredLogDownloads || !filteredLogDownloads.length">
+          No Logs available for selected days.
+        </div>
+        <table is="coral-table" v-else>
           <colgroup>
             <col is="coral-table-column" sortable="" sortabledirection="ascending" />
             <col is="coral-table-column" sortable="" />
@@ -85,178 +103,187 @@
 </template>
 
 <script lang="ts">
-  import { Pipeline, Program, EnvironmentList, Environment, HalLink } from "../client";
-  import Vue from "vue";
-  import Select, { Option } from "./Select.vue";
-  import { CoralEvent } from "vue/types/vue";
-  import globalAxios from "axios";
-  import CloudManagerApi from "../client/wrapper/CloudManagerApi";
+    import { Pipeline, Program, EnvironmentList, Environment, HalLink } from "../client";
+    import Vue from "vue";
+    import Select, { Option } from "./Select.vue";
+    import { CoralEvent } from "vue/types/vue";
+    import globalAxios from "axios";
+    import CloudManagerApi from "../client/wrapper/CloudManagerApi";
 
-  interface UndocumentedLogOption {
-    service: string;
-    name: string;
-  }
-  interface UndocumentedEnvironment extends Environment {
-    availableLogOptions: UndocumentedLogOption[];
-  }
-  interface LogDownloadHalLink extends HalLink {
-    _links: {
-      http__ns_adobe_com_adobecloud_rel_logs_download: HalLink;
-      http__ns_adobe_com_adobecloud_rel_logs_tail: HalLink;
-    };
-  }
-  interface LogHalLink extends HalLink {
-    http__ns_adobe_com_adobecloud_rel_logs: HalLink;
-    _links: LogDownloadHalLink;
-  }
-
-  interface LogDownlodResult {
-    redirect: string;
-  }
-  export default Vue.extend({
-    name: "Environment",
-
-    data() {
-      return {
-        environment: {} as Environment,
-        links: {} as any,
-        logDays: "1",
-        logService: "",
-        logsStatus: "loading",
-        logServiceOptions: [] as Option[],
-        logDownloads: [],
-        filteredLogDownloads: [],
-        filter: "",
-        days: [
-          { value: "1", title: "Today" },
-          { value: "2", title: "Last Two Days" },
-          { value: "3", title: "Last Three Days" },
-          { value: "7", title: "Last Seven Days" }
-        ]
+    interface UndocumentedLogOption {
+      service: string;
+      name: string;
+    }
+    interface UndocumentedEnvironment extends Environment {
+      availableLogOptions: UndocumentedLogOption[];
+    }
+    interface LogDownloadHalLink extends HalLink {
+      _links: {
+        http__ns_adobe_com_adobecloud_rel_logs_download: HalLink;
+        http__ns_adobe_com_adobecloud_rel_logs_tail: HalLink;
       };
-    },
-    components: {
-      Select
-    },
-    async created() {
-      this.$showLoadingScreen();
-      const client = await CloudManagerApi.getInstance();
-      const env = await client.environments.getEnvironment(
-        this.$route.params.programId,
-        this.$route.params.environmentId
-      );
-      this.environment = env.data;
-      const links = this.environment?._links;
-      this.links = {
-        author: links?.http__ns_adobe_com_adobecloud_rel_author?.href,
-        publish: links?.http__ns_adobe_com_adobecloud_rel_publish?.href,
-        // @ts-ignore // undocumented link "/api/program/7752/environment/12979/logs?service={service}&name={name}&days={days}",
-        logs: links?.http__ns_adobe_com_adobecloud_rel_logs as HalLink
-      };
+    }
+    interface LogHalLink extends HalLink {
+      http__ns_adobe_com_adobecloud_rel_logs: HalLink;
+      _links: LogDownloadHalLink;
+    }
 
-      const undocumentedEnv = this.environment as UndocumentedEnvironment;
-      const options = undocumentedEnv?.availableLogOptions?.map(o => o.service);
+    interface LogDownlodResult {
+      redirect: string;
+    }
+    export default Vue.extend({
+      name: "Environment",
 
-      this.logServiceOptions = [...new Set(options)].map(o => ({
-        value: o,
-        title: o
-      }));
-      this.logServiceOptions.unshift({
-        value: "",
-        title: "All"
-      });
-      this.showLogs();
-      this.$hideLoadingScreen();
-      //const logsLink =  as HalLink;
-      //await client.links.getLink(logsLink,)
-    },
-    watch: {
-      filter: function(newVal) {
-        this.filterLogs();
-      }
-    },
-    methods: {
-      async showLogs() {
-        this.logsStatus = "loading";
-        const client = await CloudManagerApi.getInstance();
-        const response = await client.links.getLink(
-          this.links.logs,
-          {
-            days: this.logDays
-          },
-          href =>
-            // another unfortunate thing. the URI template returned for env logs makes these params required
-            // when they are optional.. so fixing that here... probably a bad idea but works ¯\_(ツ)_/¯
-            href.replace("?service={service}&name={name}&days={days}", "{?service,name,days}")
-        );
-        this.logDownloads = response.data?._embedded?.downloads || [];
-        this.filteredLogDownloads = this.logDownloads;
-        this.filterLogs();
-        this.logsStatus = "loaded";
+      data() {
+        return {
+          environment: {} as Environment,
+          links: {} as any,
+          logDays: "1",
+          logService: "",
+          logsStatus: "loading",
+          logServiceOptions: [] as Option[],
+          logDownloads: [],
+          filteredLogDownloads: [],
+          filter: "",
+          days: [
+            { value: "1", title: "Today" },
+            { value: "2", title: "Last Two Days" },
+            { value: "3", title: "Last Three Days" },
+            { value: "7", title: "Last Seven Days" }
+          ]
+        };
       },
-      getLogServices() {
-        // @ts-ignore // undocumented adobe api
-        const services = this.environment?.availableLogOptions?.map(
-          // @ts-ignore // undocumented adobe api
-          o => o.service
-        );
-        return [...new Set(services)];
+      components: {
+        Select
       },
-      async downloadLog(logDownload: LogDownloadHalLink) {
+      async created() {
         this.$showLoadingScreen();
         const client = await CloudManagerApi.getInstance();
-        const result = await client.links.getLink(
-          logDownload?._links?.http__ns_adobe_com_adobecloud_rel_logs_download
+        const env = await client.environments.getEnvironment(
+          this.$route.params.programId,
+          this.$route.params.environmentId
         );
-        const download = result.data as LogDownlodResult;
-        this.$downloadFile(download.redirect);
+        this.environment = env.data;
+        const links = this.environment?._links;
+        this.links = {
+          author: links?.http__ns_adobe_com_adobecloud_rel_author?.href,
+          publish: links?.http__ns_adobe_com_adobecloud_rel_publish?.href,
+          devConsole: links?.http__ns_adobe_com_adobecloud_rel_developerConsole?.href
+          // @ts-ignore // undocumented link "/api/program/7752/environment/12979/logs?service={service}&name={name}&days={days}",
+          logs: links?.http__ns_adobe_com_adobecloud_rel_logs as HalLink
+        };
+
+        const undocumentedEnv = this.environment as UndocumentedEnvironment;
+        const options = undocumentedEnv?.availableLogOptions?.map(o => o.service);
+
+        this.logServiceOptions = [...new Set(options)].map(o => ({
+          value: o,
+          title: o
+        }));
+        this.logServiceOptions.unshift({
+          value: "",
+          title: "All"
+        });
+        this.showLogs();
         this.$hideLoadingScreen();
+        //const logsLink =  as HalLink;
+        //await client.links.getLink(logsLink,)
       },
-      async tailLog(logDownload: LogDownloadHalLink) {
-        const logUrl = logDownload?._links?.http__ns_adobe_com_adobecloud_rel_logs_tail?.href || "";
-        console.log("tailing: ", logUrl);
-        let logWindow = new electron.remote.BrowserWindow({
-          show: false,
-          webPreferences: {
-            preload: location.pathname.replace("index.html", "preload.js")
-          }
-        });
-        const logTailPath = location.pathname.replace("index.html", "logTail.html");
-        //logWindow.openDevTools();
-        logWindow.loadURL(`file://${logTailPath}?url=${encodeURIComponent(logUrl)}`);
-        logWindow.once("ready-to-show", () => {
-          //logWindow.reload();
-          logWindow.show();
-        });
-
-        logWindow.on("closed", () => {
-          logWindow = null;
-        });
-        return logWindow;
-
-        // this.$router.push({
-        //   name: "logtail",
-        //   params: {
-        //     programId: this.$route.params.programId,
-        //     environmentId: this.$route.params.environmentId
-        //   },
-        //   query: { url: logUrl }
-        // });
+      watch: {
+        filter: function(newVal) {
+          this.filterLogs();
+        }
       },
-      filterLogs() {
-        this.filteredLogDownloads = this.logDownloads.filter(l => {
-          return (
-            !this.filter ||
-            // @ts-ignore // undocumented adobe api
-            l.service.indexOf(this.filter) !== -1 ||
-            // @ts-ignore // undocumented adobe api
-            l.name.indexOf(this.filter) !== -1
+      methods: {
+        async showLogs() {
+          this.logsStatus = "loading";
+          try {
+  const client = await CloudManagerApi.getInstance();
+          const response = await client.links.getLink(
+            this.links.logs,
+            {
+              days: this.logDays
+            },
+            href =>
+              // another unfortunate thing. the URI template returned for env logs makes these params required
+              // when they are optional.. so fixing that here... probably a bad idea but works ¯\_(ツ)_/¯
+              href.replace("?service={service}&name={name}&days={days}", "{?service,name,days}")
           );
-        });
-        this.$forceUpdate();
+          this.logDownloads = response.data?._embedded?.downloads || [];
+          this.filteredLogDownloads = this.logDownloads;
+          this.filterLogs();
+          } catch (err) {
+            console.error(err);
+            this.$toast(err?.response?.data?.errors?.join("\n") || err, "error")
+          }
+          finally {
+          this.logsStatus = "loaded";
+          }
+
+        },
+        getLogServices() {
+          // @ts-ignore // undocumented adobe api
+          const services = this.environment?.availableLogOptions?.map(
+            // @ts-ignore // undocumented adobe api
+            o => o.service
+          );
+          return [...new Set(services)];
+        },
+        async downloadLog(logDownload: LogDownloadHalLink) {
+          this.$showLoadingScreen();
+          const client = await CloudManagerApi.getInstance();
+          const result = await client.links.getLink(
+            logDownload?._links?.http__ns_adobe_com_adobecloud_rel_logs_download
+          );
+          const download = result.data as LogDownlodResult;
+          this.$downloadFile(download.redirect);
+          this.$hideLoadingScreen();
+        },
+        async tailLog(logDownload: LogDownloadHalLink) {
+          const logUrl = logDownload?._links?.http__ns_adobe_com_adobecloud_rel_logs_tail?.href || "";
+          console.log("tailing: ", logUrl);
+          let logWindow = new electron.remote.BrowserWindow({
+            show: false,
+            webPreferences: {
+              preload: location.pathname.replace("index.html", "preload.js")
+            }
+          });
+          const logTailPath = location.pathname.replace("index.html", "logTail.html");
+          //logWindow.openDevTools();
+          logWindow.loadURL(`file://${logTailPath}?url=${encodeURIComponent(logUrl)}`);
+          logWindow.once("ready-to-show", () => {
+            //logWindow.reload();
+            logWindow.show();
+          });
+
+          logWindow.on("closed", () => {
+            logWindow = null;
+          });
+          return logWindow;
+
+          // this.$router.push({
+          //   name: "logtail",
+          //   params: {
+          //     programId: this.$route.params.programId,
+          //     environmentId: this.$route.params.environmentId
+          //   },
+          //   query: { url: logUrl }
+          // });
+        },
+        filterLogs() {
+          this.filteredLogDownloads = this.logDownloads.filter(l => {
+            return (
+              !this.filter ||
+              // @ts-ignore // undocumented adobe api
+              l.service.indexOf(this.filter) !== -1 ||
+              // @ts-ignore // undocumented adobe api
+              l.name.indexOf(this.filter) !== -1
+            );
+          });
+          this.$forceUpdate();
+        }
       }
-    }
-  });
+    });
 </script>
 
 <style scoped></style>
