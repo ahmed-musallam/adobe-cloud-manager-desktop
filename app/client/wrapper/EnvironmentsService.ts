@@ -1,6 +1,15 @@
 import { BaseService } from "./BaseService";
 import { EnvironmentsApi } from "../typescript-axios";
 export default class EnvironmentsService extends BaseService<EnvironmentsApi> {
+  deleteEnvironment(programId: string, environmentId: string, options?: any) {
+    return this.wrappedApi.deleteEnvironment(
+      programId,
+      environmentId,
+      this.orgId,
+      this.authorization,
+      this.apiKey
+    );
+  }
   getEnvironment(programId: string, environmentId: string, options?: any) {
     return this.wrappedApi.getEnvironment(
       programId,

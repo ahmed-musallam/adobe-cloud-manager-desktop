@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Adobe Cloud Manager Desktop",
   "main": "main.js",
-  "author":"Ahmed Musallam <ahmed@ahmedmusallam.com> (https://ahmedmusallam.com)",
+  "author": "Ahmed Musallam <ahmed@ahmedmusallam.com> (https://ahmedmusallam.com)",
   "browserslist": [
     "last 1 Chrome versions"
   ],
@@ -49,6 +49,7 @@
     "axios": "^0.19.2",
     "clusterize.js": "^0.18.1",
     "deep-rename-keys": "^0.2.1",
+    "electron-store": "^5.1.1",
     "keytar": "^5.0.0",
     "menubar": "^8.0.0",
     "uritemplate": "^0.3.4",

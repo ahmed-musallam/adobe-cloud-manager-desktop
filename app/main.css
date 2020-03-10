@@ -16,8 +16,13 @@
 .bordered-box {
   border: 1px solid rgb(225, 225, 225);
   padding: 1em;
+  border-radius: 4px;
 }
 
 .d-block {
   display: block !important;
+}
+
+coral-alert {
+  width: 100%;
 }
