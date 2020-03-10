@@ -1,4 +1,5 @@
 import AuthStore from "../../util/AuthStore";
+
 export default class AuthParams {
   public orgId: string | undefined;
   public authorization: string | undefined;
@@ -7,6 +8,13 @@ export default class AuthParams {
     this.orgId = orgId;
     this.authorization = `Bearer ${accessToken}`;
     this.apiKey = apiKey;
+  }
+  public asHeadersObject(): Headers {
+    return {
+      "x-gw-ims-org-id": this.orgId,
+      Authorization: this.authorization,
+      "x-api-key": this.apiKey
+    };
   }
   static async getDefault(): Promise<AuthParams> {
     const account = await AuthStore.getCurrentAccount();
