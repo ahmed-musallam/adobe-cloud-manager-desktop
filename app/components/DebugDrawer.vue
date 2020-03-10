@@ -20,8 +20,3 @@
     padding: 0;
   }
 </style>
-<style>
-  [debug-drawer] [handle="toggleButton"] {
-    margin-left: -23px;
-  }
-</style>
