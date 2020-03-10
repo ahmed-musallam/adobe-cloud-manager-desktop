@@ -44,7 +44,7 @@
                 pipeline-quick-actions
                 target="_parent"
                 open="true"
-                threshold="2"
+                threshold="0"
                 interaction="off"
               >
                 <coral-quickactions-item
@@ -63,6 +63,9 @@
                 </coral-quickactions-item>
                 <coral-quickactions-item icon="viewList" @click.stop="goToPipeline(pipeline.id)">
                   View All Executions
+                </coral-quickactions-item>
+                <coral-quickactions-item icon="bell" @click.stop="enableNotifications(pipeline)">
+                  Enable Notifications
                 </coral-quickactions-item>
               </coral-quickactions>
             </td>
@@ -86,6 +89,7 @@
   import { Pipeline, PipelineStatusEnum } from "../client";
   import CloudManagerApi from "../client/wrapper/CloudManagerApi";
   import DebugDrawer from "./DebugDrawer.vue";
+  import PipelineNotification from "../util/PipelineNotification";
   export default Vue.extend({
     name: "PipelinesTable",
     data() {
@@ -109,6 +113,13 @@
             pipelineId: pipelineId
           }
         });
+      },
+      enableNotifications(pipeline: Pipeline) {
+        console.log("Enable Notifications!");
+        const worker = PipelineNotification.startPipelineNotifications(pipeline);
+        worker.onmessage = function(e) {
+          console.log(e.data);
+        };
       },
       async updatePipelines(programId: string) {
         this.loading = true;
