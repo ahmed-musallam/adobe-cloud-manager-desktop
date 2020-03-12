@@ -1,6 +1,6 @@
 const workers: { [key: string]: Worker } = {};
 import AuthParams from "../client/wrapper/AuthParams";
-import { Pipeline } from "../client";
+import { Pipeline, PipelineStatusEnum } from "../client";
 class NotificationDetail {
   constructor(public pipeline: Pipeline, public authHeaders: Headers) {}
 }
@@ -17,19 +17,32 @@ export default class PipelineNotification {
     workers[pipelineId]?.terminate();
   }
   private static createNotificationWorker() {
+    // code must all be here since this function is stringified and run as a webworker.
     return this.createWorker(function(e) {
       const notificationDetail: NotificationDetail = e.data;
       const pipeline = notificationDetail.pipeline;
-      console.log("worker recieved: ", notificationDetail);
-      fetch(
-        `https://cloudmanager.adobe.io/api/program/${pipeline.programId}/pipeline/${pipeline.id}`,
-        {
-          headers: notificationDetail.authHeaders
+      async function getPipeline() {
+        return fetch(
+          `https://cloudmanager.adobe.io/api/program/${pipeline.programId}/pipeline/${pipeline.id}`,
+          { headers: notificationDetail.authHeaders }
+        );
+      }
+      //console.log("worker recieved: ", notificationDetail);
+      async function poll() {
+        for (;;) {
+          let response = await getPipeline();
+          if (response.status != 200) {
+            const err = `${response.status} Error while fetching Pipeline: ${pipeline?.id}. ${response.statusText}`;
+            console.error(err);
+            postMessage(err);
+            break; //exit
+          } else {
+            let jsonResponse = await response.json();
+            console.log("got response: ", jsonResponse);
+          }
         }
-      )
-        .then(response => response.json())
-        .then(result => console.log(result))
-        .catch(err => console.error("got err: ", err));
+      }
+      poll();
     });
   }
   private static createWorker(fn: any) {
