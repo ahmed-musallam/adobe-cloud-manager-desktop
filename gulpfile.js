@@ -95,9 +95,11 @@ function copyAssetsTask(cb) {
 }
 
 function bundleTask(watch) {
+  const publicUrl = path.join(__dirname, "dist");
   const bundler = new Bundler("./app/main.ts", {
     watch: !!watch,
-    hmrHostname: "localhost"
+    hmrHostname: "localhost",
+    publicUrl: publicUrl
   });
   return (bundle = () => bundler.bundle());
 }
