@@ -89,7 +89,7 @@
   import { Pipeline, PipelineStatusEnum } from "../client";
   import CloudManagerApi from "../client/wrapper/CloudManagerApi";
   import DebugDrawer from "./DebugDrawer.vue";
-  import PipelineNotification from "../util/PipelineNotification";
+  import NotificationUtil from "../util/NotificationUtil";
   export default Vue.extend({
     name: "PipelinesTable",
     data() {
@@ -114,12 +114,9 @@
           }
         });
       },
-      enableNotifications(pipeline: Pipeline) {
+      async enableNotifications(pipeline: Pipeline) {
         console.log("Enable Notifications!");
-        const worker = PipelineNotification.startPipelineNotifications(pipeline);
-        worker.onmessage = function(e) {
-          console.log(e.data);
-        };
+        await NotificationUtil.startPipelineNotifications(pipeline);
       },
       async updatePipelines(programId: string) {
         this.loading = true;

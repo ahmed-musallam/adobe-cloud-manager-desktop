@@ -24,10 +24,12 @@
             <td is="coral-table-cell">
               {{ environment.name }}
             </td>
+            <!--
             <td is="coral-table-cell">
               {{ environment.type }}
               <button @click.stop="deleteEnvironment(environment)">delete</button>
             </td>
+            -->
           </tr>
         </tbody>
       </table>
