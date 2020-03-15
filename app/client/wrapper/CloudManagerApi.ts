@@ -37,19 +37,25 @@ export default class CloudManagerApi {
   static async getInstance(): Promise<CloudManagerApiInstance> {
     if (!CloudManagerApi.instance) {
       const authParams = await AuthParams.getDefault();
-      CloudManagerApi.instance = {
-        logs: new LogsService(authParams, undefined),
-        links: new LinksService(authParams, undefined),
-        branches: new BrachesService(authParams, new BranchesApi()),
-        environments: new EnvironmentsService(authParams, new EnvironmentsApi()),
-        pipelineExecution: new PipelineExecutionService(authParams, new PipelineExecutionApi()),
-        pipelines: new PipelinesService(authParams, new PipelinesApi()),
-        programs: new ProgramsService(authParams, new ProgramsApi()),
-        repositories: new RepositoriesService(authParams, new RepositoriesApi())
-      };
+      CloudManagerApi.instance = this.newInstance(authParams);
       CloudManagerApi.setupRetryInterceptor();
     }
     return CloudManagerApi.instance;
+  }
+  /**
+   * Prefer using getInstance instead.
+   */
+  public static newInstance(authParams: AuthParams): CloudManagerApiInstance {
+    return {
+      logs: new LogsService(authParams, undefined),
+      links: new LinksService(authParams, undefined),
+      branches: new BrachesService(authParams, new BranchesApi()),
+      environments: new EnvironmentsService(authParams, new EnvironmentsApi()),
+      pipelineExecution: new PipelineExecutionService(authParams, new PipelineExecutionApi()),
+      pipelines: new PipelinesService(authParams, new PipelinesApi()),
+      programs: new ProgramsService(authParams, new ProgramsApi()),
+      repositories: new RepositoriesService(authParams, new RepositoriesApi())
+    };
   }
 
   static async refresh() {
