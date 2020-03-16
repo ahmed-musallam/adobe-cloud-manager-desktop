@@ -26,3 +26,17 @@
 coral-alert {
   width: 100%;
 }
+
+coral-quickactions [variant="quietaction"][toggle="false"] [icon]:after{
+  content: ' ';
+  width: 0;
+  height: 25px;
+  top: 4px;
+  transform: rotate(30deg);
+  left: calc(50% - 2px);
+  position: absolute;
+  border-left: 2px solid rgba(245,245,245,0.9);
+  border-right: 2px solid rgb(110, 110, 110);
+  font-size: 23px;
+  font-weight: 900;
+}
