@@ -6,11 +6,6 @@
         <coral-wait size="S" v-if="loading"></coral-wait>
       </div>
       <table is="coral-table" selectable="" v-else-if="!loading && pipelines.length">
-        <colgroup>
-          <col is="coral-table-column" sortable direction="ascending" />
-          <col is="coral-table-column" sortable="" />
-          <col is="coral-table-column" sortable="" />
-        </colgroup>
         <thead is="coral-table-head">
           <tr is="coral-table-row">
             <th is="coral-table-headercell">Pipeline</th>
@@ -64,7 +59,10 @@
                 <coral-quickactions-item icon="viewList" @click.stop="goToPipeline(pipeline.id)">
                   View All Executions
                 </coral-quickactions-item>
-                <coral-quickactions-item icon="bell" @click.stop="enableNotifications(pipeline)">
+                <coral-quickactions-item
+                  icon="bell"
+                  @click.stop="enableNotifications(pipeline, $event)"
+                >
                   Enable Notifications
                 </coral-quickactions-item>
               </coral-quickactions>
@@ -114,9 +112,10 @@
           }
         });
       },
-      async enableNotifications(pipeline: Pipeline) {
+      async enableNotifications(pipeline: Pipeline, event: any) {
         console.log("Enable Notifications!");
         await NotificationUtil.startPipelineNotifications(pipeline);
+        event.target.setAttribute("toggle", "false");
       },
       async updatePipelines(programId: string) {
         this.loading = true;
