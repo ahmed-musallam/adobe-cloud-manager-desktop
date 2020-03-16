@@ -4,10 +4,6 @@
     <div :class="{ 'bordered-box': loading }">
       <coral-wait size="S" v-if="loading"></coral-wait>
       <table is="coral-table" selectable="" v-else-if="!loading && environments.length">
-        <colgroup>
-          <col is="coral-table-column" sortable="" sortabledirection="ascending" />
-          <col is="coral-table-column" sortable="" />
-        </colgroup>
         <thead is="coral-table-head">
           <tr is="coral-table-row">
             <th is="coral-table-headercell">Name</th>
@@ -24,12 +20,10 @@
             <td is="coral-table-cell">
               {{ environment.name }}
             </td>
-            <!--
             <td is="coral-table-cell">
               {{ environment.type }}
-              <button @click.stop="deleteEnvironment(environment)">delete</button>
+              <!-- <button @click.stop="deleteEnvironment(environment)">delete</button> -->
             </td>
-            -->
           </tr>
         </tbody>
       </table>
