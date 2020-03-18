@@ -6,17 +6,17 @@ import AuthParams from "../client/wrapper/AuthParams";
 import { NotificationMessage, NotificationMessageChange } from "./NotificationMessage";
 
 const WAIT = 10000;
-let currentExecutionId: string;
+let currentPipelineExecutionStatus: PipelineExecutionStatusEnum;
 
-let pipeline: Pipeline;
+let execution: PipelineExecution;
 let authParams: AuthParams;
 let client: CloudManagerApiInstance;
 
 async function handleMessage(e: MessageEvent) {
-  const notificationMessage: NotificationMessage<Pipeline> = e.data;
-  pipeline = notificationMessage.data as Pipeline;
+  const notificationMessage: NotificationMessage<PipelineExecution> = e.data;
+  execution = notificationMessage.data as PipelineExecution;
   authParams = notificationMessage.authParams as AuthParams;
-  if (!pipeline || !authParams) {
+  if (!execution || !authParams) {
     console.error("Missing pipeline or authParams, terminating worker.");
     self.close();
   }
@@ -24,26 +24,18 @@ async function handleMessage(e: MessageEvent) {
   poll();
 }
 
-function handleNewExecution(execution: PipelineExecution) {
-  if (execution && currentExecutionId !== execution.id) {
-    // new execution
+function handleExecutionStatusChange(execution: PipelineExecution) {
+  if (currentPipelineExecutionStatus !== execution.status) {
+    self.postMessage(new NotificationMessageChange({} as Pipeline, execution));
+    currentPipelineExecutionStatus = execution.status as PipelineExecutionStatusEnum;
+  }
 
-    const worker = new Worker("./ExecutionNotification.worker.ts");
-    worker.onerror = function(ev: ErrorEvent) {
-      new Notification("Pipeline Error!", {
-        body: `${pipeline.name} sent error: ${ev.error}`
-      });
-      worker.terminate();
-    };
-    worker.onmessage = function(ev: MessageEvent) {
-      const message = ev.data as NotificationMessageChange;
-      self.postMessage(new NotificationMessageChange(pipeline, message.execution));
-    };
-
-    worker.postMessage(new NotificationMessage(execution, authParams));
-    currentExecutionId = String(execution.id);
-  } else {
-    console.log("still the same execution noting changed...");
+  if (
+    currentPipelineExecutionStatus !== PipelineExecutionStatusEnum.NOT_STARTED &&
+    currentPipelineExecutionStatus !== PipelineExecutionStatusEnum.RUNNING &&
+    currentPipelineExecutionStatus !== PipelineExecutionStatusEnum.CANCELLING
+  ) {
+    self.close(); // if this execution is not started, or not running, terminate
   }
 }
 
@@ -52,12 +44,13 @@ async function poll() {
     let stopPolling = false;
     let response: any;
     try {
-      response = await client.pipelineExecution.getCurrentExecution(
-        String(pipeline.programId),
-        String(pipeline.id)
+      response = await client.pipelineExecution.getExecution(
+        String(execution.programId),
+        String(execution.pipelineId),
+        String(execution.id)
       );
       const data = response.data;
-      handleNewExecution(data);
+      handleExecutionStatusChange(data);
     } catch (e) {
       var shouldError = false;
       const response = e.response;
@@ -80,8 +73,9 @@ async function poll() {
       if (shouldError) {
         stopPolling = true; // stop polling
         const status = response?.status || "UNKNOWN";
-        const error = `${status} Error while fetching Pipeline: ${pipeline?.id}. ${response?.statusText}`;
+        const error = `${status} Error while fetching Execution: ${execution?.id} for Pipeline ${execution.pipelineId}. ${response?.statusText}`;
         console.error(error, e);
+        self.close();
         throw new Error(error);
       }
     }
