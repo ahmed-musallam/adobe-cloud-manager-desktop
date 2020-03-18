@@ -1,22 +1,14 @@
 <template>
   <div>
     <h3>Settings:</h3>
-    <!--
-    <coral-accordion>
-      <coral-accordion-item>
-        <coral-accordion-item-label>General</coral-accordion-item-label>
-        <form class="coral-Form coral-Form--vertical">
-          <label id="label1" class="coral-Form-fieldlabel"
-            >Pipeline Status Refresh Interval (seconds)</label
-          >
-          <coral-numberinput labelledby="label1" value="5"></coral-numberinput>
-        </form>
-      </coral-accordion-item>
-      <coral-accordion-item>
-        <coral-accordion-item-label>Authentication</coral-accordion-item-label>
-        <AuthForm></AuthForm>
-      </coral-accordion-item>
-    </coral-accordion>
+    <hr />
+    <form class="coral-FormGroup coral-FormGroup--labelsAbove">
+      <div class="coral-FormGroup-item">
+        <coral-checkbox v-model="debug">Debug Mode</coral-checkbox>
+        <div v-if="debug">debug</div>
+      </div>
+    </form>
+
     <button
       is="coral-button"
       variant="quietaction"
@@ -26,26 +18,26 @@
     >
       Quit
     </button>
-    -->
   </div>
 </template>
 
 <script lang="ts">
-  import AuthForm from "./AuthForm.vue";
   import Vue from "vue";
+  import { electronStore } from "../../global";
 
   export default Vue.extend({
     name: "Settings",
-    components: {
-      AuthForm
-    },
+    components: {},
     data() {
-      return {};
+      return {
+        debug: false
+      };
     },
     methods: {
       quitApp() {
         electron.remote.getCurrentWindow().close();
-      }
+      },
+      log: console.log
     }
   });
 </script>
