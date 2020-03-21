@@ -11,6 +11,7 @@ import { NotificationMessage, NotificationMessageChange } from "./NotificationMe
 export default class NotificationUtil {
   public static async startPipelineNotifications(pipeline: Pipeline) {
     const worker = new Worker("./PipelineNotification.worker.ts");
+
     const authParams = await AuthParams.getDefault();
     worker.onerror = function(ev: ErrorEvent) {
       new Notification("Pipeline Error!", {
