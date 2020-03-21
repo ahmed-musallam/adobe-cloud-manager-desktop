@@ -61,7 +61,8 @@
                 </coral-quickactions-item>
                 <coral-quickactions-item
                   icon="bell"
-                  @click.stop="enableNotifications(pipeline, $event)"
+                  :data-notification="pipeline.id"
+                  @click.stop="toggleNotifications(pipeline, $event)"
                 >
                   Enable Notifications
                 </coral-quickactions-item>
@@ -102,6 +103,19 @@
     async created() {
       this.updatePipelines(this.$route.params.programId);
     },
+    updated: function() {
+      this.$nextTick(() => {
+        this.$el.querySelectorAll("[data-notification]").forEach(el => {
+          const pipelineId = el.getAttribute("data-notification") || "";
+          const isWatching = NotificationUtil.isWatchingPipeline(pipelineId);
+          if (isWatching) {
+            const pipeline = this.pipelines.find(pipeline => pipeline.id === pipelineId);
+            NotificationUtil.startPipelineNotifications(pipeline as Pipeline, true);
+          }
+          this.enableIcon(el, !isWatching);
+        });
+      });
+    },
     methods: {
       goToPipeline(pipelineId: string) {
         this.$router.push({
@@ -112,10 +126,25 @@
           }
         });
       },
-      async enableNotifications(pipeline: Pipeline, event: any) {
-        console.log("Enable Notifications!");
-        await NotificationUtil.startPipelineNotifications(pipeline);
-        event.target.setAttribute("toggle", "false");
+      async toggleNotifications(pipeline: Pipeline, event: any, silent?: boolean) {
+        const pipelineId = String(pipeline.id);
+        const isWatching = NotificationUtil.isWatchingPipeline(pipelineId);
+        if (isWatching) {
+          NotificationUtil.stopPipelineNotifications(pipeline, silent);
+        } else {
+          await NotificationUtil.startPipelineNotifications(pipeline, silent);
+          const actionIcon = event.target.getAttribute("icon");
+        }
+        if (!silent) {
+          this.enableIcon(event.target, isWatching);
+        }
+      },
+      enableIcon(actionItem: any, enable: boolean) {
+        // what's about to ensue is terrible work around to a stupid problem,
+        // you see the click handler is attached to `coral-quickactions-item` which is a SIBLING
+        // of the actual generated button markup.. why.. who knows.. so now we have to do this because
+        // I do not want to change the UI at this point.
+        actionItem._elements.button.setAttribute("toggle", enable);
       },
       async updatePipelines(programId: string) {
         this.loading = true;
