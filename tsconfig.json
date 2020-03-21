@@ -2,6 +2,11 @@
   "compilerOptions": {
     // this aligns with Vue's browser support
     "target": "ES2020",
+    "lib":  [
+      "es6",
+      "webworker",
+      "dom"
+    ],
     // this enables stricter inference for data properties on `this`
     "strict": true,
     "moduleResolution": "node",
