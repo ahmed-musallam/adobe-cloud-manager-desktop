@@ -6,11 +6,6 @@
         <coral-wait size="S" v-if="loading"></coral-wait>
       </div>
       <table is="coral-table" selectable="" v-else-if="!loading && pipelines.length">
-        <colgroup>
-          <col is="coral-table-column" sortable direction="ascending" />
-          <col is="coral-table-column" sortable="" />
-          <col is="coral-table-column" sortable="" />
-        </colgroup>
         <thead is="coral-table-head">
           <tr is="coral-table-row">
             <th is="coral-table-headercell">Pipeline</th>
@@ -44,7 +39,7 @@
                 pipeline-quick-actions
                 target="_parent"
                 open="true"
-                threshold="2"
+                threshold="0"
                 interaction="off"
               >
                 <coral-quickactions-item
@@ -63,6 +58,13 @@
                 </coral-quickactions-item>
                 <coral-quickactions-item icon="viewList" @click.stop="goToPipeline(pipeline.id)">
                   View All Executions
+                </coral-quickactions-item>
+                <coral-quickactions-item
+                  icon="bell"
+                  :data-notification="pipeline.id"
+                  @click.stop="toggleNotifications(pipeline, $event)"
+                >
+                  Enable Notifications
                 </coral-quickactions-item>
               </coral-quickactions>
             </td>
@@ -86,6 +88,7 @@
   import { Pipeline, PipelineStatusEnum } from "../client";
   import CloudManagerApi from "../client/wrapper/CloudManagerApi";
   import DebugDrawer from "./DebugDrawer.vue";
+  import NotificationUtil from "../util/NotificationUtil";
   export default Vue.extend({
     name: "PipelinesTable",
     data() {
@@ -100,6 +103,19 @@
     async created() {
       this.updatePipelines(this.$route.params.programId);
     },
+    updated: function() {
+      this.$nextTick(() => {
+        this.$el.querySelectorAll("[data-notification]").forEach(el => {
+          const pipelineId = el.getAttribute("data-notification") || "";
+          const isWatching = NotificationUtil.isWatchingPipeline(pipelineId);
+          if (isWatching) {
+            const pipeline = this.pipelines.find(pipeline => pipeline.id === pipelineId);
+            NotificationUtil.startPipelineNotifications(pipeline as Pipeline, true);
+          }
+          this.enableIcon(el, !isWatching);
+        });
+      });
+    },
     methods: {
       goToPipeline(pipelineId: string) {
         this.$router.push({
@@ -109,6 +125,26 @@
             pipelineId: pipelineId
           }
         });
+      },
+      async toggleNotifications(pipeline: Pipeline, event: any, silent?: boolean) {
+        const pipelineId = String(pipeline.id);
+        const isWatching = NotificationUtil.isWatchingPipeline(pipelineId);
+        if (isWatching) {
+          NotificationUtil.stopPipelineNotifications(pipeline, silent);
+        } else {
+          await NotificationUtil.startPipelineNotifications(pipeline, silent);
+          const actionIcon = event.target.getAttribute("icon");
+        }
+        if (!silent) {
+          this.enableIcon(event.target, isWatching);
+        }
+      },
+      enableIcon(actionItem: any, enable: boolean) {
+        // what's about to ensue is terrible work around to a stupid problem,
+        // you see the click handler is attached to `coral-quickactions-item` which is a SIBLING
+        // of the actual generated button markup.. why.. who knows.. so now we have to do this because
+        // I do not want to change the UI at this point.
+        actionItem._elements.button.setAttribute("toggle", enable);
       },
       async updatePipelines(programId: string) {
         this.loading = true;

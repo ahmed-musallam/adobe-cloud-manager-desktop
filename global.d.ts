@@ -2,11 +2,12 @@ import VueRouter, { Route } from 'vue-router'
 import CloudManagerApi, { CloudManagerApiInstance } from "./app/client/wrapper/CloudManagerApi";
 import { AxiosResponse } from 'axios';
 import Vue from 'vue';
+import ElectronStore from "electron-store";
 
 // declare global variables
-declare const electronStore: any;
 declare const electron: any;
 declare const Clusterize: any;
+declare const electronStore: ElectronStore;
 
 declare global {
   interface Window { 

@@ -4,10 +4,6 @@
     <div :class="{ 'bordered-box': loading }">
       <coral-wait size="S" v-if="loading"></coral-wait>
       <table is="coral-table" selectable="" v-else-if="!loading && environments.length">
-        <colgroup>
-          <col is="coral-table-column" sortable="" sortabledirection="ascending" />
-          <col is="coral-table-column" sortable="" />
-        </colgroup>
         <thead is="coral-table-head">
           <tr is="coral-table-row">
             <th is="coral-table-headercell">Name</th>
@@ -26,6 +22,7 @@
             </td>
             <td is="coral-table-cell">
               {{ environment.type }}
+              <!-- <button @click.stop="deleteEnvironment(environment)">delete</button> -->
             </td>
           </tr>
         </tbody>
@@ -77,6 +74,17 @@
         var client = await CloudManagerApi.getInstance();
         const envList = await client.environments.getEnvironments(programId);
         this.environments = envList.data._embedded?.environments as Environment[];
+        this.loading = false;
+      },
+      async deleteEnvironment(environment: Environment) {
+        this.loading = true;
+        var client = await CloudManagerApi.getInstance();
+        const deleteResponse = await client.environments.deleteEnvironment(
+          String(environment.programId),
+          String(environment.id)
+        );
+        console.log("deleted: ");
+        console.log(deleteResponse.data);
         this.loading = false;
       }
     }
