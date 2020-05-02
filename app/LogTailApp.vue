@@ -1,13 +1,36 @@
 <template>
-  <div style="overflow-x:scroll">
-    <div class="bottom-right">
-      <coral-wait size="S" v-if="loading && !error"></coral-wait>
-    </div>
+  <div>
     <coral-banner variant="error" v-if="error">
       <coral-banner-header>Error</coral-banner-header>
       <coral-banner-content>{{ error }}</coral-banner-content>
     </coral-banner>
-    <div id="log-scroll-area" class="clusterize-scroll">
+    <coral-actionbar>
+      <coral-actionbar-primary threshold="-1" morebuttontext="More">
+        <coral-actionbar-item>
+          <input is="coral-textfield" placeholder="filter" @input="filter($event.target.value)" />
+        </coral-actionbar-item>
+      </coral-actionbar-primary>
+      <coral-actionbar-secondary morebuttontext="More">
+        <coral-actionbar-item>
+          <button @click="scrollToBottom" is="coral-button" icon="arrowDown">Bottom</button>
+        </coral-actionbar-item>
+        <coral-actionbar-item>
+          <button @click="clear" is="coral-button" icon="delete">Clear</button>
+        </coral-actionbar-item>
+        <coral-actionbar-item>
+          <button @click="exit" is="coral-button" icon="closeCircle">Exit</button>
+        </coral-actionbar-item>
+        <coral-actionbar-item>
+          <coral-wait size="M" v-if="loading && !error"></coral-wait>
+        </coral-actionbar-item>
+      </coral-actionbar-secondary>
+    </coral-actionbar>
+    <div
+      ref="scrollArea"
+      id="log-scroll-area"
+      class="clusterize-scroll u-coral-padding"
+      @scroll="handleScroll($event.target)"
+    >
       <ol id="log-content-area" class="clusterize-content">
         <li class="clusterize-no-data">Loading data...</li>
       </ol>
@@ -34,7 +57,10 @@
         dataChunks: [] as string[],
         clusterize: {} as any,
         loading: true,
-        error: ""
+        error: "",
+        rows: [] as string[],
+        searchText: "",
+        scrollToEnd: true
       };
     },
     async created() {
@@ -50,11 +76,49 @@
         this.clusterize = new Clusterize({
           rows: [],
           scrollId: "log-scroll-area",
-          contentId: "log-content-area"
+          contentId: "log-content-area",
+          no_data_text: "Waiting for new data..."
         });
+        this.$nextTick(() => this.scrollToBottom());
       }
     },
     methods: {
+      exit() {
+        electron.remote.getCurrentWindow().close();
+      },
+      handleScroll(element: HTMLElement) {
+        console.log("SCROLLED: ", element);
+        this.scrollToEnd = element.offsetHeight + element.scrollTop == element.scrollHeight;
+      },
+      clear() {
+        this.rows = [];
+        this.clusterize.clear();
+      },
+      scrollToBottom() {
+        const scrollArea = this.$refs.scrollArea as HTMLElement;
+        scrollArea.scrollTop = scrollArea.scrollHeight;
+      },
+      filter(text: string) {
+        this.searchText = text;
+        if (!text) {
+          console.log("show All");
+          console.log(this.rows);
+          this.clusterize.update(this.rows);
+        } else {
+          console.log("before  ", this.rows);
+          console.log("Filter: ", text);
+          const filtered = this.rows.filter(this.shouldShowRow);
+          console.log(filtered);
+          this.clusterize.update(filtered);
+        }
+      },
+      shouldShowRow(rowText: String): boolean {
+        if (!this.searchText) {
+          return true;
+        } else {
+          return rowText && rowText.includes(this.searchText);
+        }
+      },
       async getContentLength(url: string) {
         const client = await CloudManagerApi.getInstance();
         const resp = await client.logs.head(url);
@@ -72,8 +136,13 @@
         return res;
       },
       addToLog(data: string) {
-        const _data = data.split("\n").map(line => `<li>${line}<li>`);
-        this.clusterize.append(_data);
+        const newRows = data.split("\n").map(line => `<li>${line}<li>`);
+        this.rows = this.rows.concat(newRows);
+        this.clusterize.append(newRows.filter(this.shouldShowRow));
+        if (this.scrollToEnd) {
+          // scroll to the end of log
+          this.scrollToBottom();
+        }
       },
       throwError(msg: string) {
         this.loading = false;
@@ -83,7 +152,7 @@
       async tail(url: string, initialStart?: number) {
         let currentStart = 0;
         if (initialStart) {
-          currentStart = initialStart - 1000; // initial chunk
+          currentStart = initialStart - 5000; // initial chunk
         }
         let currentContentLength = 0;
         for (;;) {
@@ -104,7 +173,7 @@
               return; // we cancelled the request!
             }
             const errorResponse = error?.response;
-            const errorStatus = errorResponse.status;
+            const errorStatus = errorResponse?.status;
             if (errorStatus === 416) {
               //console.log("got 416")!;
               await this.$sleep(2000); // sleep 2 seconds and try again
@@ -127,8 +196,11 @@
 
 <style lang="scss" scoped>
   #log-scroll-area {
-    height: 100%;
+    height: calc(100% - 46px - 2px); // 46px is the action bar height
     max-height: 100%;
+    margin-right: 3px;
+    box-sizing: border-box;
+    word-break: break-all;
   }
   #log-content-area {
     list-style: none;
@@ -139,5 +211,16 @@
     position: fixed;
     bottom: 5px;
     right: 5px;
+  }
+  ::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+    padding: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
   }
 </style>
