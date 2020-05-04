@@ -1,6 +1,8 @@
 # Adobe Cloud Manager Desktop
-A simple menubar app to show cloud manger status.
+A desktop application for managing your Adobe Cloud Manager instances.
 
+## Download Binaries
+See release section
 
 ## Build From Source
 
@@ -22,8 +24,9 @@ npx gulp --tasks
 # runs the electron app and watches for changes
 npx gulp electron:watch:debug
 ```
-### Helpful links for development
 
+### Helpful links for development
+1. [Cloud Manager API](https://www.adobe.io/apis/experiencecloud/cloud-manager/api-reference.html)
 1. Coral Spectrun
   this is the web components implementation of Adobe's spectrum CSS
   - [Coral Spectrum on github](https://github.com/adobe/coral-spectrum)

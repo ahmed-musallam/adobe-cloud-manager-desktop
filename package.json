@@ -9,14 +9,14 @@
   ],
   "scripts": {
     "postinstall": "electron-rebuild",
-    "prettier": "prettier --write ./app/**.{js,ts,vue} ./app/**/**.{js,ts,vue}  ",
+    "prettier": "prettier --write ./app/**.{js,ts,vue} ./app/**/**.{js,ts,vue}",
     "start": "gulp",
     "generate-client": "swaxios -i ./app/generated/api.yml -o ./app/generated/api",
     "gulp": "gulp"
   },
   "lint-staged": {
     "./app/*.{js,json,css,vue}": [
-      "prettier --vue-indent-script-and-styl --writee",
+      "npm run prettier",
       "git add"
     ]
   },
