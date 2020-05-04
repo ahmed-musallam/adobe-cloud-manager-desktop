@@ -64,7 +64,7 @@
                   :data-notification="pipeline.id"
                   @click.stop="toggleNotifications(pipeline, $event)"
                 >
-                  Enable Notifications
+                  {{ isBeingWatched(pipeline.id) ? "Disable" : "Enable" }} Notifications
                 </coral-quickactions-item>
               </coral-quickactions>
             </td>
@@ -126,9 +126,12 @@
           }
         });
       },
+      isBeingWatched(pipelineId: string) {
+        return NotificationUtil.isWatchingPipeline(pipelineId);
+      },
       async toggleNotifications(pipeline: Pipeline, event: any, silent?: boolean) {
         const pipelineId = String(pipeline.id);
-        const isWatching = NotificationUtil.isWatchingPipeline(pipelineId);
+        const isWatching = this.isBeingWatched(pipelineId);
         if (isWatching) {
           NotificationUtil.stopPipelineNotifications(pipeline, silent);
         } else {
