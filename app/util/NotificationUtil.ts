@@ -37,7 +37,8 @@ export default class NotificationUtil {
 
   public static stopPipelineNotifications(pipeline: Pipeline, silent?: boolean) {
     const pipelineId = String(pipeline.id);
-    workers[pipelineId]?.terminate();
+    workers[pipelineId].terminate();
+    delete workers[pipelineId];
     NotificationUtil.setWatchingPipeline(pipelineId, false);
     if (!silent) {
       let myNotification = new Notification("Noted!", {
