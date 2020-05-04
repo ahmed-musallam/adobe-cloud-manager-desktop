@@ -1,6 +1,6 @@
 {
   "name": "adobe-cloud-manager-desktop",
-  "version": "0.1.0",
+  "version": "1.0.0-alpha.0",
   "description": "Adobe Cloud Manager Desktop",
   "main": "main.js",
   "author": "Ahmed Musallam <ahmed@ahmedmusallam.com> (https://ahmedmusallam.com)",
