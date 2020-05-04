@@ -71,7 +71,7 @@
             <tr is="coral-table-row" v-for="(logDownload, i) in filteredLogDownloads" :key="i">
               <td is="coral-table-cell">{{ logDownload.service }}</td>
               <td is="coral-table-cell">{{ logDownload.name }}</td>
-              <td is="coral-table-cell">{{ logDownload.date | dateNoTime }}</td>
+              <td is="coral-table-cell">{{ formatLogDate(logDownload.date) }}</td>
               <td is="coral-table-cell">
                 <button
                   is="coral-button"
@@ -285,6 +285,21 @@
           );
         });
         this.$forceUpdate();
+      },
+      // expects format yyyy-MM-dd
+      formatLogDate(dateStr: string) {
+        if (!dateStr) return "";
+        const parts = dateStr.split("-")
+        if (parts.length !== 3) return dateStr;
+        const date = new Date(
+                    parseInt(parts[0], 10),
+                    parseInt(parts[1], 10) - 1,
+                    parseInt(parts[2], 10));
+        return Intl.DateTimeFormat("en-US", {
+          year: "numeric",
+          month: "numeric",
+          day: "numeric"
+        }).format(date);
       }
     }
   });
