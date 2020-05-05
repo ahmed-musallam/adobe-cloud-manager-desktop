@@ -9,7 +9,14 @@ A desktop application for managing your Adobe Cloud Manager instances.
 </p>
 
 ## Download Binaries
-See release section
+[Download latest from releases section](https://github.com/ahmed-musallam/adobe-cloud-manager-desktop/releases)
+
+## Usage
+You'll need to create an API integration in Adobe IO consolefor this client to connect to your Cloud Manager instance. See the [adobe docs](https://www.adobe.io/apis/experiencecloud/cloud-manager/docs.html#!AdobeDocs/cloudmanager-api-docs/master/create-api-integration.md) for details on creating an API integration.
+
+Once you have created an API integration, you can add a new account in Cloud Manager Desktop and fill the `API Key`, `Client Secret`, `Organization ID`, `Technical Account` and `Private Key`.
+
+_detailed documentation coming soon_
 
 ## Build From Source
 
