@@ -249,7 +249,7 @@
           icon: "../../icon/icon.png",
           show: false,
           webPreferences: {
-            preload: location.pathname.replace("index.html", "preload.js")
+            preload: decodeURI(location.pathname.replace("index.html", "preload.js"))
           }
         });
         const logTailPath = location.pathname.replace("index.html", "logTail.html");
