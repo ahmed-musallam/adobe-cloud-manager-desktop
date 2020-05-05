@@ -1,6 +1,13 @@
 # Adobe Cloud Manager Desktop
 A desktop application for managing your Adobe Cloud Manager instances.
 
+
+<p align="center">
+  <br>
+  <img src="doc/cloud-manager.gif">
+  <br>
+</p>
+
 ## Download Binaries
 See release section
 
