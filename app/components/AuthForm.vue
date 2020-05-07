@@ -32,9 +32,12 @@
       </button>
       <h4 class="status" :style="{ color: savedError ? 'red' : 'green' }">
         <em v-if="!loading">{{ saveMsg }}</em>
+        <br />
+        <em v-if="!loading" style="line-height: 20px;">{{ detailedSaveMsg }}</em>
         <coral-wait v-if="loading" size="S"></coral-wait>
       </h4>
       <br />
+
       <!--
       <button @click="handleRefreshToken" is="coral-button" type="button">
         <span :class="{ hidden: !loading }">
@@ -105,6 +108,7 @@
         saved: false,
         savedError: false,
         saveMsg: "",
+        detailedSaveMsg: "",
         newAccountName: "",
         accessToken: "" as stringOrNull,
         auth: {
@@ -151,13 +155,15 @@
       }
     },
     methods: {
-      handleAfterSave(error: boolean) {
+      handleAfterSave(error: boolean, exception?: Error) {
         if (error) {
           this.savedError = true;
-          this.saveMsg = "Error! Check log!";
+          this.saveMsg = `Error!`;
+          this.detailedSaveMsg = exception?.message || "";
         } else {
           this.savedError = false;
           this.saveMsg = "Success!";
+          this.detailedSaveMsg = "";
         }
         this.saved = true;
         setTimeout(() => {
@@ -178,7 +184,7 @@
           await AuthUtil.getAccessToken(account);
         } catch (e) {
           this.loading = false;
-          this.handleAfterSave(true);
+          this.handleAfterSave(true, e);
           throw e;
         }
         this.loading = false;
