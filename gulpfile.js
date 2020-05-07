@@ -27,8 +27,7 @@ const DARWIN_PACKAGER_OPTIONS = {
     "@adobe/spectrum-css",
     "vue",
     "popper.js",
-    "core-js",
-    "spectrum-css"
+    "core-js"
   ].map(toWildRegex)
 };
 
