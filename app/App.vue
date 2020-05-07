@@ -222,7 +222,9 @@
           const route = this.$route;
           const firstProgramId = this.programs[0].id || "";
           if (firstProgramId) {
-            this.$router.push(`/program/${firstProgramId}`).catch(err => {});
+            const path = `/program/${firstProgramId}`;
+            this.currentProgramHref = path;
+            this.$router.push(path).catch(err => {});
           }
         }
       },
