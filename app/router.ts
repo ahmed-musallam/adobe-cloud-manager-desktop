@@ -6,7 +6,7 @@ import Environment from "./components/Environment";
 import Settings from "./components/Settings";
 import AuthError from "./components/AuthError";
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: "/program/:programId",
@@ -39,3 +39,13 @@ export default new Router({
     }
   ]
 });
+router.beforeEach((to, from, next) => {
+  // guard against going back to root.
+  if (!to.path || to.path === "/") {
+    next(false);
+  } else {
+    next();
+  }
+});
+
+export default router;
