@@ -1,7 +1,7 @@
 <template>
   <div v-if="execution && execution.id">
     <h3 style="margin-bottom:0">
-      Pipeline Execution - {{ pipelineName }}
+      Pipeline Execution - {{ getPipelineName(execution.pipelineId) }}
       <Status :variant="execution.status" :showText="true"></Status>
     </h3>
     <coral-list class="bordered-box">
@@ -93,7 +93,8 @@
   import {
     PipelineExecution,
     PipelineExecutionStatusEnum,
-    PipelineExecutionStepState
+    PipelineExecutionStepState,
+    Pipeline
   } from "../client";
   import VerticalSteps from "./VerticalSteps.vue";
   import VerticalStep from "./VerticalStep.vue";
@@ -102,6 +103,7 @@
   import CloudManagerApi from "../client/wrapper/CloudManagerApi";
   import { Dictionary } from "vue-router/types/router";
   import globalAxios, { CancelTokenSource } from "axios";
+  import { pipelineListStore } from "./PipelineListStore";
 
   const stepActionTitles: Dictionary<string> = {
     validate: "Validation",
@@ -171,6 +173,10 @@
       },
       getPrettyStepTitle(action: string) {
         return stepActionTitles[action] || action;
+      },
+      getPipelineName(pipelineId: string) {
+        const pipeline = pipelineListStore.pipelines.find(p => p.id === pipelineId);
+        return pipeline?.name;
       },
       async getMetrics(step: PipelineExecutionStepState) {
         const client = await CloudManagerApi.getInstance();

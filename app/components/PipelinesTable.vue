@@ -89,6 +89,7 @@
   import CloudManagerApi from "../client/wrapper/CloudManagerApi";
   import DebugDrawer from "./DebugDrawer.vue";
   import NotificationUtil from "../util/NotificationUtil";
+  import { pipelineListStore, pipelineListStoreActions } from "./PipelineListStore";
   export default Vue.extend({
     name: "PipelinesTable",
     data() {
@@ -156,6 +157,7 @@
 
         const pipelinesResponse = await client.pipelines.getPipelines(programId || "");
         this.pipelines = pipelinesResponse.data?._embedded?.pipelines || [];
+        pipelineListStoreActions.setPipelines(this.pipelines);
         this.loading = false;
       },
       async startPipeline(pipeline: Pipeline) {
