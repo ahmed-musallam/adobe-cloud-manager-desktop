@@ -45,7 +45,7 @@
     "@adobe/coral-spectrum": "^4.3.2",
     "@adobe/jwt-auth": "^0.3.1",
     "@spectrum-css/breadcrumb": "^2.0.5",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "clusterize.js": "^0.18.1",
     "deep-rename-keys": "^0.2.1",
     "electron-store": "^5.1.1",
