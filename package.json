@@ -24,7 +24,7 @@
     "@vue/component-compiler-utils": "^3.1.1",
     "concurrently": "^5.1.0",
     "cssnano": "^4.1.10",
-    "electron": "^8.1.1",
+    "electron": "^13.6.6",
     "electron-installer-dmg": "^3.0.0",
     "electron-installer-windows": "^3.0.0",
     "electron-packager": "^14.2.1",
